@@ -1,0 +1,35 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+a, ul {
+    text-decoration: none;
+    list-style-type: none;
+    color: #000;
+}
+
+.wrapper {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+}
+
+nav, main, footer {
+    margin: auto;
+}
+
+nav {
+    background-color: #1e68d7;
+    width: 100%;
+}
+
+main {
+    background-color: #b061d7;
+    order: 1;
+}
+
+footer {
+    background-color: #20d739;
+    order: 2;
+}

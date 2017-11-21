@@ -1,0 +1,80 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+a, ul {
+    text-decoration: none;
+    list-style-type: none;
+    color: #000;
+}
+
+.row {
+    width: 100%;
+    clear: both;
+}
+
+.col-1 {
+    width: 8.3334%;
+    float: left;
+}
+
+.col-2 {
+    width: 16.6667%;
+    float: left;
+}
+
+.col-3 {
+    width: 25%;
+    float: left;
+}
+
+.col-4 {
+    width: 33.3334%;
+    float: left;
+}
+
+.col-5 {
+    width: 41.6667%;
+    float: left;
+}
+
+.col-6 {
+    width: 50%;
+    float: left;
+}
+
+.col-7 {
+    width: 58.3334%;
+    float: left;
+}
+
+.col-8 {
+    width: 66.6667%;
+    float: left;
+}
+
+.col-9 {
+    width: 75%;
+    float: left;
+}
+
+.col-10 {
+    width: 88.3334%;
+    float: left;
+}
+
+.col-11 {
+    width: 91.6667%;
+    float: left;
+}
+
+.col-12 {
+    width: 100%;
+    float: left;
+}
+
+.nav-menu-horizontal > li {
+    float: left;
+    text-overflow: ellipsis;
+}
