@@ -3,64 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <title>HabitTracker</title>
-    <link href="style/splash_screen.css" rel="stylesheet" type="text/css"/>
     <link href="style/framework.css" rel="stylesheet" type="text/css"/>
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <link href="style/splash.css" rel="stylesheet" type="text/css"/>
     <script type="text/javascript">
         var main = function () {
-            console.log("hello wolrd");
+            alert("hello world");
         }
-        $(document).ready(main);
+        $(document).getElementById("register_nav_email").onclick(
+            function () {
+                $("register_nav_email").append(main());
+            }
+        );
     </script>
 </head>
 <body>
-    <div class="wrapper">
-        <nav>
-            <img src="" alt="logo" title="logo" />
-            <ul class="nav-menu-horizontal">
-                <li>Register</li>
-                <li>Login</li>
-                <li>Navigation: <span id="spy">Test</span></li>
-                <li>Review</li>
-            </ul>
-        </nav>
+    <nav>
+        <img src="" alt="logo" title="logo" />
+        <ul>
+            <li>Register</li>
+            <li>Login</li>
+            <li>Navigation: <span id="spy">Test</span></li>
+            <li>Review</li>
+        </ul>
+    </nav>
 
-        <main>
-            <div class="register-big">
-                <form method="post" action="splash.html">
-                    <label aria-label="register_nav_email">Your email:</label>
-                    <input placeholder="Test@yourremail.com" id="register_nav_email" type="email"/>
+    <main>
+        <div class="register-big">
+            <form method="post" action="splash.html">
+                <label aria-label="register_nav_email">Your email:</label>
+                <input placeholder="Test@yourremail.com" id="register_nav_email" type="email"/>
 
-                    <label aria-label="register_nav_password">Your password:</label>
-                    <input placeholder="Password" id="register_nav_password" type="password"/>
-                </form>
-            </div>
+                <label aria-label="register_nav_password">Your password:</label>
+                <input placeholder="Password" id="register_nav_password" type="password"/>
+            </form>
+        </div>
 
-            <div class="reviews">
-                <div class="row">
-                    <div class="review-slider">
-                        <div class="dialog-1 col-4">
-                            <p>This is the subtext of dialog 1</p>
-                        </div>
-                        <div class="dialog-2 col-4">
-                            <p>This is the subtext of dialog 2</p>
-                        </div>
-                        <div class="dialog-3 col-4">
-                            <p>This is the subtext of dialog 3</p>
-                        </div>
+        <div class="reviews">
+            <div class="row">
+                <div class="review-slider">
+                    <div class="dialog-1">
+                        <p>This is the subtext of dialog 1</p>
+                    </div>
+                    <div class="dialog-2">
+                        <p>This is the subtext of dialog 2</p>
+                    </div>
+                    <div class="dialog-3">
+                        <p>This is the subtext of dialog 3</p>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <div class="happy-text">
-                <h1>Happy text header</h1>
-                <p>Some happy text</p>
-            </div>
-        </main>
+        <div class="happy-text">
+            <h1>Happy text header</h1>
+            <p>Some happy text</p>
+        </div>
+    </main>
 
-        <footer>
-            <h1>Hello World</h1>
-        </footer>
-    </div>
+    <footer></footer>
 </body>
 </html>
