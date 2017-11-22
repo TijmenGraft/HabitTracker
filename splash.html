@@ -7,35 +7,59 @@
     <link href="style/splash.css" rel="stylesheet" type="text/css"/>
     <script type="text/javascript">
         var main = function () {
-            alert("hello world");
+            console.log("hello world");
         }
-        $(document).getElementById("register_nav_email").onclick(
-            function () {
-                $("register_nav_email").append(main());
-            }
-        );
+        $(document).ready(main);
     </script>
 </head>
 <body>
     <nav>
-        <img src="" alt="logo" title="logo" />
+        <img src="" alt="logo" title="frequent" />
         <ul>
-            <li>Register</li>
-            <li>Login</li>
+            <li><a href="#">Register</a></li>
+            <li><a href="#">Login</a></li>
+            <li><a href="#">Review</a></li>
             <li>Navigation: <span id="spy">Test</span></li>
-            <li>Review</li>
+            <li><a href="#">Guide</a></li>
         </ul>
     </nav>
 
-    <main>
-    	<span class="circle">Hello World</span>
-        <div class="register-big">
-            <form method="post" action="splash.html">
-                <label aria-label="register_nav_email">Your email:</label>
-                <input placeholder="Test@yourremail.com" id="register_nav_email" type="email"/>
+	<main>
+    	<span class="circle">
+    		<img src="" alt="Create" title="Create"/>
+    		<p>Create</p>
+    	</span>
 
-                <label aria-label="register_nav_password">Your password:</label>
-                <input placeholder="Password" id="register_nav_password" type="password"/>
+    	<span class="circle">
+    		<img src="" alt="Reflect" title="Reflect"/>
+    		<p>Reflect</p>
+    	</span>
+
+    	<span class="circle">
+    		<img src="" alt="Stats" title="Stats"/>
+    		<p>Stats</p>
+    	</span>
+
+    	<span class="circle">
+    		<img src="" alt="Improve" title="Improve"/>
+    		<p>Improve</p>
+    	</span>
+
+    	<div class="register-big">
+            <form method="post" action="splash.html">
+                <label for="register_nav_email" aria-label="register_nav_email">Your email:</label>
+                <input name="reg_form_email" placeholder="Test@yourremail.com" id="register_nav_email" type="email"/>
+
+                <label for="" aria-label="register_nav_username">Username:</label>
+                <input name="reg_form_username" placeholder="Username" id="register_nav_username" type="text">
+
+                <label for="register_nav_password" aria-label="register_nav_password">Your password:</label>
+                <input name="reg_form_password" placeholder="Password" id="register_nav_password" type="password"/>
+
+                <label for="register_nav_comfirmpass" aria-label="register_nav_comfirmpass">Confirm password:</label>
+                <input name="reg_form_password_comfirm" placeholder="Comfirm password" id="register_nav_comfirmpass" type="password"/>
+
+                <button type="submit" name="reg_nav_submit" value="continue">Continue</button>
             </form>
         </div>
 
@@ -61,6 +85,16 @@
         </div>
     </main>
 
-    <footer></footer>
+    <footer>
+        <form method="post" action="splash.html">
+            <label for="contact_email" aria-label="contact_email">Your email:</label>
+            <input name="contact_form_email" placeholder="test@youremail.com" id="contact_email" type="email"/>
+
+            <label for="contact_text" aria-label="contact_text">Your message:</label>
+            <textarea name="contact_form_message" placeholder="Put your message here, please" id="contact_text" rows="10" cols="30"></textarea>
+
+            <button type="submit" name="contact_submit" value="Send">Send</button>
+        </form>
+    </footer>
 </body>
 </html>
