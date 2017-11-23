@@ -7,5 +7,6 @@ function openCloseHabitSetup(x){
     document.getElementById("habitSetup").innerHTML = "<button id='createHabitBttn'>Create habit</button>";
     document.getElementById("createHabitBttn").onclick = function(){openHabitSetup("open")};
 }
+}
 var setupToString = "<p>The habit setup will be implemented soon.</p>"+
     "<button id='saveHabitChanges'>Commit</button>";
