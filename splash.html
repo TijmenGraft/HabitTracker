@@ -2,9 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
     <title>HabitTracker</title>
     <link href="style/framework.css" rel="stylesheet" type="text/css"/>
-    <link href="style/splash.css" rel="stylesheet" type="text/css"/>
+    <link href="style/splashcss.css" rel="stylesheet" type="text/css"/>
     <script type="text/javascript">
         var main = function () {
             console.log("hello world");
@@ -25,41 +26,43 @@
     </nav>
 
 	<main>
-    	<span class="circle">
-    		<img src="/img/create.png" alt="Create" title="Create"/>
-    		<p>Create</p>
-    	</span>
+        <div class="fancy-circle-wrapper">
+        	<span class="fancy-circle">
+        		<img src="/img/create.png" alt="Create" title="Create"/>
+        		<p>Create</p>
+        	</span>
 
-    	<span class="circle">
-    		<img src="/img/reflect.png" alt="Reflect" title="Reflect"/>
-    		<p>Reflect</p>
-    	</span>
+        	<span class="fancy-circle">
+        		<img src="/img/reflect.png" alt="Reflect" title="Reflect"/>
+        		<p>Reflect</p>
+        	</span>
 
-    	<span class="circle">
-    		<img src="/img/stats.png" alt="Stats" title="Stats"/>
-    		<p>Stats</p>
-    	</span>
+        	<span class="fancy-circle">
+        		<img src="/img/stats.png" alt="Stats" title="Stats"/>
+        		<p>Stats</p>
+        	</span>
 
-    	<span class="circle">
-    		<img src="/img/improve.png" alt="Improve" title="Improve"/>
-    		<p>Improve</p>
-    	</span>
+        	<span class="fancy-circle">
+        		<img src="/img/improve.png" alt="Improve" title="Improve"/>
+        		<p>Improve</p>
+        	</span>
+        </div>
 
     	<div class="register-big">
             <form method="post" action="splash.html">
                 <label for="register_nav_email" aria-label="register_nav_email">Your email:</label>
-                <input name="reg_form_email" placeholder="Test@yourremail.com" id="register_nav_email" type="email"/>
+                <input class="login-input" name="reg_form_email" placeholder="Test@yourremail.com" id="register_nav_email" type="email"/>
 
                 <label for="" aria-label="register_nav_username">Username:</label>
-                <input name="reg_form_username" placeholder="Username" id="register_nav_username" type="text">
+                <input class="login-input" name="reg_form_username" placeholder="Username" id="register_nav_username" type="text">
 
                 <label for="register_nav_password" aria-label="register_nav_password">Your password:</label>
-                <input name="reg_form_password" placeholder="Password" id="register_nav_password" type="password"/>
+                <input class="login-input" name="reg_form_password" placeholder="Password" id="register_nav_password" type="password"/>
 
                 <label for="register_nav_comfirmpass" aria-label="register_nav_comfirmpass">Confirm password:</label>
-                <input name="reg_form_password_comfirm" placeholder="Comfirm password" id="register_nav_comfirmpass" type="password"/>
+                <input class="login-input" name="reg_form_password_comfirm" placeholder="Comfirm password" id="register_nav_comfirmpass" type="password"/>
 
-                <button type="submit" name="reg_nav_submit" value="continue">Continue</button>
+                <button class="login-submit-button" type="submit" name="reg_nav_submit" value="continue">Continue</button>
             </form>
         </div>
 
