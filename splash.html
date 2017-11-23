@@ -20,7 +20,7 @@
             <li><a href="#">Register</a></li>
             <li><a href="#">Login</a></li>
             <li><a href="#">Review</a></li>
-            <li>Menu<span class="dropdown-caret"></span></li>
+            <li class="has-dropdown">Menu<span class="dropdown-caret"></span></li>
             <li><a href="#">Guide</a></li>
         </ul>
         <ul class="nav-menu">
@@ -60,7 +60,7 @@
                 <label for="register_nav_email" aria-label="register_nav_email">Your email:</label>
                 <input class="login-input" name="reg_form_email" placeholder="Test@yourremail.com" id="register_nav_email" type="email"/>
 
-                <label for="" aria-label="register_nav_username">Username:</label>
+                <label for="register_nav_username" aria-label="register_nav_username">Username:</label>
                 <input class="login-input" name="reg_form_username" placeholder="Username" id="register_nav_username" type="text">
 
                 <label for="register_nav_password" aria-label="register_nav_password">Your password:</label>
@@ -95,15 +95,40 @@
     </main>
 
     <footer>
-        <form method="post" action="splash.html">
-            <label for="contact_email" aria-label="contact_email">Your email:</label>
-            <input name="contact_form_email" placeholder="test@youremail.com" id="contact_email" type="email"/>
+        <div class="stay-commited">
+            <h5>JOIN LETTER</h5>
+            <p>Join our 100 people network who track their habits</p>
+            <form method="post" action="splash.html">
+                <label for="signup_footer_email" aria-label="signup_footer_email">Email:</label>
+                <input class="singup-input" type="email" name="singup_form_email" placeholder="test@yourremail.com" id="signup_footer_email">
 
-            <label for="contact_text" aria-label="contact_text">Your message:</label>
-            <textarea name="contact_form_message" placeholder="Put your message here, please" id="contact_text" rows="10" cols="30"></textarea>
+                <button class="singup-submit-button" type="submit" name="singup_footer_submit" value="singup">Sing Up!</button>
+            </form>
+            <div class="social-media">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
 
-            <button type="submit" name="contact_submit" value="Send">Send</button>
-        </form>
+        <div class="inspiring-quote">
+            <h5>QUOTES</h5>
+            <pre>Life is like riding a bicycle. To keep your balance, 
+            you must keep moving - Albert Einstein</pre>
+        </div>
+
+        <div class="footer-nav">
+            <h5>NAVIGATE</h5>
+        </div>
+
+        <div class="address">
+            <h6>Frequent<span> &bull; </span>Mekelweg 4 2628CD, Delft<span> &bull; </span>Tel: +31 15 27 89803</h6>
+        </div>
+
+        <div class="privacy">
+            <p>Privacy policy<span> &bull; </span> Sitemap <span> &bull; </span> copyright frequent 2017</p>
+        </div>
     </footer>
 </body>
 </html>

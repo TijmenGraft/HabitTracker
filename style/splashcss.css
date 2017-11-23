@@ -1,46 +1,56 @@
 nav {
-	background-color: lightblue;
 	overflow: auto;
+	width: 100%;
 }
 
-nav img { 
-	float: left;
+nav ul li {
+	font-size: 30pt;
+	margin-right: 0.5em;
+	background-color: transparent;
+	float: right;
+}
+
+.main-menu li:hover {
+	background-color: #3B7886;
+	-webkit-transition: background-color 500ms linear;
+	-ms-transition: background-color 500ms linear;
+	transition: background-color 500ms linear;
+}
+
+.nav-menu li:hover {
+	background-color: #1F4660;
+	-webkit-transition: background-color 500ms linear;
+	-ms-transition: background-color 500ms linear;
+	transition: background-color 500ms linear;
 }
 
 nav .main-menu {
 	overflow: auto;
 	width: 100%;	
 	padding-top: 1.5em;
-	padding-left: 1.5em;
-	padding-right: 1.5em;
+	background-color: #1F4660;
+}
+
+nav .main-menu li:first-child {
+	float: left !important;
 }
 
 nav .nav-menu {
 	overflow: auto;
 	width: 100%;
-	background-color: red;
+	background-color: #3B7886;
 }
 
-nav ul li {
-	font-size: 25px;
-	margin-right: 0.5em;
-	background-color: transparent;
-	float: right;
-}
-
-nav ul img {
-	float: left !important;
-}
-
-nav ul li:hover {
-	background-color: darkblue;
-	-webkit-transition: background-color 500ms linear;
-	-ms-transition: background-color 500ms linear;
-	transition: background-color 500ms linear;
+.nav-menu li {
+	font-size: 24pt;
 }
 
 main {
 	width: 100%;
+}
+
+.fancy-circle-wrapper, .register-big, .reviews, .happy-text, footer {
+	margin-top: 3em;
 }
 
 .fancy-circle {
@@ -88,7 +98,6 @@ main {
 }
 
 .reviews {
-	margin-top: 3em;
 	width: 100%;
 	text-align: center;
 }
@@ -135,3 +144,29 @@ main {
 	text-align: center;
 }
 
+footer {
+	background-color: #1F4660;
+	width: 100%;
+	font-size: 75%;
+	overflow: hidden;
+	text-align: center;
+}
+
+.stay-commited, .inspiring-quote, .footer-nav {
+	width: 33.333%;
+	max-width: 33.333%;
+	float: left;
+	margin-top: 2em;
+}
+
+.address {
+	width: 100%;
+	float: left;
+	margin-top: 2em;
+	margin-bottom: 2em;
+}
+
+.privacy {
+	width: 100%;
+	float: left;
+}
