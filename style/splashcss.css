@@ -1,0 +1,48 @@
+nav {
+	background-color: lightblue;
+	overflow: auto;
+}
+
+nav img { 
+	float: left;
+}
+
+nav ul li {
+	font-size: 25px;
+	margin-right: 0.5em;
+	background-color: transparent;
+}
+
+nav ul li:hover {
+	background-color: darkblue;
+	-webkit-transition: background-color 500ms linear;
+	-ms-transition: background-color 500ms linear;
+	transition: background-color 500ms linear;
+}
+
+main {
+	width: 100%;
+}
+
+.fancy-circle {
+	width: 50%;
+	float: left;
+	text-align: center;
+}
+
+@media (min-width: 768px) {
+	main {
+		width: 80%;
+		margin-left: 10%;
+		margin-right: 10%;
+	}
+	.fancy-circle {
+		width: 25%;
+	}
+}
+
+.fancy-circle-wrapper {
+	width: 100%;
+	overflow: auto;
+}
+
