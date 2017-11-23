@@ -103,3 +103,10 @@ main {
 		margin: 2em 35% 0em 35%;
 	}
 }
+}
+
+.fancy-circle-wrapper {
+	width: 100%;
+	overflow: auto;
+}
+
