@@ -1,0 +1,105 @@
+nav {
+	background-color: lightblue;
+	overflow: auto;
+}
+
+nav img { 
+	float: left;
+}
+
+nav ul li {
+	font-size: 25px;
+	margin-right: 0.5em;
+	background-color: transparent;
+}
+
+nav ul li:hover {
+	background-color: darkblue;
+	-webkit-transition: background-color 500ms linear;
+	-ms-transition: background-color 500ms linear;
+	transition: background-color 500ms linear;
+}
+
+main {
+	width: 100%;
+}
+
+.fancy-circle {
+	width: 50%;
+	float: left;
+	text-align: center;
+}
+
+.fancy-circle-wrapper {
+	width: 100%;
+	overflow: auto;
+}
+
+.login-input {
+	width: 70%;
+	height: 2.5em;
+	margin: 2em 15% 0em 15%;
+	text-align: center !important;
+	text-rendering: optimizeLegibility !important;
+	-webkit-font-smoothing: antialiased !important;
+	font-size: 18px;
+}
+
+.login-submit-button {
+	width: 50%;
+	margin: 2em 25% 0em 25%;
+	height: 2.5em;
+	text-align: center;
+	background-color: #0099cc;
+	font-size: 20px;
+	border: none;
+	color: #fff;
+}
+
+.login-submit-button:hover, .login-submit-button:focus {
+	background-color: #007399;
+	-webkit-transition: background-color 250ms ease-in;
+	-ms-transition: background-color 250ms ease-in;
+	transition: background-color 250ms ease-in;
+}
+
+.reviews {
+	margin-top: 3em;
+	width: 100%;
+	text-align: center;
+}
+
+.review-slider {
+	margin-top: 1em;
+	width: 100%;
+}
+
+.happy-text {
+	width: 100%;
+	text-align: center;
+}
+
+@media (min-width: 768px) {
+	main {
+		width: 80%;
+		margin-left: 10%;
+		margin-right: 10%;
+	}
+	.fancy-circle {
+		width: 25%;
+	}
+	label {
+		display: none;
+		visibility: hidden;
+	}
+	.review-dialog {
+		width: 27.3333%;
+		margin: 0 3%;
+		float: left;
+		min-height: 20em;
+	}
+	.login-submit-button {
+		width: 30%;
+		margin: 2em 35% 0em 35%;
+	}
+}
