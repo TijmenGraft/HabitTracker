@@ -25,6 +25,36 @@ nav ul li {
 	clear: both;
 }
 
+p {
+	font-size: 16pt;
+}
+
+h6 {
+	font-size: 18pt;
+}
+
+h5 {
+	font-size: 24pt;
+}
+
+h4 {
+	font-size: 30pt;
+}
+
+h3 {
+	font-size: 36pt;
+}
+
+h2 {
+	font-size: 42pt;
+}
+
+h1 {
+	font-size: 48pt;
+	text-decoration: underline;
+}
+
+
 @media all and (min-width: 0em) and (max-width: 425px) {
 	nav {
 		padding: 1em;
