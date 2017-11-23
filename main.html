@@ -18,18 +18,6 @@
 			</ul>
 		</nav>
 		<button id="noclick">Don't click me, some things can't be unseen!</button>
-		<script type="text/javascript">
-    var url = "https://telegraaf.nl";
-    if(typeof IE_fix != "undefined") // IE8 and lower fix to pass the http referer
-    {
-        document.write("redirecting..."); // Don't remove this line or appendChild() will fail because it is called before document.onload to make the redirect as fast as possible. Nobody will see this text, it is only a tech fix.
-        var referLink = document.createElement("a");
-        referLink.href = url;
-        document.body.appendChild(referLink);
-        referLink.click();
-    }
-    else { window.location.replace(url); } // All other browsers
-</script>
 		<main>
 			<div class="page-wrapper">
 				<div id="overview_page" class="active page">
