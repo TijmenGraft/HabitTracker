@@ -1,4 +1,4 @@
-function(){openCloseHabitSetup("close")};
+document.ready = function(){openCloseHabitSetup("close")};
 function openCloseHabitSetup(x){
   if(x == "open"){
     document.getElementById("habitSetup").innerHTML = setupToString;
