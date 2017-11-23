@@ -7,10 +7,29 @@ nav img {
 	float: left;
 }
 
+nav .main-menu {
+	overflow: auto;
+	width: 100%;	
+	padding-top: 1.5em;
+	padding-left: 1.5em;
+	padding-right: 1.5em;
+}
+
+nav .nav-menu {
+	overflow: auto;
+	width: 100%;
+	background-color: red;
+}
+
 nav ul li {
 	font-size: 25px;
 	margin-right: 0.5em;
 	background-color: transparent;
+	float: right;
+}
+
+nav ul img {
+	float: left !important;
 }
 
 nav ul li:hover {
@@ -30,9 +49,14 @@ main {
 	text-align: center;
 }
 
+.register-big {
+	text-align: center;
+}
+
 .fancy-circle-wrapper {
 	width: 100%;
 	overflow: auto;
+	text-align: center;
 }
 
 .login-input {
@@ -108,5 +132,6 @@ main {
 .fancy-circle-wrapper {
 	width: 100%;
 	overflow: auto;
+	text-align: center;
 }
 

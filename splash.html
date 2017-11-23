@@ -15,18 +15,25 @@
 </head>
 <body>
     <nav>
-        <img src="img/logo.svg" alt="logo" title="frequent" />
-        <ul>
+        <ul class="main-menu">
+            <li><img src="img/logo.svg" alt="logo" title="frequent" /></li>
             <li><a href="#">Register</a></li>
             <li><a href="#">Login</a></li>
             <li><a href="#">Review</a></li>
-            <li>Navigation: <span id="spy">Test</span></li>
+            <li>Menu<span class="dropdown-caret"></span></li>
             <li><a href="#">Guide</a></li>
+        </ul>
+        <ul class="nav-menu">
+            <li><a href="#concept">Concept</a></li>
+            <li><a href="#register">Register</a></li>
+            <li><a href="review">Review</a></li>
+            <li><a href="about">About</a></li>
         </ul>
     </nav>
 
 	<main>
-        <div class="fancy-circle-wrapper">
+        <div class="fancy-circle-wrapper" id="concept">
+            <h1>Concept</h1>
         	<span class="fancy-circle">
         		<img src="img/create.svg" alt="Create" title="Create"/>
         		<p>Create</p>
@@ -47,7 +54,8 @@
         		<p>Improve</p>
         	</span>
         </div>
-    	<div class="register-big">
+    	<div class="register-big" id="register">
+            <h1>Register</h1>
             <form method="post" action="splash.html">
                 <label for="register_nav_email" aria-label="register_nav_email">Your email:</label>
                 <input class="login-input" name="reg_form_email" placeholder="Test@yourremail.com" id="register_nav_email" type="email"/>
@@ -65,7 +73,7 @@
             </form>
         </div>
 
-        <div class="reviews">
+        <div class="reviews" id="review">
             <h1>Reviews</h1>
             <div class="review-slider" id="review-slider">
                 <div class="review-dialog">
@@ -80,8 +88,8 @@
             </div>
         </div>
 
-        <div class="happy-text">
-            <h1>Happy text header</h1>
+        <div class="happy-text" id="about">
+            <h1>About</h1>
             <p>Some happy text</p>
         </div>
     </main>
