@@ -7,7 +7,8 @@
  * Bank: the amount of points this person has
  * Articles: the articles already bought by this person
  */
-function Person(firstName, middleName, surname, age, gender, bank, articles) {
+function Person(id, firstName, middleName, surname, age, gender, bank, articles) {
+    this.id = id;
     this.firstName = firstname;
     this.middleName = middlename;
     this.surName = surname;
@@ -17,6 +18,8 @@ function Person(firstName, middleName, surname, age, gender, bank, articles) {
     this.bank = bank;
     this.articles = articles;
 }
+Person.prototype.setID = function(id){this.id = id;};
+Person.prototype.getID = function(){return this.id;};
 
 Person.prototype.setFirstName = function(firstName){this.firstName = firstName;};
 Person.prototype.getFirstName = function(){return this.firstName;};
