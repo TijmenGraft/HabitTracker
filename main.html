@@ -1,74 +1,100 @@
 <!doctype htlm>
 <html>
 	<head>
-		<title>Your cockpit</title>
+		<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>Your cockpit</title>
+    <link href="style/framework.css" rel="stylesheet" type="text/css"/>
+    <link href="style/maincss.css" rel="stylesheet" type="text/css"/>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+	<script type="text/javascript" src="js/habitoop.js"></script>
+	<script type="text/javascript" src="js/HabitList.js"></script>
+	<script type="text/javascript" src="js/Person.js"></script>
 	</head>
 	<body>
 		<nav>
-			<img src="" alt="Logo" title="Frequent"/>
-			<ul>
+			<ul class="upper-nav">
+				<li><a href="#"><img src="" alt="logo" title="Frequent"/></a></li>
 				<li><a href="#">Guide</a></li>
 				<li><a href="#">Setting</a></li>
 			</ul>
-			<ul>
-				<li><a href="#">Overview</a></li>
-				<li><a href="#">Stats</a></li>
-				<li><a href="#">Shop</a></li>
-				<li><a href="#">Logbook</a></li>
+			<ul class="lower-nav">
+				<li class="page-active"><a href="#">Overview</a></li>
+				<li class="page-active"><a href="#">Stats</a></li>
+				<li class=""><a href="#">Shop</a></li>
+				<li class=""><a href="#">Logbook</a></li>
 			</ul>
 		</nav>
 		<button id="noclick">Don't click me, some things can't be unseen!</button>
 		<main>
 			<div class="page-wrapper">
 				<div id="overview_page" class="active page">
-					<div class="habit-card" id="general_habit">
-						<h2>Overview</h2>
-						<ul class="habit-list">
-							<li class="good-habit">Good habit example</li>
-							<li class="bad-habit">Bad habit example</li>
-						</ul>
-						<h5>Add a new habit to general</h5>
-						<span class="add-habit" id="add_habit_to_general">+</span>
-					</div>
-					
-					<div class="habit-card" id="addnew_habitcard">
-						<h5>New list of habits</h5>
-						<span class="add-habit-type" id="add_new_habit_category">+</span>
+					<div class="page-content-wrapper">
+						<div class="habit-card" id="general_habit">
+							<div class="habit-card-header">
+								<h4>General</h4>
+							</div>
+							<div class="habit-card-body">
+								<ul class="habit-list">
+									<li class="good-habit">Good habit example</li>
+									<li class="bad-habit">Bad habit example</li>
+								</ul>
+								<span class="add-habit" id="add_habit_to_general">+</span>
+							</div>
+							<div class="habit-card-footer">
+								<p>Test</p>
+							</div>
+						</div>
+						
+						<div class="habit-card" id="addnew_habitcard">
+							<div class="habit-card-header">
+								<h4>New habit type</h4>
+							</div>
+							<div class="habit-card-body">
+								<span class="add-habit-type" id="add_new_habit_category">+</span>
+							</div>
+						</div>
 					</div>
 				</div>
 				
 				<div id="stats_page" class="page">
-					<h2>Stats</h2>
-					<p>Here will be some charts for tracking your habits</p>
-					<p>Also the calander will be here</p>
+					<div class="page-content-wrapper">
+						<h2>Stats</h2>
+						<p>Here will be some charts for tracking your habits</p>
+						<p>Also the calander will be here</p>
+					</div>
 				</div>
 				
 				<div id="shop_page" class="page">
-					<h2>Shop</h2>
-					<div class="shop-wrapper">
-						<div class="artikel" id="black_trouser_avatar">
-							<img src="" alt="black_trouser_avatar" title="New stylish black trouser"/>
-							<p>Use your points to buy this fancy trouser for your avatar</p>
-							<button type="button">Buy</button>
+					<div class="page-content-wrapper">
+						<h2>Shop</h2>
+						<div class="shop-wrapper">
+							<div class="artikel" id="black_trouser_avatar">
+								<img src="" alt="black_trouser_avatar" title="New stylish black trouser"/>
+								<p>Use your points to buy this fancy trouser for your avatar</p>
+								<button type="button">Buy</button>
+							</div>
 						</div>
 					</div>
 				</div>
 				
 				<div id="logbook_page" class="page">
-					<h2>Logbook</h2>
-					<div class="logbook-wrapper">
-						<div class="logbook-menu">
-							<ul>
-								<li><a href="#">All</a></li>
-								<li><a href="#">General</a></li>
-								<li><a href="#">Sports</a></li>
-							</ul>
-						</div>
-						<div class="logbook-content">
-							<ul>
-								<li tag="general">Not yelling at the boss 29/11/2017</li>
-								<li tag="sports">Did my daily 200 pushups 29/11/2017</li>
-							</ul>
+					<div class="page-content-wrapper">
+						<h2>Logbook</h2>
+						<div class="logbook-wrapper">
+							<div class="logbook-menu">
+								<ul>
+									<li><a href="#">All</a></li>
+									<li><a href="#">General</a></li>
+									<li><a href="#">Sports</a></li>
+								</ul>
+							</div>
+							<div class="logbook-content">
+								<ul>
+									<li tag="general">Not yelling at the boss 29/11/2017</li>
+									<li tag="sports">Did my daily 200 pushups 29/11/2017</li>
+								</ul>
+							</div>
 						</div>
 					</div>
 				</div>

@@ -1,0 +1,104 @@
+nav {
+	overflow: auto;
+	width: 100%;
+}
+
+nav ul li {
+	font-size: 30pt;
+	text-align: center;
+	background-color: transparent;
+	float: right;
+}
+
+nav .upper-nav {
+	width: 100%;
+	background-color: #1F4660;
+	overflow: auto;
+}
+
+nav .upper-nav li:first-child {
+	float: left !important;
+	width: 10% !important;
+}
+
+nav .upper-nav li {
+	width: 45%;
+}
+
+nav .lower-nav {
+	width: 100%;
+	background-color: #3B7886;
+	overflow: auto;
+}
+
+nav .lower-nav li {
+	width: 25%;
+	float: left;
+}
+
+nav .lower-nav li:hover {
+	background-color: green;
+}
+
+nav .lower-nav .page-active {
+	background-color: red;
+}
+
+.page-wrapper {
+	width: 100%;
+	display: block;
+}
+
+.page {
+	display: none;
+}
+
+.page-content-wrapper {
+	width: 90%;
+	margin: 0 5%;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	flex-flow: row;
+	align-items: center;
+	align-content: center;
+	justify-content: space-around;
+}
+
+.active {
+	display: block !important;
+}
+
+.habit-card {
+	width: 25%;
+	float: left;
+	display: block;
+	border: 1px #1F4660 solid;
+	text-align: center;
+	min-height: 35vh;
+	max-height: 50vh;
+	overflow-y: hidden;
+	overflow-x: hidden;
+	align-self: flex-end;
+}
+
+.habit-card-header {
+	width: 100%;
+	background-color: #1F4660;
+	padding: 0.25em;
+}
+
+.habit-card-body ul li:nth-child(even) {
+	background-color: #e2e2e2;
+}
+
+.habit-card-body ul li:nth-child(odd) {
+	background-color: white;
+}
+
+.habit-card-body span {
+	font-size: 200%;
+	font-weight: bold;
+	color: lime;
+	padding: 0.25em;
+}
