@@ -4,11 +4,13 @@ Type: in which category does this habit fall if the category doesnt exsits yet i
 Frequency: How many times does this habit needs to repeat itself each week
 Description: A small description of the habit
 **/
-function Habit(name, type, frequency, description) {
+function Habit(name, type, frequency, description, startDate, endDate) {
 	this.name = name;
 	this.type = type;
 	this.frequency = frequency;
 	this.description = description;
+	this.startDate = startDate;
+	this.endDate = endDate
 
 	this.echo = (function() {
 		console.log("Hello!");
@@ -26,6 +28,12 @@ Habit.prototype.getFrequency = function(){return this.frequency;};
 
 Habit.prototype.setDescription = function(description){this.description = description;};
 Habit.prototype.getDescription = function(){return this.description;};
+
+Habit.prototype.setStartDate = function(startDate){this.startDate = startDate;};
+Habit.prototype.getStartDate = function(){return this.startDate;};
+
+Habit.prototype.setEndDate = function(endDate){this.endDate = endDate;};
+Habit.prototype.getEndDate = function(){return this.endDate;};
 
 Habit.prototype.toString = function() {
 	return "This habit:" + this.getName() + " is from the type: " + this.getType() + " with description: " + this.getDescription()
