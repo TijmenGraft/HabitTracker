@@ -7,9 +7,12 @@
     <link href="style/framework.css" rel="stylesheet" type="text/css"/>
     <link href="style/maincss.css" rel="stylesheet" type="text/css"/>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-	<script type="text/javascript" src="js/habitoop.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script type="text/javascript" src="js/Habit.js"></script>
 	<script type="text/javascript" src="js/HabitList.js"></script>
 	<script type="text/javascript" src="js/Person.js"></script>
+	<script type="text/javascript" src="js/Article.js"></script>
+	<script type="text/javascript" src="js/HabitManagment.js"></script>
 	</head>
 	<body>
 		<nav>
@@ -51,8 +54,46 @@
 								<h4>New habit type</h4>
 							</div>
 							<div class="habit-card-body">
-								<span class="add-habit-type" id="add_new_habit_category">+</span>
+								<span class="add-habit-category" id="add_new_habit_category">+</span>
 							</div>
+						</div>
+					</div>
+
+					<div class="model" id="add_habit_model">
+						<div class="model-header">
+							<h1>Add Habit</h1> 
+						</div>
+						<div class="model-body">
+							<!--name, type, category, frequency, description, startDate, endDate-->
+							<label for="habit_main_title" aria-label="habit_main_title">Habit title:</label>
+							<input class="habit-input" name="habit_form_title" placeholder="Habit title" id="habit_main_title" type="text"/>
+			
+							<label for="habit_main_type" aria-label="habit_main_type">Good/Bad:</label>
+							<input class="habit-input" name="habit_form_type" id="habit_main_type" type="radio" value="1">Good
+							<input class="habit-input" name="habit_form_type" id="habit_main_type" type="radio" value="0">Bad
+
+							<label for="habit_main_frequency" aria-label="habit_main_frequency">Frequency:</label>
+							<input class="habit-input" name="habit_form_frequency" type="checkbox" value="ma">Monday
+							<input class="habit-input" name="habit_form_frequency" type="checkbox" value="tu">Tuesday
+							<input class="habit-input" name="habit_form_frequency" type="checkbox" value="we">Wednesday
+							<input class="habit-input" name="habit_form_frequency" type="checkbox" value="th">Thursday
+							<input class="habit-input" name="habit_form_frequency" type="checkbox" value="fr">Friday
+							<input class="habit-input" name="habit_form_frequency" type="checkbox" value="sat">Saturday
+							<input class="habit-input" name="habit_form_frequency" type="checkbox" value="sun">Sunday
+			
+							<label for="habit_main_description" aria-label="habit_main_description">Description:</label>
+							<input class="habit-input" name="habit_form_description" placeholder="A short description of the habit" id="habit_main_description" type="text"/>
+
+							<label for="habit_main_startDate" aria-label="habit_main_startDate">Startdate:</label>
+							<input class="habit-input" name="habit_form_start_date" id="habit_main_startDate" type="date"/>
+
+							<label for="habit_main_endDate" aria-label="habit_main_endDate">Startdate:</label>
+							<input class="habit-input" name="habit_form_end_date" id="habit_main_endDate" type="date"/>
+
+							<button class="habit-submit-button" type="submit" name="reg_nav_submit" value="continue" id="add_habit_submit">Continue</button>
+						</div>
+						<div class="model-footer">
+
 						</div>
 					</div>
 				</div>
