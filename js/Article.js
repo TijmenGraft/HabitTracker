@@ -33,3 +33,7 @@ Article.prototype.changePricePercentage = function(changePercentage) {
     this.setPrice(newPrice);
 }
 
+Article.prototype.createImgPath = function() {
+    return this.getID() + "_" + this.getName();
+}
+
