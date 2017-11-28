@@ -1,4 +1,5 @@
 /**
+ * ID: the uniek id for the person so we can find this person
  * Firstname: firstname obviously
  * Middlename: tussenvoegsel in dutch
  * Surname: surname obviously
