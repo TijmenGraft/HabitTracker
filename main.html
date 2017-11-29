@@ -90,10 +90,29 @@
 							<label for="habit_main_endDate" aria-label="habit_main_endDate">Startdate:</label>
 							<input class="habit-input" name="habit_form_end_date" id="habit_main_endDate" type="date"/>
 
-							<button class="habit-submit-button" type="submit" name="reg_nav_submit" value="continue" id="add_habit_submit">Continue</button>
+							<button class="habit-submit-button" type="submit" name="habit_main_submit" value="continue" id="add_habit_submit">Continue</button>
 						</div>
 						<div class="model-footer">
 
+						</div>
+					</div>
+
+					<div class="model" id="add_habit_category_model">
+						<div class="model-header">
+							<h1>Add category:</h1>
+						</div>
+						<div class="modell-body">
+							<form method="post" action="main.html">
+								<label for="habit_category_main_title" aria-label="habit_category_main_title">Title:</label>
+								<input class="habit-category-input" name="habit_category_form_title" id="habit_category_main_title" type="text" placeholder="Title"/>
+
+								<label for="habit_category_main_description" aria-label="habit_category_main_description">Description:</label>
+								<input class="habit-category-input" name="habit_category_form_description" id="habit_category_main_description" type="textarea" placeholder="description"/>
+
+								<button class="habit-category-submit-button" type="submit" name="habit_category_main_submit" id="add_habit_category_submit">Continue</button>
+							</form>
+						</div>
+						<div class="model-footer">
 						</div>
 					</div>
 				</div>

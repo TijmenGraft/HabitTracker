@@ -1,6 +1,7 @@
-function HabitList(id, name) {
+function HabitList(id, name, description) {
     this.id = id;
     this.name = name;
+    this.description = description;
     this.listOfHabits = [];
 }
 
@@ -9,6 +10,9 @@ HabitList.prototype.getId = function(){return this.id;};
 
 HabitList.prototype.setName = function(name){this.name = name;};
 HabitList.prototype.getName = function(){return this.name;};
+
+HabitList.prototype.setDescription = function(description){this.description = description;};
+HabitList.prototype.getDescription = function(){return this.description;};
 
 HabitList.prototype.setListOfHabits = function(listOfHabits){this.listOfHabits = listOfHabits;};
 HabitList.prototype.getListOfHabits = function(){return this.listOfHabits;};
@@ -27,7 +31,7 @@ HabitList.prototype.numberOfGoodHabits = function() {
         }
     });
     return goodHabitCounter;
-}
+};
 
 HabitList.prototype.numberOfBadHabits = function() {
     var badHabitCounter = 0;
@@ -37,7 +41,7 @@ HabitList.prototype.numberOfBadHabits = function() {
         }
     });
     return badHabitCounter;
-}
+};
 
 HabitList.prototype.toString = function() {
     var returnString = "";
@@ -46,7 +50,26 @@ HabitList.prototype.toString = function() {
         returnString += entry.toString();
     });
     return returnString;
-}
+};
+
+HabitList.prototype.toElement = function() {
+    /**<div class="habit-card" id="general_habit">
+        <div class="habit-card-header">
+            <h4>General</h4>
+        </div>
+        <div class="habit-card-body">
+            <ul class="habit-list">
+                <li class="good-habit">Good habit example</li>
+                <li class="bad-habit">Bad habit example</li>
+            </ul>
+            <span class="add-habit" id="add_habit_to_general">+</span>
+        </div>
+        <div class="habit-card-footer">
+            <p>Test</p>
+        </div>
+    </div>
+    **/
+};
 
 var testHabitList = new HabitList(1,"Sports");
 testHabitList.addHabit(testHabitOne);

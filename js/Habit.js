@@ -53,6 +53,10 @@ Habit.prototype.toString = function() {
 	+ " it needs to be repeated on " + this.getFrequency();
 };
 
+Habit.prototype.toElement = function() {
+	return "<li>" + this.getName() + "</li>";
+};
+
 Habit.prototype.equals = function(other) {
 	if(other instanceof Habit) {
 		if(other.getName() === this.getName()) {
