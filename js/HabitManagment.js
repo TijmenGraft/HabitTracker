@@ -20,7 +20,8 @@ $(document).ready(function(){
         var habitEndDate = $("#habit_main_endDate").val();
         console.log(0 + " " + habitTitle + " " + habitType + " " + habitCategory + " " + habitFrequency + " " + habitDescription + " " + habitStartDate + " " + habitEndDate);
         var newHabit = new Habit(0,habitTitle,habitType,habitCategory,habitFrequency,habitDescription,habitStartDate,habitEndDate);
-        $(".habit-list").append(newHabit.toElement());
+        var postTo = '#'+habitCategory.toLowerCase()+"_habit_list";
+        $(postTo).append(newHabit.toElement());
     });
 
     $(".add-habit-category").on("click", function(){
@@ -32,6 +33,8 @@ $(document).ready(function(){
     $("#add_habit_category_submit").on("click", function() {
         var habitCategoryTitle = $("#habit_category_main_title").val();
         var habitCategoryDescription = $("#habit_category_main_description").val();
+        var newHabitList = new HabitList(0,habitCategoryTitle,habitCategoryDescription);
         console.log(0 + " " + habitCategoryTitle + " " + habitCategoryDescription);
+        $("#habit_wrapper").append(newHabitList.toElement());
     });
 });

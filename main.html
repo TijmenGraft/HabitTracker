@@ -28,17 +28,16 @@
 				<li class=""><a href="#">Logbook</a></li>
 			</ul>
 		</nav>
-		<button id="noclick">Don't click me, some things can't be unseen!</button>
 		<main>
 			<div class="page-wrapper">
 				<div id="overview_page" class="active page">
-					<div class="page-content-wrapper">
+					<div class="page-content-wrapper" id="habit_wrapper">
 						<div class="habit-card" id="general_habit">
 							<div class="habit-card-header">
 								<h4>General</h4>
 							</div>
 							<div class="habit-card-body">
-								<ul class="habit-list">
+								<ul class="habit-list" id="general_habit_list">
 									<li class="good-habit">Good habit example</li>
 									<li class="bad-habit">Bad habit example</li>
 								</ul>
@@ -102,15 +101,13 @@
 							<h1>Add category:</h1>
 						</div>
 						<div class="modell-body">
-							<form method="post" action="main.html">
-								<label for="habit_category_main_title" aria-label="habit_category_main_title">Title:</label>
-								<input class="habit-category-input" name="habit_category_form_title" id="habit_category_main_title" type="text" placeholder="Title"/>
+							<label for="habit_category_main_title" aria-label="habit_category_main_title">Title:</label>
+							<input class="habit-category-input" name="habit_category_form_title" id="habit_category_main_title" type="text" placeholder="Title"/>
 
-								<label for="habit_category_main_description" aria-label="habit_category_main_description">Description:</label>
-								<input class="habit-category-input" name="habit_category_form_description" id="habit_category_main_description" type="textarea" placeholder="description"/>
+							<label for="habit_category_main_description" aria-label="habit_category_main_description">Description:</label>
+							<input class="habit-category-input" name="habit_category_form_description" id="habit_category_main_description" type="textarea" placeholder="description"/>
 
-								<button class="habit-category-submit-button" type="submit" name="habit_category_main_submit" id="add_habit_category_submit">Continue</button>
-							</form>
+							<button class="habit-category-submit-button" type="submit" name="habit_category_main_submit" id="add_habit_category_submit">Continue</button>
 						</div>
 						<div class="model-footer">
 						</div>
@@ -162,8 +159,7 @@
 		</main>
 		
 		<footer>
+			<p>Test</p>
 		</footer>
-		<div id="habitSetup"></div>
-		<script src="scripts/habitSetup.js"></script>
 	</body>
 </html>
