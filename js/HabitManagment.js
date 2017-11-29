@@ -7,6 +7,7 @@ $(document).ready(function(){
         $("#add_habit_model").attr({
             "data-destination":location
         });
+        $("#add_habit_model").toggleClass("model-show");
     });
 
     $("#add_habit_submit").on("click", function(){
@@ -14,7 +15,8 @@ $(document).ready(function(){
         //id, name, type, category, frequency, description, startDate, endDate
         var habitTitle = $("#habit_main_title").val();
         var habitType = $('input[name=habit_form_type]:checked').val();
-        var habitCategory = "General";
+        var habitCategory = $("#add_habit_model").attr("data-destination");
+        console.log(habitCategory);
         var habitFrequency = [];
         $('.habit-input:checkbox:checked').each(function() {
             var value = (this.checked ? $(this).val() : "");
