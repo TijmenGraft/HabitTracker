@@ -71,6 +71,7 @@ nav .lower-nav .page-active {
 
 .habit-card {
 	width: 25%;
+	min-width: 20%;
 	float: left;
 	display: block;
 	border: 1px #1F4660 solid;

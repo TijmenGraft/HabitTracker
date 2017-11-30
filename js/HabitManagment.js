@@ -10,13 +10,27 @@ $(document).ready(function(){
         $("#add_habit_model").toggleClass("model-show");
     });
 
+    $(document).on("click",".habit", function(){
+        console.log("Changing habit fired!");
+        var valueType = $(this).attr('data-habitType');
+        var valueFrequent = $(this).attr('data-habitFrequency');
+        var valueFrequentSplit = valueFrequent.split(",");
+        $("#change_habit_main_title").val($(this).attr('data-habitTitle'));
+        $('input[name=change_habit_form_type][value='+valueType+']').prop('checked', true);
+        for (var i = 0; i < valueFrequentSplit.length; i++) {
+            $('input[name=change_habit_form_frequency][value='+valueFrequentSplit[i]+']').prop('checked', true);
+        }
+        $("#change_habit_main_description").val($(this).attr('data-habitDescription'));
+        $("#change_habit_main_startDate").val($(this).attr('data-habitStartDate'));
+        $("#change_habit_main_endDate").val($(this).attr('data-habitEndDate'));
+    });
+
     $("#add_habit_submit").on("click", function(){
         console.log(this);
         //id, name, type, category, frequency, description, startDate, endDate
         var habitTitle = $("#habit_main_title").val();
         var habitType = $('input[name=habit_form_type]:checked').val();
         var habitCategory = $("#add_habit_model").attr("data-destination");
-        console.log(habitCategory);
         var habitFrequency = [];
         $('.habit-input:checkbox:checked').each(function() {
             var value = (this.checked ? $(this).val() : "");
@@ -29,6 +43,17 @@ $(document).ready(function(){
         var newHabit = new Habit(0,habitTitle,habitType,habitCategory,habitFrequency,habitDescription,habitStartDate,habitEndDate);
         var postTo = '#'+habitCategory.toLowerCase()+"_habit_list";
         $(postTo).append(newHabit.toElement());
+
+        var postHabitDataTo = '#'+newHabit.getName()+"_a_habit";
+        $(postHabitDataTo).attr({
+            "data-habitTitle":habitTitle,
+            "data-habitType":habitType,
+            "data-habitCategory":habitCategory,
+            "data-habitFrequency":habitFrequency,
+            "data-habitDescription":habitDescription,
+            "data-habitStartDate":habitStartDate,
+            "data-habitEndDate":habitEndDate
+        });
     });
 
     $(".add-habit-category").on("click", function(){
