@@ -25,6 +25,12 @@ $(document).ready(function(){
         $("#change_habit_main_endDate").val($(this).attr('data-habitEndDate'));
     });
 
+    $(document).on("click",".delete-habit", function() {
+        console.log(this);
+        console.log();
+        $(this).parent().remove();
+    });
+
     $("#add_habit_submit").on("click", function(){
         console.log(this);
         //id, name, type, category, frequency, description, startDate, endDate
