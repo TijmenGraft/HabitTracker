@@ -9,25 +9,32 @@ $(document).ready(function(){
         });
         $("#add_habit_model").toggleClass("model-show");
     });
-
-    $(document).on("click",".habit", function(){
+    /**
+    This method will implement the change method
+    **/
+    $(document).on("click",".change-habit", function(){
         console.log("Changing habit fired!");
-        var valueType = $(this).attr('data-habitType');
-        var valueFrequent = $(this).attr('data-habitFrequency');
+        var valueType = $(this).parent().attr('data-habitType');
+        var valueFrequent = $(this).parent().attr('data-habitFrequency');
         var valueFrequentSplit = valueFrequent.split(",");
-        $("#change_habit_main_title").val($(this).attr('data-habitTitle'));
+        $("#change_habit_main_title").val($(this).parent().attr('data-habitTitle'));
         $('input[name=change_habit_form_type][value='+valueType+']').prop('checked', true);
         for (var i = 0; i < valueFrequentSplit.length; i++) {
             $('input[name=change_habit_form_frequency][value='+valueFrequentSplit[i]+']').prop('checked', true);
         }
-        $("#change_habit_main_description").val($(this).attr('data-habitDescription'));
-        $("#change_habit_main_startDate").val($(this).attr('data-habitStartDate'));
-        $("#change_habit_main_endDate").val($(this).attr('data-habitEndDate'));
+        $("#change_habit_main_description").val($(this).parent().attr('data-habitDescription'));
+        $("#change_habit_main_startDate").val($(this).parent().attr('data-habitStartDate'));
+        $("#change_habit_main_endDate").val($(this).parent().attr('data-habitEndDate'));
+    });
+
+    $(document).on("click",".habit-check", function() {
+        console.log("I want to change to green");
+        $(this).css({
+            "color":"green"
+        });
     });
 
     $(document).on("click",".delete-habit", function() {
-        console.log(this);
-        console.log();
         $(this).parent().remove();
     });
 
@@ -74,5 +81,12 @@ $(document).ready(function(){
         var newHabitList = new HabitList(0,habitCategoryTitle,habitCategoryDescription);
         console.log(0 + " " + habitCategoryTitle + " " + habitCategoryDescription);
         $("#habit_wrapper").append(newHabitList.toElement());
+    });
+
+    $(".label-left, .label-right").on("click", function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+        $(this).toggleClass("label-trigger-state");
     });
 });

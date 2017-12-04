@@ -54,7 +54,10 @@ Habit.prototype.toString = function() {
 };
 
 Habit.prototype.toElement = function() {
-	return '<li id="'+this.getName()+'_a_habit" class="habit">' + this.getName() + ' <span class="delete-habit">x</span></li>';
+	var returnElement = '<li id="'+this.getName()+'_a_habit" class="habit">' + this.getName() + ' <i class="fa fa-check habit-check" aria-hidden="true"> </i>';
+	returnElement += '<i class="fa fa-times delete-habit" aria-hidden="true"> </i>';
+	returnElement += '<i class="fa fa-cog change-habit" aria-hidden="true"> </i></li>'
+	return returnElement;
 };
 
 Habit.prototype.equals = function(other) {
