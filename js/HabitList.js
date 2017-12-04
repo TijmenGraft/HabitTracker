@@ -53,22 +53,13 @@ HabitList.prototype.toString = function() {
 };
 
 HabitList.prototype.toElement = function() {
-    /**<div class="habit-card" id="general_habit">
-        <div class="habit-card-header">
-            <h4>General</h4>
-        </div>
-        <div class="habit-card-body">
-            <ul class="habit-list">
-                <li class="good-habit">Good habit example</li>
-                <li class="bad-habit">Bad habit example</li>
-            </ul>
-            <span class="add-habit" id="add_habit_to_general">+</span>
-        </div>
-        <div class="habit-card-footer">
-            <p>Test</p>
-        </div>
-    </div>
-    **/
+    var returnElement = "";
+    returnElement += '<div class="habit-card" id="'+this.getName()+'_habit">';
+    returnElement += '<div class="habit-card-header"><h4>'+this.getName()+'</h4></div>';
+    returnElement += '<div class="habit-card-body"><ul class="habit-list" id="'+this.getName().toLowerCase()+'_habit_list"></ul>';
+    returnElement += '<span class="add-habit" id="add_habit_to_'+this.getName()+'">+</span>';
+    returnElement += '</div><div class="habit-card-footer"><p>TEST</p></div></div>';
+    return returnElement;
 };
 
 var testHabitList = new HabitList(1,"Sports");

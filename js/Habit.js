@@ -24,8 +24,8 @@ function Habit(id, name, type, category, frequency, description, startDate, endD
 	});
 }
 
-Habit.prototype.setName = function(id){this.id = id;};
-Habit.prototype.getName = function(){return this.id;};
+Habit.prototype.setId = function(id){this.id = id;};
+Habit.prototype.getId = function(){return this.id;};
 
 Habit.prototype.setName = function(name){this.name = name;};
 Habit.prototype.getName = function(){return this.name;};
@@ -54,7 +54,10 @@ Habit.prototype.toString = function() {
 };
 
 Habit.prototype.toElement = function() {
-	return "<li>" + this.getName() + "</li>";
+	var returnElement = '<li id="'+this.getName()+'_a_habit" class="habit">' + this.getName() + ' <i class="fa fa-check habit-check" aria-hidden="true"> </i>';
+	returnElement += '<i class="fa fa-times delete-habit" aria-hidden="true"> </i>';
+	returnElement += '<i class="fa fa-cog change-habit" aria-hidden="true"> </i></li>'
+	return returnElement;
 };
 
 Habit.prototype.equals = function(other) {
