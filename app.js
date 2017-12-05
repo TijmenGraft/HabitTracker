@@ -29,6 +29,7 @@ var mailOptions = {
 
 var server = http.createServer(function (req, res) {
     if (req.method.toLowerCase() == 'get') {
+        
         displayPage(req,res);
     } else if (req.method.toLowerCase() == 'post') {
         //processAllFieldsOfTheForm(req, res);
@@ -40,25 +41,26 @@ var server = http.createServer(function (req, res) {
  * @param {*} res 
  */
 function displayPage(req,res) {
-    if(req.url.indexOf(".html") != -1) {
-        fs.readFile(__dirname + "splash.html", function(err, data) {
-            res.writeHead(200, {
-                "Content-type":"text/html",
-                "Content-length":data.length
-            });
-            res.write(data);
-            res.end();   
-        })
-    }
-    
-    if(req.url.indexOf(".css") != -1) {
+    fs.readFile(__dirname + "/splash.html", function(err,data){
+        if(err) {
+            console.log(err);
+        }
+        res.writeHead(200, {
+            "Content-type":"text/html",
+            "Content-length":data.length
+        });
+        res.write(data);
+        res.end();
+    });
+    if(req.url.indexOf('.css') != -1) {
+        console.log(req.url);
         fs.readFile(__dirname + "/style/framework.css", function(err,data){
             if(err) {
                 console.log(err);
             }
             res.writeHead(200, {
-                "Content-Type": "text/css",
-                "Content-length": data.length
+                "Content-type":"text/css",
+                "Content-length":data.length
             });
             res.write(data);
             res.end();
@@ -115,4 +117,5 @@ function processFormFieldsIndividual(req, res) {
 // });
 
 server.listen(8080);
+console.log("Server listening");
 
