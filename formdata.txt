@@ -1,0 +1,20 @@
+{ fields: 
+   { reg_form_email: 'blabla@gmail.com',
+     reg_form_username: 'tijmen',
+     reg_form_password: '',
+     reg_form_password_comfirm: '',
+     reg_nav_submit: 'continue' },
+  files: 
+   { reg_form_profile_pic: 
+      File {
+        domain: null,
+        _events: {},
+        _eventsCount: 0,
+        _maxListeners: undefined,
+        size: 23211,
+        path: 'C:\\Users\\Tijmen\\AppData\\Local\\Temp\\upload_bd1faf20b2ff2f5c39d0d35fa3b3470f',
+        name: 'Logo.png',
+        type: 'image/png',
+        hash: null,
+        lastModifiedDate: 2017-12-05T09:13:13.559Z,
+        _writeStream: [WriteStream] } } }
