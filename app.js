@@ -2,6 +2,7 @@
 //Package required for having a normal working server
 const http = require("http");
 const fs = require("fs");
+const url = require("url");
 const events = require("events");
 const nodemailer = require("nodemailer");
 const querystring = require("querystring");
@@ -41,6 +42,7 @@ var server = http.createServer(function (req, res) {
  * @param {*} res 
  */
 function displayPage(req,res) {
+    console.log(req.url);
     fs.readFile(__dirname + "/splash.html", function(err,data){
         if(err) {
             console.log(err);
@@ -53,15 +55,23 @@ function displayPage(req,res) {
         res.end();
     });
     if(req.url.indexOf('.css') != -1) {
-        console.log(req.url);
-        fs.readFile(__dirname + "/style/framework.css", function(err,data){
+        var q = url.parse(req.url, true);
+        var pathCssFile = q.pathname;
+        console.log(pathCssFile);
+        console.log(__dirname + pathCssFile);
+        fs.readFile(__dirname + pathCssFile, function(err,data){
             if(err) {
                 console.log(err);
+                res,writeHead(404, {
+                    "Content-type":"text/html"
+                });
+                return res.end("404 Not Found");
             }
             res.writeHead(200, {
                 "Content-type":"text/css",
                 "Content-length":data.length
             });
+            console.log("We got this far");
             res.write(data);
             res.end();
         });

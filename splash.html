@@ -56,8 +56,8 @@
         	</span>
         </div>
     	<div class="register-big" id="register">
-            <h1>Register</h1>
-            <form method="post" action="splash.html">
+            <h1>Register or Login</h1>
+            <form method="post" action="/register">
                 <label for="register_nav_email" aria-label="register_nav_email">Your email:</label>
                 <input class="login-input" name="reg_form_email" placeholder="Test@yourremail.com" id="register_nav_email" type="email"/>
 
@@ -71,6 +71,15 @@
                 <input class="login-input" name="reg_form_password_comfirm" placeholder="Comfirm password" id="register_nav_comfirmpass" type="password"/>
 
                 <button class="login-submit-button" type="submit" name="reg_nav_submit" value="continue">Continue</button>
+            </form>
+            <form method="post" action="/login">
+                <label for="login_nav_username" aria-label="login_nav_username">Your username:</label>
+                <input class="login-input" name="login_form_username" placeholder="Username or email" id="login_nav_username" type="text"/>
+
+                <label for="login_nav_password" aria-label="login_nav_password">Your password:</label>
+                <input class="login-input" name="login_form_password" placeholder="Password" id="login_nav_password"  type="password"/>
+
+                <button class="login-submit-button" type="submit" name="login_nav_submit" value="login">Login</button>
             </form>
         </div>
 
