@@ -7,6 +7,8 @@
     <link href="style/framework.css" rel="stylesheet" type="text/css"/>
     <link href="style/splashcss.css" rel="stylesheet" type="text/css"/>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/uiManagment.js"></script>
     <script type="text/javascript">
         var main = function () {
             console.log("hello world");
@@ -35,29 +37,29 @@
 
 	<main>
         <div class="fancy-circle-wrapper" id="concept">
-            <h1>Concept</h1>
+            <h1><a href="#concept">Concept</a></h1>
         	<span class="fancy-circle">
-        		<img src="/img/create.svg" alt="Create" title="Create"/>
+        		<img src="/img/create.png" alt="Create" title="Create"/>
         		<p>Create</p>
         	</span>
 
         	<span class="fancy-circle">
-        		<img src="/img/reflect.svg" alt="Reflect" title="Reflect"/>
+        		<img src="/img/reflect.png" alt="Reflect" title="Reflect"/>
         		<p>Reflect</p>
         	</span>
 
         	<span class="fancy-circle">
-        		<img src="/img/stats.svg" alt="Stats" title="Stats"/>
+        		<img src="/img/stats.png" alt="Stats" title="Stats"/>
         		<p>Stats</p>
         	</span>
 
         	<span class="fancy-circle">
-        		<img src="/img/improve.svg" alt="Improve" title="Improve"/>
+        		<img src="/img/improve.png" alt="Improve" title="Improve"/>
         		<p>Improve</p>
         	</span>
         </div>
     	<div class="register-big" id="register">
-            <h1>Register or Login</h1>
+            <h1><a href="#register">Register or Login</a></h1>
             <form method="post" action="/register">
                 <label for="register_nav_email" aria-label="register_nav_email">Your email:</label>
                 <input class="login-input" name="reg_form_email" placeholder="Test@yourremail.com" id="register_nav_email" type="email"/>
@@ -85,7 +87,7 @@
         </div>
 
         <div class="reviews" id="review">
-            <h1>Reviews</h1>
+            <h1><a href="#review">Reviews</a></h1>
             <div class="review-slider" id="review-slider">
                 <div class="review-dialog">
                     <p>This is the subtext of dialog 1 this is some text to fill it up</p>
@@ -100,7 +102,7 @@
         </div>
 
         <div class="happy-text" id="about">
-            <h1>About</h1>
+            <h1><a href="#about">About</a></h1>
             <p>Some happy text</p>
         </div>
     </main>

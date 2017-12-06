@@ -59,6 +59,10 @@ main {
 	text-align: center;
 }
 
+.fancy-circle img {
+	max-width: 100%;
+}
+
 .register-big {
 	text-align: center;
 }

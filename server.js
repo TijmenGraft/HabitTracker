@@ -91,12 +91,30 @@ app.post("/register", function(req,res) {
     fields["comfirm_password"] = comfirm_password;
     console.log(email + " " + username + " " + password + " " + comfirm_password);
     console.log(fields);
+    res.redirect('back');	
+    res.writeHead(302, {
+
+    });
 });
 
 app.post("/login", function(req,res) {
 	var username = req.body.login_form_username; //continue here
     var password = req.body.login_form_password;
     console.log(username + " " + password);
+});
+
+app.get("*", function(req,res){
+	fs.readFile(__dirname + "/client/html/errorpage.html", function(err,data){
+		if(err) {
+			console.log(err);
+		}
+		res.writeHead(200, {
+			"Content-type":"text/html",
+			"Content-length":data.length
+		});
+		res.write(data);
+		res.end();
+	});
 });
 
 function displayPage(req,res) {
