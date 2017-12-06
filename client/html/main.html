@@ -43,7 +43,7 @@
 									<li class="habit">Good habit example 
 										<i class="fa fa-check habit-check" aria-hidden="true"></i>
 										<i class="fa fa-times delete-habit" aria-hidden="true"></i>
-										<i class="fa fa-cog change-habit" aria-hidden="true"></i>
+										<i class="fa fa-cog change-habit" data-habit="add_habit_change_model" aria-hidden="true"></i>
 									</li>
 									<li class="habit">Bad habit example</li>
 								</ul>
@@ -121,64 +121,66 @@
 							<h1>Change habit</h1>
 						</div>
 						<div class="model-body">
-							<label for="change_habit_main_title" aria-label="change_habit_main_title">Habit title:</label>
-							<input class="change-habit-input" name="change_habit_form_title" placeholder="Habit title" id="change_habit_main_title" type="text"/>
-							
-							<fieldset class="radio-button-group-horizontal change-habit-group">
-								<label class="show label-left" for="good_main_type" aria-label="good_main_type">Good
-									<input class="change-habit-radio" name="change_habit_form_type" id="good_main_type" type="radio" value="1">
-								</label>
-								<label class="show label-right" for="bad_main_type" aria-label="good_main_type">Bad
-									<input class="change-habit-radio" name="change_habit_form_type" id="change_habit_main_type" type="radio" value="0">
-								</label>
-							</fieldset>
+							<form method="POST" action="/update">
+								<label for="change_habit_main_title" aria-label="change_habit_main_title">Habit title:</label>
+								<input class="change-habit-input" name="change_habit_form_title" placeholder="Habit title" id="change_habit_main_title" type="text"/>
+								
+								<fieldset class="radio-button-group-horizontal change-habit-group">
+									<label class="show label-left" for="good_main_type" aria-label="good_main_type">Good
+										<input class="change-habit-radio" name="change_habit_form_type" id="good_main_type" type="radio" value="1">
+									</label>
+									<label class="show label-right" for="bad_main_type" aria-label="good_main_type">Bad
+										<input class="change-habit-radio" name="change_habit_form_type" id="change_habit_main_type" type="radio" value="0">
+									</label>
+								</fieldset>
 
-							<fieldset class="change-habit-group">
-								<ul>
-									<li>
-										<label class="show label-left" for="mo_main_frequency" aria-label="mo_main_frequency">Mo
-											<input class="change-habit-radio" id="mo_main_frequency" name="change_habit_form_frequency" type="checkbox" value="ma">
-										</label>
-										<label class="show label-right" for="tu_main_frequency" aria-label="tu_main_frequency">Tu
-											<input class="change-habit-radio" id="tu_main_frequency" name="change_habit_form_frequency" type="checkbox" value="tu">
-										</label>
-									</li>
-									<li>
-										<label class="show label-left" for="we_main_frequency" aria-label="we_main_frequency">We
-											<input class="change-habit-radio" id="we_main_frequency" name="change_habit_form_frequency" type="checkbox" value="we">
-										</label>
-										<label class="show label-right" for="th_main_frequency" aria-label="th_main_frequency">Th
-											<input class="change-habit-radio" id="th_main_frequency" name="change_habit_form_frequency" type="checkbox" value="th">
-										</label>
-									</li>
-									<li>
-										<label class="show label-left" for="fr_main_frequency" aria-label="we_main_frequency">Fr
-											<input class="change-habit-radio" id="fr_main_frequency" name="change_habit_form_frequency" type="checkbox" value="fr">
-										</label>
-									</li>
-									<li>
-										<label class="show label-right" for="sa_main_frequency" aria-label="sa_main_frequency">Sa
-											<input class="change-habit-radio" id="sa_main_frequency" name="change_habit_form_frequency" type="checkbox" value="sat">
-										</label>
-									</li>
-									<li>
-										<label class="show label-right" for="su_main_frequency" aria-label="su_main_frequency">Su
-											<input class="change-habit-radio" id="su_main_frequency" name="change_habit_form_frequency" type="checkbox" value="sun">
-										</label>
-									</li>
-								</ul>
-							</fieldset>
-			
-							<label for="change_habit_main_description" aria-label="change_habit_main_description">Description:</label>
-							<input class="change-habit-input" name="change_habit_form_description" placeholder="A short description of the habit" id="change_habit_main_description" type="text"/>
+								<fieldset class="change-habit-group">
+									<ul>
+										<li>
+											<label class="show label-left" for="mo_main_frequency" aria-label="mo_main_frequency">Mo
+												<input class="change-habit-radio" id="mo_main_frequency" name="change_habit_form_frequency" type="checkbox" value="ma">
+											</label>
+											<label class="show label-right" for="tu_main_frequency" aria-label="tu_main_frequency">Tu
+												<input class="change-habit-radio" id="tu_main_frequency" name="change_habit_form_frequency" type="checkbox" value="tu">
+											</label>
+										</li>
+										<li>
+											<label class="show label-left" for="we_main_frequency" aria-label="we_main_frequency">We
+												<input class="change-habit-radio" id="we_main_frequency" name="change_habit_form_frequency" type="checkbox" value="we">
+											</label>
+											<label class="show label-right" for="th_main_frequency" aria-label="th_main_frequency">Th
+												<input class="change-habit-radio" id="th_main_frequency" name="change_habit_form_frequency" type="checkbox" value="th">
+											</label>
+										</li>
+										<li>
+											<label class="show label-left" for="fr_main_frequency" aria-label="we_main_frequency">Fr
+												<input class="change-habit-radio" id="fr_main_frequency" name="change_habit_form_frequency" type="checkbox" value="fr">
+											</label>
+										</li>
+										<li>
+											<label class="show label-right" for="sa_main_frequency" aria-label="sa_main_frequency">Sa
+												<input class="change-habit-radio" id="sa_main_frequency" name="change_habit_form_frequency" type="checkbox" value="sat">
+											</label>
+										</li>
+										<li>
+											<label class="show label-right" for="su_main_frequency" aria-label="su_main_frequency">Su
+												<input class="change-habit-radio" id="su_main_frequency" name="change_habit_form_frequency" type="checkbox" value="sun">
+											</label>
+										</li>
+									</ul>
+								</fieldset>
+				
+								<label for="change_habit_main_description" aria-label="change_habit_main_description">Description:</label>
+								<input class="change-habit-input" name="change_habit_form_description" placeholder="A short description of the habit" id="change_habit_main_description" type="text"/>
 
-							<label for="change_habit_main_startDate" aria-label="change_habit_main_startDate">Startdate:</label>
-							<input class="change-habit-input" name="change_habit_form_start_date" id="change_habit_main_startDate" type="date"/>
+								<label for="change_habit_main_startDate" aria-label="change_habit_main_startDate">Startdate:</label>
+								<input class="change-habit-input" name="change_habit_form_start_date" id="change_habit_main_startDate" type="date"/>
 
-							<label for="change_habit_main_endDate" aria-label="change_habit_main_endDate">endDate:</label>
-							<input class="change-habit-input" name="change_habit_form_end_date" id="change_habit_main_endDate" placeholder="End date" type="date"/>
+								<label for="change_habit_main_endDate" aria-label="change_habit_main_endDate">endDate:</label>
+								<input class="change-habit-input" name="change_habit_form_end_date" id="change_habit_main_endDate" placeholder="End date" type="date"/>
 
-							<button class="habit-managment-submit-button" type="submit" name="habit_change_main_submit" value="change" id="change_habit_submit">Change</button>
+								<button class="habit-managment-submit-button" type="submit" name="habit_change_main_submit" value="change" id="change_habit_submit">Change</button>
+							</form>
 						</div>
 					</div>
 				</div>
