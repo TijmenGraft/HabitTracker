@@ -29,7 +29,7 @@ $(document).ready(function() {
     console.log(screenWidth + " Open screens: " + maxOpenScreenDec);
     $(".page").each(function(i) {
         console.log(this);
-        $(this.attr("id"))
+        //$(this.attr("id"))
         if(i < maxOpenScreenDec) {
             console.log("true");
         }
@@ -45,5 +45,12 @@ $(document).ready(function() {
                 window.location.hash = hash;
             });
         }
+    });
+
+    $(".label-left, .label-right").on("click", function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+        $(this).toggleClass("label-trigger-state");
     });
 });

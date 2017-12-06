@@ -83,10 +83,5 @@ $(document).ready(function(){
         $("#habit_wrapper").append(newHabitList.toElement());
     });
 
-    $(".label-left, .label-right").on("click", function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        e.stopImmediatePropagation();
-        $(this).toggleClass("label-trigger-state");
-    });
+    
 });
