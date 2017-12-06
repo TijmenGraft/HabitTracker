@@ -3,22 +3,14 @@ $(document).ready(function() {
 
     $(".add-habit, .add-habit-category, .change-habit").on("click", function(){
         var modelId = '#' + $(this).attr("data-habit") + '';
-        $(modelId).css({
-            "display":"block",
-            "visibility":"visible",
-            "opacity":1
-        });
+        $(modelId).toggleClass("model-open")
         openModel = modelId;
     });
 
     $(document).keyup(function(e) {
         if(e.keyCode == 27) {
             if(!(!openModel.trim())) {
-                $(openModel).css({
-                    "display":"none",
-                    "visibility":"visible",
-                    "opacity":0
-                });
+                $(openModel).toggleClass("model-open");
                 openModel = "";
             }
         }

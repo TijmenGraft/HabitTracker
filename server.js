@@ -7,11 +7,39 @@ const events = require("events");
 const nodemailer = require("nodemailer");
 const querystring = require("querystring");
 const formidable = require("formidable");
-const bodyparser = require("body-parser");
+const bodyParser = require('body-parser')
 const util = require("util");
 var app = express();
 
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname + '/client'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
+
+var habits = [];
+var h1 = {
+    id: "0",
+    name: "Jog everyday",
+    type: "good",
+    category: "Sports",
+    frequency: "[ma,tu]",
+    description: "I need to jog everyday",
+    startDate: "5-12-2017",
+    endDate: "5-12-2018"
+};
+var h2 = {
+    id: "1",
+    name: "Stop gaming",
+    type: "bad",
+    category: "Gaming",
+    frequency: "[ma,tu,we,th,fr,sa,su]",
+    description: "I need to stop gaming so often",
+    startDate: "5-12-2017",
+    endDate: "5-12-2018"
+};
+habits.push(h1);
+habits.push(h2);
 
 app.get("/",function(req,res) {
 	console.log(req.url);
@@ -21,21 +49,54 @@ app.get("/",function(req,res) {
         //processAllFieldsOfTheForm(req, res);
         processFormFieldsIndividual(req,res);
     }
-	
 	console.log("We have a get request");
 });
 
+app.get("/showHabits", function(req, res) {
+    res.json(habits);
+});
+
+app.get("/addHabit", function(req,res) {
+    var queryData = url.parse(req.url, true).query;
+    console.log(queryData.habit_form_title);
+    if(queryData.habit_form_title !== undefined) {
+        var newHabit = {
+            id: 2,
+            name: queryData.habit_form_title,
+            type: queryData.habit_form_type,
+            category: "sport",
+            frequency: queryData.habit_form_frequency,
+            description: queryData.habit_form_description,
+            startDate: queryData.habit_form_start_date,
+            endDate: queryData.habit_form_end_date
+        }
+        habits.push(newHabit);
+        console.log("Added" + newHabit.name);
+        res.end("Habit added succesfully");
+    }
+    else {
+        res.end("Error missing the name");
+    }
+});
+
 app.post("/register", function(req,res) {
-	var email = req.body.reg_form_email;
-	var username = req.body.req_form_username;
-	var password = req.body.req_form_password;
-	var comfirm_password = req.body.req_form_comfirm_password;
-	console.log(email + " " + username + " " + password + " " + comfirm_password);
+    var fields = [];
+    var email = req.body.reg_form_email;
+    fields["email"] = email;
+    var username = req.body.reg_form_username;
+    fields["username"] = username;
+    var password = req.body.reg_form_password;
+    fields["password"] = password;
+    var comfirm_password = req.body.reg_form_password_comfirm;
+    fields["comfirm_password"] = comfirm_password;
+    console.log(email + " " + username + " " + password + " " + comfirm_password);
+    console.log(fields);
 });
 
 app.post("/login", function(req,res) {
-	var username = ; //continue here
-	var password = ;
+	var username = req.body.login_form_username; //continue here
+    var password = req.body.login_form_password;
+    console.log(username + " " + password);
 });
 
 function displayPage(req,res) {
@@ -52,41 +113,7 @@ function displayPage(req,res) {
     });
 }
 
-function processFormFieldsIndividual(req, res) {
-    var fields = [];
-    var form = new formidable.IncomingForm();
-    form.on("field", function(field,value){
-        console.log(field + " : " + value);
-        fields[field] = value;
-    });
-
-    form.on("file", function(name,file){
-        console.log(name + " : " + file);
-        fields[name] = file;
-    });
-
-    form.on("progress", function(bytesReceived, bytesExpected) {
-        var progress = {
-            type: "progress",
-            bytesReceived : bytesReceived,
-            bytesExpected : bytesExpected
-        };
-        console.log(progress);
-    });
-
-    form.on("end", function() {
-        res.writeHead(200, {
-            "content-type":"text/plain"
-        });
-        res.write("received the data: \n\n");
-        res.end(util.inspect({
-            fields: fields
-        }));
-    });
-    form.parse(req);
-}
-
-var server = app.listen(8081, function() {
+var server = app.listen(8080, function() {
 	var host = server.address().address;
 	var port = server.address().port;
 	console.log("Server is listening on %s:%s", host, port);

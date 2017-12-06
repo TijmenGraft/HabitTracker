@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>HabitTracker</title>
+    <link href="style/framework.css" rel="stylesheet" type="text/css"/>
+    <link href="style/splashcss.css" rel="stylesheet" type="text/css"/>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <script type="text/javascript">
+        var main = function () {
+            console.log("hello world");
+        }
+        $(document).ready(main);
+    </script>
+</head>
+<body>
+    <nav>
+        <ul class="main-menu">
+            <li><img src="img/logo.svg" alt="logo" title="frequent" /></li>
+            <li><a href="#">Register</a></li>
+            <li><a href="#">Login</a></li>
+            <li><a href="#">Review</a></li>
+            <li class="has-dropdown">Menu<span class="dropdown-caret"></span></li>
+            <li><a href="#">Guide</a></li>
+        </ul>
+        <ul class="nav-menu">
+            <li><a href="#concept">Concept</a></li>
+            <li><a href="#register">Register</a></li>
+            <li><a href="#review">Review</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="/html/main.html">Main</a></li>
+        </ul>
+    </nav>
+
+	<main>
+        <div class="fancy-circle-wrapper" id="concept">
+            <h1>Concept</h1>
+        	<span class="fancy-circle">
+        		<img src="/img/create.svg" alt="Create" title="Create"/>
+        		<p>Create</p>
+        	</span>
+
+        	<span class="fancy-circle">
+        		<img src="/img/reflect.svg" alt="Reflect" title="Reflect"/>
+        		<p>Reflect</p>
+        	</span>
+
+        	<span class="fancy-circle">
+        		<img src="/img/stats.svg" alt="Stats" title="Stats"/>
+        		<p>Stats</p>
+        	</span>
+
+        	<span class="fancy-circle">
+        		<img src="/img/improve.svg" alt="Improve" title="Improve"/>
+        		<p>Improve</p>
+        	</span>
+        </div>
+    	<div class="register-big" id="register">
+            <h1>Register or Login</h1>
+            <form method="post" action="/register">
+                <label for="register_nav_email" aria-label="register_nav_email">Your email:</label>
+                <input class="login-input" name="reg_form_email" placeholder="Test@yourremail.com" id="register_nav_email" type="email"/>
+
+                <label for="register_nav_username" aria-label="register_nav_username">Username:</label>
+                <input class="login-input" name="reg_form_username" placeholder="Username" id="register_nav_username" type="text">
+
+                <label for="register_nav_password" aria-label="register_nav_password">Your password:</label>
+                <input class="login-input" name="reg_form_password" placeholder="Password" id="register_nav_password" type="password"/>
+
+                <label for="register_nav_comfirmpass" aria-label="register_nav_comfirmpass">Confirm password:</label>
+                <input class="login-input" name="reg_form_password_comfirm" placeholder="Comfirm password" id="register_nav_comfirmpass" type="password"/>
+
+                <button class="login-submit-button" type="submit" name="reg_nav_submit" value="continue">Continue</button>
+            </form>
+            <form method="post" action="/login">
+                <label for="login_nav_username" aria-label="login_nav_username">Your username:</label>
+                <input class="login-input" name="login_form_username" placeholder="Username or email" id="login_nav_username" type="text"/>
+
+                <label for="login_nav_password" aria-label="login_nav_password">Your password:</label>
+                <input class="login-input" name="login_form_password" placeholder="Password" id="login_nav_password"  type="password"/>
+
+                <button class="login-submit-button" type="submit" name="login_nav_submit" value="login">Login</button>
+            </form>
+        </div>
+
+        <div class="reviews" id="review">
+            <h1>Reviews</h1>
+            <div class="review-slider" id="review-slider">
+                <div class="review-dialog">
+                    <p>This is the subtext of dialog 1 this is some text to fill it up</p>
+                </div>
+                <div class="review-dialog">
+                    <p>This is the subtext of dialog 2</p>
+                </div>
+                <div class="review-dialog">
+                    <p>This is the subtext of dialog 3</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="happy-text" id="about">
+            <h1>About</h1>
+            <p>Some happy text</p>
+        </div>
+    </main>
+
+    <footer>
+        <div class="stay-commited">
+            <h5>JOIN LETTER</h5>
+            <p>Join our 100 people network who track their habits</p>
+            <form method="post" action="splash.html">
+                <label for="signup_footer_email" aria-label="signup_footer_email">Email:</label>
+                <input class="singup-input" type="email" name="singup_form_email" placeholder="test@yourremail.com" id="signup_footer_email">
+
+                <button class="singup-submit-button" type="submit" name="singup_footer_submit" value="singup">Sing Up!</button>
+            </form>
+            <div class="social-media">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+
+        <div class="inspiring-quote">
+            <h5>QUOTES</h5>
+            <pre>Life is like riding a bicycle. To keep your balance, 
+            you must keep moving - Albert Einstein</pre>
+        </div>
+
+        <div class="footer-nav">
+            <h5>NAVIGATE</h5>
+        </div>
+
+        <div class="address">
+            <h6>Frequent<span> &bull; </span>Mekelweg 4 2628CD, Delft<span> &bull; </span>Tel: +31 15 27 89803</h6>
+        </div>
+
+        <div class="privacy">
+            <p>Privacy policy<span> &bull; </span> Sitemap <span> &bull; </span> copyright frequent 2017</p>
+        </div>
+    </footer>
+</body>
+</html>
