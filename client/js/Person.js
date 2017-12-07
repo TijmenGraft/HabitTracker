@@ -8,10 +8,10 @@
  * Bank: the amount of points this person has
  * Articles: the articles already bought by this person
  */
-function Person(id, firstName, middleName, surname, age, gender, bank, articles) {
+Person = function Person(id, firstName, middleName, surname, age, gender, bank, articles) {
     this.id = id;
-    this.firstName = firstname;
-    this.middleName = middlename;
+    this.firstName = firstName;
+    this.middleName = middleName;
     this.surName = surname;
     this.age = age;
     this.gender = gender;
@@ -65,3 +65,5 @@ Person.prototype.purchaseArticle = function(price, article) {
         this.addArticle(article);
     }
 }
+
+

@@ -8,6 +8,7 @@ const nodemailer = require("nodemailer");
 const querystring = require("querystring");
 const formidable = require("formidable");
 const bodyParser = require('body-parser')
+const PersonConstructor = require('./client/js/Person.js');
 const util = require("util");
 var app = express();
 
@@ -17,29 +18,60 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
+//global variablesid, firstName, middleName, surname, age, gender, bank, articles
+var Person = new PersonConstructor.Person(0, "tijmen","van","graft",20,"man",0,"ff");
+console.log(Person);
+
+var users = [];
+var user1 = {
+    traits: {
+        id: 0,
+        firstName: "Tijmen",
+        middleName: "van",
+        surName: "Graft",
+        age: "19",
+        gender: "male",
+        categoryList: [],
+        bank: 0,
+        articles: []
+    }
+}
+users.push(user1);
+
 var habits = [];
-var h1 = {
-    id: "0",
-    name: "Jog everyday",
-    type: "good",
-    category: "sports",
-    frequency: "[ma,tu]",
-    description: "I need to jog everyday",
-    startDate: "5-12-2017",
-    endDate: "5-12-2018"
-};
-var h2 = {
-    id: "1",
-    name: "Stop gaming",
-    type: "bad",
-    category: "gaming",
-    frequency: "[ma,tu,we,th,fr,sa,su]",
-    description: "I need to stop gaming so often",
-    startDate: "5-12-2017",
-    endDate: "5-12-2018"
-};
-habits.push(h1);
-habits.push(h2);
+    var h1 = {
+        id: "0",
+        name: "Jog everyday",
+        type: "good",
+        category: "sports",
+        frequency: "[ma,tu]",
+        description: "I need to jog everyday",
+        startDate: "5-12-2017",
+        endDate: "5-12-2018"
+    };
+    var h2 = {
+        id: "1",
+        name: "Stop gaming",
+        type: "bad",
+        category: "gaming",
+        frequency: "[ma,tu,we,th,fr,sa,su]",
+        description: "I need to stop gaming so often",
+        startDate: "5-12-2017",
+        endDate: "5-12-2018"
+    };
+    var h3 = {
+        id: "2",
+        name: "Take the stairs",
+        type: "bad",
+        category: "walking",
+        frequency: "[ma,tu,we,th,fr,sa,su]",
+        description: "I need to stop gaming so often",
+        startDate: "5-12-2017",
+        endDate: "5-12-2018"
+    }
+    habits.push(h1);
+    habits.push(h2);
+    habits.push(h3);
 
 var habitsDataIdContains = function(id) {
     console.log("length:" + habits.length);
@@ -82,10 +114,10 @@ app.get("/addHabit", function(req,res) {
     console.log(queryData.habit_form_title);
     if(queryData.habit_form_title !== undefined) {
         var newHabit = {
-            id: 2,
+            id: queryData.habit_form_id,
             name: queryData.habit_form_title,
             type: queryData.habit_form_type,
-            category: "sport",
+            category: queryData.habit_form_category,
             frequency: queryData.habit_form_frequency,
             description: queryData.habit_form_description,
             startDate: queryData.habit_form_start_date,

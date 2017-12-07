@@ -61,7 +61,3 @@ HabitList.prototype.toElement = function() {
     returnElement += '</div><div class="habit-card-footer"><p>TEST</p></div></div>';
     return returnElement;
 };
-
-var testHabitList = new HabitList(1,"Sports");
-testHabitList.addHabit(testHabitOne);
-testHabitList.addHabit(testHabitOther);

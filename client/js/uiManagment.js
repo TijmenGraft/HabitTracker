@@ -4,12 +4,20 @@ $(document).ready(function() {
     $(".add-habit, .add-habit-category, .change-habit").on("click", function(){
         var modelId = '#' + $(this).attr("data-habit") + '';
         $(modelId).toggleClass("model-open")
+        $(modelId).animate({
+            top: "10%",
+            opacity: 1
+        }, 100)
         openModel = modelId;
     });
 
     $(document).keyup(function(e) {
         if(e.keyCode == 27) {
             if(!(!openModel.trim())) {
+                $(openModel).animate({
+                    top: "0%",
+                    opacity: 0
+                }, 100);
                 $(openModel).toggleClass("model-open");
                 openModel = "";
             }
@@ -34,7 +42,6 @@ $(document).ready(function() {
             console.log("true");
         }
     });
-
 
     $("a").on("click", function(event) {
         if(this.hash !== "") {

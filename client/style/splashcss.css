@@ -73,6 +73,34 @@ main {
 	text-align: center;
 }
 
+.user-managment {
+	width: 70%;
+	margin: 0em 15%;
+	background-color: #0099cc;
+	float: left;
+	-webkit-transition: background-color 250ms ease-in;
+	-ms-transition: background-color 250ms ease-in;
+	transition: background-color 250ms ease-in;
+}
+
+.user-managment span {
+	width: 50%;
+	text-align: center;
+	display: block;
+	float: left;
+}
+
+.user-managment span:hover, .user-managment span:focus {
+	background-color: #007399;
+	-webkit-transition: background-color 250ms ease-in;
+	-ms-transition: background-color 250ms ease-in;
+	transition: background-color 250ms ease-in;
+}
+
+.user-managment  * > h1{
+	color: #fff !important;
+}
+
 .login-input {
 	width: 70%;
 	height: 2.5em;
