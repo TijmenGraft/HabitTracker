@@ -39,6 +39,19 @@ var main = function() {
 
     $("#add_habit_submit").on("click", function() {
         console.log("Add habit");
+        var Title = $("#habit_main_title").val();
+        var Category = $("#habit_main_category").val();
+        var Type = $('input[name=habit_form_type]:checked').val();
+        var Frequency = [];
+        $('.habit-radio:checkbox:checked').each(function() {
+            var value = (this.checked ? $(this).val() : "");
+            Frequency.push(value);
+            console.log(value);
+        });
+        var Description = $("#habit_main_description").val();
+        var StartDate = $("#habit_main_startDate").val();
+        var EndDate = $("#habit_main_endDate").val();
+        console.log(0 + " " + Title + " " + Type + " " + Category + " " + Frequency + " " + Description + " " + StartDate + " " + EndDate);
     });
 };
 $(document).ready(main);

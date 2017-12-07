@@ -69,10 +69,13 @@
 							<h1>Add Habit</h1> 
 						</div>
 						<div class="model-body">
-							<form method="get" action="/addHabit">
+							<form method="get" action="/addHabit" onsubmit="return false">
 							<!--name, type, category, frequency, description, startDate, endDate-->
 								<label for="habit_main_title" aria-label="habit_main_title">Habit title:</label>
-								<input class="habit-input" value="sports" name="habit_form_title" placeholder="Habit title" id="habit_main_title" type="text"/>
+								<input class="habit-input" value="Walking everyday" name="habit_form_title" placeholder="Habit title" id="habit_main_title" type="text"/>
+
+								<label for="habit_main_category" aria-label="habit_main_category">Category:</label>
+								<input class="habit-input" value="sports" name="habit_form_category" placeholder="Habit category" id="habit_main_category" type="text"/>
 				
 								<label for="habit_main_type" aria-label="habit_main_type">Good/Bad:</label>
 								<input class="habit-radio" name="habit_form_type" id="habit_main_type" type="radio" value="1" checked>Good

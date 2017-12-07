@@ -56,7 +56,7 @@ HabitList.prototype.toElement = function() {
     var returnElement = "";
     returnElement += '<div class="habit-card" id="'+this.getName()+'_habit">';
     returnElement += '<div class="habit-card-header"><h4>'+this.getName()+'</h4></div>';
-    returnElement += '<div class="habit-card-body"><ul class="habit-list" id="'+this.getName().toLowerCase()+'_habit_list"></ul>';
+    returnElement += '<div class="habit-card-body"><ul class="habit-list" id="'+this.getName()+'_habit_list"></ul>';
     returnElement += '<span class="add-habit" id="add_habit_to_'+this.getName()+'">+</span>';
     returnElement += '</div><div class="habit-card-footer"><p>TEST</p></div></div>';
     return returnElement;
