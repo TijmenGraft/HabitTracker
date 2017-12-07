@@ -25,7 +25,7 @@ $(document).ready(function() {
     });
 
     var screenWidth = $("body").width();
-    var maxOpenScreensFloat = screenWidth/300;
+    var maxOpenScreensFloat = screenWidth/500;
     var maxOpenScreenDec = maxOpenScreensFloat.toFixed();
     if(maxOpenScreenDec > 4){
         maxOpenScreenDec = 4;
@@ -35,11 +35,14 @@ $(document).ready(function() {
     maxOpenScreenDec = maxOpenScreenDec - 1;
 
     console.log(screenWidth + " Open screens: " + maxOpenScreenDec);
-    $(".page").each(function(i) {
+    $(".page-nav").on("click", function(i) {
         console.log(this);
         //$(this.attr("id"))
-        if(i < maxOpenScreenDec) {
+        if($(this:li).hasClass(".page-active")) {
+            console.log("Page is active");
+        }else if(i < maxOpenScreenDec) {
             console.log("true");
+
         }
     });
 

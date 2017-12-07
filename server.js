@@ -19,8 +19,6 @@ app.use(bodyParser.urlencoded({
 }));
 
 //global variablesid, firstName, middleName, surname, age, gender, bank, articles
-var Person = new PersonConstructor.Person(0, "tijmen","van","graft",20,"man",0,"ff");
-console.log(Person);
 
 var users = [];
 var user1 = {
