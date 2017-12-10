@@ -3,6 +3,7 @@ var main = function() {
 
     var addHabit = function(id,name) {
         if($("#" + id).length == 0) {
+            console.log(name);
             var li = '<li class="habit" id="'+id+'">' + name 
             + ' <i class="fa fa-check habit-check" aria-hidden="true"></i>'
             + ' <i class="fa fa-times delete-habit" aria-hidden="true"></i>'
@@ -20,12 +21,13 @@ var main = function() {
             if($(CategoryId).length == 0) {
                 var appendHabitList = new HabitList(0,temp,"A small description");
                 $("#habit_wrapper").append(appendHabitList.toElement());
+                console.log(Habits);
                 var li = addHabit(Habits[key].id, Habits[key].name);
                 if(li != false) {
                     $(CategoryId + "_list").append(li);
                 }
             } else {
-                var li = addHabit(Habits[key].id);
+                var li = addHabit(Habits[key].id, Habits[key].name);
                 if(li != false) {
                     $(CategoryId + "_list").append(li);
                 }

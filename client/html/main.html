@@ -69,7 +69,7 @@
 							<h1>Add Habit</h1> 
 						</div>
 						<div class="model-body">
-							<form method="get" action="/addHabit">
+							<form method="get" action="/addHabit" onsubmit="return false">
 							<!--name, type, category, frequency, description, startDate, endDate-->
 								<label for="habit_main_title" aria-label="habit_main_title">Habit title:</label>
 								<input class="habit-input" value="sports" name="habit_form_title" placeholder="Habit title" id="habit_main_title" type="text"/>
@@ -121,7 +121,7 @@
 							<h1>Change habit</h1>
 						</div>
 						<div class="model-body">
-							<form method="POST" action="/update">
+							<form method="post" action="/update">
 								<label for="change_habit_main_title" aria-label="change_habit_main_title">Habit title:</label>
 								<input class="change-habit-input" name="change_habit_form_title" placeholder="Habit title" id="change_habit_main_title" type="text"/>
 								

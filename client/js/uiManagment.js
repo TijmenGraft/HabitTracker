@@ -38,7 +38,7 @@ $(document).ready(function() {
     $(".page-nav").on("click", function(i) {
         console.log(this);
         //$(this.attr("id"))
-        if($(this:li).hasClass(".page-active")) {
+        if($(this > li).hasClass(".page-active")) {
             console.log("Page is active");
         }else if(i < maxOpenScreenDec) {
             console.log("true");

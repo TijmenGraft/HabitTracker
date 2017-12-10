@@ -66,10 +66,21 @@ var habits = [];
         description: "I need to stop gaming so often",
         startDate: "5-12-2017",
         endDate: "5-12-2018"
-    }
+    };
+    var h4 = {
+        id: "3",
+        name: "Go to the gym",
+        type: "good",
+        category: "sports",
+        frequency: "[ma,tu]",
+        description: "A great man with great responsibilities",
+        startDate: "10-12-2017",
+        endDate: "15-12-2017"
+    };
     habits.push(h1);
     habits.push(h2);
     habits.push(h3);
+    habits.push(h4);
 
 var habitsDataIdContains = function(id) {
     console.log("length:" + habits.length);
