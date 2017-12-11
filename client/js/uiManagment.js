@@ -24,8 +24,7 @@ $(document).ready(function() {
         var habitId = $(this).parent().attr("id");
         console.log(habitId);
         $.getJSON({
-            url: '/requestHabit',
-            data: habitId,
+            url: '/requestHabit?id='+habitId,
             function(data,status) {
                 if(status === 200) {
                     console.log("successfull" + data);

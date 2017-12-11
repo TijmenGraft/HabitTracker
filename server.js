@@ -93,11 +93,11 @@ var habitsDataIdContains = function(id) {
     return false;
 }
 
-var habitsDataIdPosition = function(id) {
+var selectHabitById = function(id) {
     console.log("length: " + habits.length);
     for(var i = 0; i < habits.length; i++) {
         if(habits[i].id === id) {
-            return i;
+            return habits[i];
         }
     }
 }
@@ -152,7 +152,10 @@ app.post("/addHabit", function(req,res){
 
 app.get("/requestHabit", function(req,res) {
     console.log("I have a get request from requestHabit");
-    console.log(req.params.id);
+    var habitId = req.query.id;
+    var selectedHabit = selectHabitById(habitId);
+    console.log(habitId);
+    console.log(selectedHabit);
     res.send("get reacting");
 });
 
