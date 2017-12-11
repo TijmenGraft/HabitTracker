@@ -2,19 +2,19 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
-    <title>Your cockpit</title>
-    <link href="/style/framework.css" rel="stylesheet" type="text/css"/>
-    <link href="/style/maincss.css" rel="stylesheet" type="text/css"/>
-    <link href="/font-awesome-4.7.0/css/font-awesome.css" rel="stylesheet" type="text/css"/>
-    <link href="https://fonts.googleapis.com/css?family=Lato|Roboto+Slab" rel="stylesheet">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<script type="text/javascript" src="/js/Habit.js"></script>
-	<script type="text/javascript" src="/js/HabitList.js"></script>
-	<script type="text/javascript" src="/js/Person.js"></script>
-	<script type="text/javascript" src="/js/Article.js"></script>
-	<script type="text/javascript" src="/js/HabitManagment2.js"></script>
-	<script type="text/javascript" src="/js/uiManagment.js"></script>
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+	    <title>Your cockpit</title>
+	    <link href="/style/framework.css" rel="stylesheet" type="text/css"/>
+	    <link href="/style/maincss.css" rel="stylesheet" type="text/css"/>
+	    <link href="/font-awesome-4.7.0/css/font-awesome.css" rel="stylesheet" type="text/css"/>
+	    <link href="https://fonts.googleapis.com/css?family=Lato|Roboto+Slab" rel="stylesheet">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script type="text/javascript" src="/js/Habit.js"></script>
+		<script type="text/javascript" src="/js/HabitList.js"></script>
+		<script type="text/javascript" src="/js/Person.js"></script>
+		<script type="text/javascript" src="/js/Article.js"></script>
+		<script type="text/javascript" src="/js/HabitManagment2.js"></script>
+		<script type="text/javascript" src="/js/uiManagment.js"></script>
 	</head>
 	<body>
 		<nav>
@@ -31,6 +31,8 @@
 			</ul>
 		</nav>
 		<main>
+			<datalist id="category_list_habit">
+			</datalist>
 			<div class="page-wrapper">
 				<div id="overview_page" class="active page">
 					<div class="page-content-wrapper" id="habit_wrapper">
@@ -53,15 +55,6 @@
 								<p>Test</p>
 							</div>
 						</div>
-						
-						<div class="habit-card" id="addnew_habitcard">
-							<div class="habit-card-header">
-								<h4>New habit type</h4>
-							</div>
-							<div class="habit-card-body">
-								<span class="add-habit-category" id="add_new_habit_category">+</span>
-							</div>
-						</div>
 					</div>
 
 					<div class="model" id="add_habit_model">
@@ -69,10 +62,13 @@
 							<h1>Add Habit</h1> 
 						</div>
 						<div class="model-body">
-							<form method="get" action="/addHabit" onsubmit="return false">
+							<form method="post" action="/addHabit" id="add_habit">
 							<!--name, type, category, frequency, description, startDate, endDate-->
 								<label for="habit_main_title" aria-label="habit_main_title">Habit title:</label>
 								<input class="habit-input" value="sports" name="habit_form_title" placeholder="Habit title" id="habit_main_title" type="text"/>
+
+								<label for="habit_main_category" aria-label="habit_main_category">Habit category:</label>
+								<input class="habit-input" list="category_list_habit" name="habit_form_category" placeholder="Habit category" id="habit_main_category" type="text"/>
 				
 								<label for="habit_main_type" aria-label="habit_main_type">Good/Bad:</label>
 								<input class="habit-radio" name="habit_form_type" id="habit_main_type" type="radio" value="1" checked>Good
@@ -101,29 +97,19 @@
 						</div>
 					</div>
 
-					<div class="model" id="add_habit_category_model">
-						<div class="model-header">
-							<h1>Add category:</h1>
-						</div>
-						<div class="model-body">
-							<label for="habit_category_main_title" aria-label="habit_category_main_title">Title:</label>
-							<input class="habit-category-input" name="habit_category_form_title" id="habit_category_main_title" type="text" placeholder="Title"/>
-
-							<label for="habit_category_main_description" aria-label="habit_category_main_description">Description:</label>
-							<input class="habit-category-input" name="habit_category_form_description" id="habit_category_main_description" type="textarea" placeholder="description"/>
-
-							<button class="habit-managment-submit-button" type="submit" name="habit_category_main_submit" id="add_habit_category_submit">Continue</button>
-						</div>
-					</div>
-
-					<div class="model" id="add_habit_change_model">
+					<div class="model" id="change_habit_model">
 						<div class="model-header">
 							<h1>Change habit</h1>
 						</div>
 						<div class="model-body">
-							<form method="post" action="/update">
+							<form method="post" action="/update" id="change_habit">
+								<input class="hidden" name="change_habit_form_id" value=""/>
+
 								<label for="change_habit_main_title" aria-label="change_habit_main_title">Habit title:</label>
 								<input class="change-habit-input" name="change_habit_form_title" placeholder="Habit title" id="change_habit_main_title" type="text"/>
+
+								<label for="habit_main_category" aria-label="habit_main_category">Habit category:</label>
+								<input class="habit-input" list="category_list_habit" name="habit_form_category" placeholder="Habit category" id="habit_main_category" type="text"/>
 								
 								<fieldset class="radio-button-group-horizontal change-habit-group">
 									<label class="show label-left" for="good_main_type" aria-label="good_main_type">Good

@@ -1,15 +1,39 @@
 $(document).ready(function() {
     var openModel = "";
 
-    $(".add-habit, .add-habit-category, .change-habit").on("click", function(){
-        var modelId = '#' + $(this).attr("data-habit") + '';
-        $(modelId).toggleClass("model-open")
-        $(modelId).animate({
+    var openModelFunction = function(id) {
+        $(id).toggleClass("model-open")
+        $(id).animate({
             top: "10%",
             opacity: 1
         }, 100)
-        openModel = modelId;
-    });
+        openModel = id;
+    }
+
+
+    $("#overview_page").on("click",".add-habit, .add-habit-category", function() {
+        console.log("toggler clicked");
+        var modelId = '#' + $(this).attr("data-habit") + '';
+        openModelFunction(modelId);
+    })
+
+    $("#overview_page").on("click",".change-habit", function() {
+        console.log("toggler clicked");
+        var modelId = '#' + $(this).attr("data-habit") + '';
+        openModelFunction(modelId);
+        var habitId = $(this).parent().attr("id");
+        console.log(habitId);
+        $.getJSON({
+            url: '/requestHabit?id='+habitId,
+            function(data,status) {
+                if(status === 200) {
+                    console.log("successfull" + data);
+                } else {
+                    console.log("failure");
+                }
+            }
+        });
+    })
 
     $(document).keyup(function(e) {
         if(e.keyCode == 27) {

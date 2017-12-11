@@ -93,13 +93,35 @@ var habitsDataIdContains = function(id) {
     return false;
 }
 
-var habitsDataIdPosition = function(id) {
+var selectHabitById = function(id) {
     console.log("length: " + habits.length);
     for(var i = 0; i < habits.length; i++) {
         if(habits[i].id === id) {
-            return i;
+            return habits[i];
         }
     }
+}
+
+var habitHandelingFormData = function(id,data) {
+    var frequencyArr = [];
+    var i = 3;
+    while(data[i].name !== "habit_form_description") {
+        console.log(i+" "+data[i].value);
+        frequencyArr.push(data[i].value);
+        ++i;
+    }
+    var habit = {
+        id: id,
+        name: data[0].value,
+        type: data[2].value,
+        category: data[1].value,
+        frequency: frequencyArr,
+        description: data[i].value,
+        startDate: data[++i].value,
+        endDate: data[++i].value
+    }
+    console.log(habit);
+    return habit;
 }
 
 app.get("/",function(req,res) {
@@ -118,27 +140,23 @@ app.get("/showHabits", function(req, res) {
     res.json(habits);
 });
 
-app.get("/addHabit", function(req,res) {
-    var queryData = url.parse(req.url, true).query;
-    console.log(queryData.habit_form_title);
-    if(queryData.habit_form_title !== undefined) {
-        var newHabit = {
-            id: queryData.habit_form_id,
-            name: queryData.habit_form_title,
-            type: queryData.habit_form_type,
-            category: queryData.habit_form_category,
-            frequency: queryData.habit_form_frequency,
-            description: queryData.habit_form_description,
-            startDate: queryData.habit_form_start_date,
-            endDate: queryData.habit_form_end_date
-        }
-        habits.push(newHabit);
-        console.log("Added" + newHabit.name);
-        res.redirect("back");
-    }
-    else {
-        res.end("Error missing the name");
-    }
+app.post("/addHabit", function(req,res){
+    var formObj = JSON.stringify(req.body);
+    var JsonObj = JSON.parse(formObj);
+    var lastHabit = habits[habits.length - 1];
+    var newHabitId = parseInt(lastHabit["id"]) + 1;
+    var newHabit = habitHandelingFormData(newHabitId,JsonObj);
+    habits.push(newHabit);
+    res.send(formObj);
+});
+
+app.get("/requestHabit", function(req,res) {
+    console.log("I have a get request from requestHabit");
+    var habitId = req.query.id;
+    var selectedHabit = selectHabitById(habitId);
+    console.log(habitId);
+    console.log(selectedHabit);
+    res.send("get reacting");
 });
 
 app.get("/update", function(req, res) {
