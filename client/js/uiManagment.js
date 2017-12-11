@@ -57,11 +57,12 @@ $(document).ready(function() {
         maxOpenScreenDec = 1;
     }
     maxOpenScreenDec = maxOpenScreenDec - 1;
-    var openScreens = 1;
+    var openScreens = 0;
 
     console.log(screenWidth + " Open screens: " + maxOpenScreenDec);
     $(".page-nav").on("click", function(openScreens) {
         console.log(this);
+        console.log($(this).find("li"));
         //$(this.attr("id"))
         if($(this).find("li").hasClass(".page-active")) {
             $(this).find("li").removeClass(".page-active");
