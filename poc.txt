@@ -1,0 +1,96 @@
+We will create the objects habit, habitGroup, habitCatalog, user and friendrequestlist
+We will use prototype-based constructors
+
+button hover
+	1. all buttons
+	2. on hover
+	3. change color
+	4. attach
+add habit
+	1. a button with a + sign
+	2. function: on click
+	3. function: open clean habit setup popup
+	4. attach
+edit habit
+	1. small button with an edit sign
+	2. on click
+	3. open habit setup popup for this habit
+	4. attach
+habit setup screen
+	close setup screen
+		1. setup screen boundaries
+		2. click outside bounaries
+		3. close the setup screen
+		4. attach
+	select frequency
+		open option list
+			1. select element with options daily, weekly, monthly
+			2. on click
+			3. open options list
+			4. attach
+		select option
+			1. option list elements
+			2. on click
+			3. select option, close option list
+			4. attach
+		close option
+			1. option list boundaries
+			2. on click outside boundaries
+			3. close option list
+			4. attach
+	commit habit
+		1. commit button
+		2. on click
+		3. commit changes & close setup screen
+		4. attach
+delete habit
+	1. small button with a thrash can/x/-
+	2. on click
+	3. open confirm delete message with confirm/cancel buttons
+	4. attach
+	confirm delete
+		1. confirm button
+		2. on click
+		3. delete habit. close message.
+		4. attach
+	cancel delete
+		1. cancel button
+		2. on click
+		3. close message
+		4. attach
+report on a habit
+	1. report button on a habit item. For positive a check, for negative a cross.
+	2. on click
+	3. (increment total completion count)? set completed for today. completed should affect the calendar to show feedback.
+		replace by revert button
+	4. attach
+	revert report
+		1. revert button
+		2. on click
+		3. replace by report button. Set completed for today to false.
+		4. attach
+sort select element
+	1. select element with options progress, next iteration deadline, show completed for this iteration only
+	2. on click
+	3. open option list
+	4. attach
+	close option list
+		1. option list boundaries
+		2. click outside boundaries
+		3. close option list
+		4. attach
+	sort on progress
+		1. option element progress
+		2. on click
+		3. set sort method progress, close option list
+		4. attach
+	sort on next iteration deadline
+		1. option element next iteration deadline
+		2. on click
+		3. set sort method next iteration deadline, close option list
+		4. attach
+	show completed only
+		1. option element completed only
+		2. on click
+		3. set sort method show completed only, sorts on next iteration start by default. close option list
+		4. attach
