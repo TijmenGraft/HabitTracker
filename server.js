@@ -94,12 +94,12 @@ var habitsDataIdContains = function(id) {
 }
 
 var selectHabitById = function(id) {
-    console.log("length: " + habits.length);
     for(var i = 0; i < habits.length; i++) {
         if(habits[i].id === id) {
             return habits[i];
         }
     }
+    return false;
 }
 
 var habitHandelingFormData = function(id,data) {
@@ -154,9 +154,18 @@ app.get("/requestHabit", function(req,res) {
     console.log("I have a get request from requestHabit");
     var habitId = req.query.id;
     var selectedHabit = selectHabitById(habitId);
-    console.log(habitId);
-    console.log(selectedHabit);
-    res.send("get reacting");
+    if(selectedHabit === false) {
+        console.log("Couldnt find the habit");
+        res.status(404).json({
+            error: "Couldnt find the habit"
+        });
+    } else {
+        console.log(habitId);
+        console.log(selectedHabit);
+        res.status(200).json({
+            data: selectedHabit
+        });
+    }
 });
 
 app.get("/update", function(req, res) {
