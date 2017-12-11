@@ -37,10 +37,37 @@ var main = function() {
 
     setInterval(function() {
         $.getJSON("../showHabits", showHabits);
-    },2000)
+    },3000)
 
     $("#add_habit_submit").on("click", function() {
         console.log("Add habit");
     });
+    /* Adding a habit by sending a request to the server 
+    * We use serialize method because it is easy 
+    */
+    $("#add_habit").submit(function(event) {
+        event.preventDefault();
+        var $form = $(this);
+        console.log("test");
+        var formData = JSON.stringify($form.serializeArray());
+        console.log(formData);
+        $.ajax({
+            type: $form.attr("method"),
+            url: $form.attr("action"),
+            data: formData,
+            contentType: "application/json",
+            dataType: "json",
+            success: function(data) {
+                console.log("Data was send correctly");
+                console.log(data);
+                console.log(data.habit_form_title);
+                console.log("Hello world");
+            },
+            error: function(data) {
+                console.log("Couldnt send the data");
+                console.log(data);
+            },
+        });
+    })
 };
 $(document).ready(main);

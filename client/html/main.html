@@ -69,7 +69,7 @@
 							<h1>Add Habit</h1> 
 						</div>
 						<div class="model-body">
-							<form method="get" action="/addHabit" onsubmit="return false">
+							<form method="post" action="/addHabit" id="add_habit">
 							<!--name, type, category, frequency, description, startDate, endDate-->
 								<label for="habit_main_title" aria-label="habit_main_title">Habit title:</label>
 								<input class="habit-input" value="sports" name="habit_form_title" placeholder="Habit title" id="habit_main_title" type="text"/>

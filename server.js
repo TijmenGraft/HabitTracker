@@ -102,6 +102,29 @@ var habitsDataIdPosition = function(id) {
     }
 }
 
+var habitHandelingFormData = function(data) {
+    var lastHabit = habits[habits.length - 1];
+    var newHabitId = lastHabit["id"] + 1;
+    var frequencyArr = [];
+    var i = 2;
+    while(i < 5) {
+        console.log(data[i].value);
+        ++i;
+    }
+    var habit = {
+        id: newHabitId,
+        name: data[0].value,
+        type: data[1].value,
+        category: "sports",
+        frequency: data[2].value,
+        description: data[3].value,
+        startDate: data[4].value,
+        endDate: data[5].value
+    }
+    habits.push(habit);
+    console.log(habit);
+}
+
 app.get("/",function(req,res) {
 	console.log(req.url);
 	if (req.method.toLowerCase() == 'get') {
@@ -118,27 +141,11 @@ app.get("/showHabits", function(req, res) {
     res.json(habits);
 });
 
-app.get("/addHabit", function(req,res) {
-    var queryData = url.parse(req.url, true).query;
-    console.log(queryData.habit_form_title);
-    if(queryData.habit_form_title !== undefined) {
-        var newHabit = {
-            id: queryData.habit_form_id,
-            name: queryData.habit_form_title,
-            type: queryData.habit_form_type,
-            category: queryData.habit_form_category,
-            frequency: queryData.habit_form_frequency,
-            description: queryData.habit_form_description,
-            startDate: queryData.habit_form_start_date,
-            endDate: queryData.habit_form_end_date
-        }
-        habits.push(newHabit);
-        console.log("Added" + newHabit.name);
-        res.redirect("back");
-    }
-    else {
-        res.end("Error missing the name");
-    }
+app.post("/addHabit", function(req,res){
+    var formObj = JSON.stringify(req.body);
+    var JsonObj = JSON.parse(formObj);
+    habitHandelingFormData(JsonObj);
+    res.send(formObj);
 });
 
 app.get("/update", function(req, res) {
