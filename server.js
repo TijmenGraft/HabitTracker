@@ -102,27 +102,26 @@ var habitsDataIdPosition = function(id) {
     }
 }
 
-var habitHandelingFormData = function(data) {
-    var lastHabit = habits[habits.length - 1];
-    var newHabitId = lastHabit["id"] + 1;
+var habitHandelingFormData = function(id,data) {
     var frequencyArr = [];
-    var i = 2;
-    while(i < 5) {
-        console.log(data[i].value);
+    var i = 3;
+    while(data[i].name !== "habit_form_description") {
+        console.log(i+" "+data[i].value);
+        frequencyArr.push(data[i].value);
         ++i;
     }
     var habit = {
-        id: newHabitId,
+        id: id,
         name: data[0].value,
-        type: data[1].value,
-        category: "sports",
-        frequency: data[2].value,
-        description: data[3].value,
-        startDate: data[4].value,
-        endDate: data[5].value
+        type: data[2].value,
+        category: data[1].value,
+        frequency: frequencyArr,
+        description: data[i].value,
+        startDate: data[++i].value,
+        endDate: data[++i].value
     }
-    habits.push(habit);
     console.log(habit);
+    return habit;
 }
 
 app.get("/",function(req,res) {
@@ -144,7 +143,10 @@ app.get("/showHabits", function(req, res) {
 app.post("/addHabit", function(req,res){
     var formObj = JSON.stringify(req.body);
     var JsonObj = JSON.parse(formObj);
-    habitHandelingFormData(JsonObj);
+    var lastHabit = habits[habits.length - 1];
+    var newHabitId = parseInt(lastHabit["id"]) + 1;
+    var newHabit = habitHandelingFormData(newHabitId,JsonObj);
+    habits.push(newHabit);
     res.send(formObj);
 });
 

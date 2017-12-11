@@ -26,6 +26,8 @@ var main = function() {
                 if(li != false) {
                     $(CategoryId + "_list").append(li);
                 }
+                var option = '<option value="'+appendHabitList.getName()+'">'
+                $("#category_list_habit").append(option);
             } else {
                 var li = addHabit(Habits[key].id, Habits[key].name);
                 if(li != false) {
