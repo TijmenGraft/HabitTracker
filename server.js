@@ -136,7 +136,6 @@ app.get("/",function(req,res) {
 });
 
 app.get("/showHabits", function(req, res) {
-    console.log("todos requested");
     res.json(habits);
 });
 
@@ -160,11 +159,8 @@ app.get("/requestHabit", function(req,res) {
             error: "Couldnt find the habit"
         });
     } else {
-        console.log(habitId);
         console.log(selectedHabit);
-        res.status(200).json({
-            data: selectedHabit
-        });
+        res.json(selectedHabit);
     }
 });
 

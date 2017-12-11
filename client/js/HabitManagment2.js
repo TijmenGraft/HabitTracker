@@ -41,9 +41,6 @@ var main = function() {
         $.getJSON("../showHabits", showHabits);
     },3000)
 
-    $("#add_habit_submit").on("click", function() {
-        console.log("Add habit");
-    });
     /* Adding a habit by sending a request to the server 
     * We use serialize method because it is easy 
     */

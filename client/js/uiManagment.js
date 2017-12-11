@@ -10,6 +10,13 @@ $(document).ready(function() {
         openModel = id;
     }
 
+    var populateChangeHabitForm = function(Habit) {
+        console.log("Calling populate habit form");
+        for(var key in Habit) {
+            console.log(Habit[key]);
+        }
+    }
+
 
     $("#overview_page").on("click",".add-habit, .add-habit-category", function() {
         console.log("toggler clicked");
@@ -18,23 +25,16 @@ $(document).ready(function() {
     })
 
     $("#overview_page").on("click",".change-habit", function() {
-        console.log("toggler clicked");
         var modelId = '#' + $(this).attr("data-habit") + '';
         openModelFunction(modelId);
         var habitId = $(this).parent().attr("id");
-        console.log(habitId);
-        $.getJSON({
-            url: '/requestHabit?id='+habitId,
-            function(data,status) {
-                if(status === 200) {
-                    console.log("successfull" + data);
-                } else {
-                    console.log("failure");
-                }
-            }
-        });
-    })
+        $.getJSON(
+            "../requestHabit?id="+habitId, 
+            populateChangeHabitForm
+        );
+    });
 
+    
     $(document).keyup(function(e) {
         if(e.keyCode == 27) {
             if(!(!openModel.trim())) {
