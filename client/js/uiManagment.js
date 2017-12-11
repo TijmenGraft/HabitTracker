@@ -64,10 +64,10 @@ $(document).ready(function() {
         console.log(this);
         //$(this.attr("id"))
         if($(this).find("li").hasClass(".page-active")) {
-            $(this).children.removeClass(".page-active");
+            $(this).find("li").removeClass(".page-active");
             console.log("Page is no longer active");
         }else if(openScreens < maxOpenScreenDec) {
-            $(this).children.addClass(".page-active");
+            $(this).find("li").addClass(".page-active");
             ++openScreens;
             console.log("Page is now active");
         }else if(openScreens == maxOpenScreenDec){
