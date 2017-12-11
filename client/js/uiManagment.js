@@ -63,11 +63,11 @@ $(document).ready(function() {
     $(".page-nav").on("click", function(openScreens) {
         console.log(this);
         //$(this.attr("id"))
-        if($(this > li).li.hasClass(".page-active")) {
-            $(this > li).li.removeClass(".page-active");
+        if($(this > li).children.hasClass(".page-active")) {
+            $(this > li).children.removeClass(".page-active");
             console.log("Page is no longer active");
         }else if(openScreens < maxOpenScreenDec) {
-            $(this > li).li.addClass(".page-active");
+            $(this > li).children.addClass(".page-active");
             ++openScreens;
             console.log("Page is now active");
         }else if(openScreens == maxOpenScreenDec){
