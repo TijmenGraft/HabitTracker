@@ -57,16 +57,21 @@ $(document).ready(function() {
         maxOpenScreenDec = 1;
     }
     maxOpenScreenDec = maxOpenScreenDec - 1;
+    var openScreens = 1;
 
     console.log(screenWidth + " Open screens: " + maxOpenScreenDec);
-    $(".page-nav").on("click", function(i) {
+    $(".page-nav").on("click", function(openScreens) {
         console.log(this);
         //$(this.attr("id"))
         if($(this > li).hasClass(".page-active")) {
-            console.log("Page is active");
-        }else if(i < maxOpenScreenDec) {
-            console.log("true");
-
+            $(this > li).removeClass(".page-active");
+            console.log("Page is no longer active");
+        }else if(openScreens < maxOpenScreenDec) {
+            $(this > li).addClass(".page-active");
+            ++openScreens;
+            console.log("Page is now active");
+        }else if(openScreens == maxOpenScreenDec){
+            console.log("Too many pages active. Close one first.");
         }
     });
 
