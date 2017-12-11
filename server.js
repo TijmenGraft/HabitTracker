@@ -150,6 +150,12 @@ app.post("/addHabit", function(req,res){
     res.send(formObj);
 });
 
+app.get("/requestHabit", function(req,res) {
+    console.log("I have a get request from requestHabit");
+    console.log(req.params.id);
+    res.send("get reacting");
+});
+
 app.get("/update", function(req, res) {
     var queryData = url.parse(req.url, true).query;
     console.log(queryData);

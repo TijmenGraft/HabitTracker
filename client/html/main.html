@@ -55,15 +55,6 @@
 								<p>Test</p>
 							</div>
 						</div>
-						
-						<div class="habit-card" id="addnew_habitcard">
-							<div class="habit-card-header">
-								<h4>New habit type</h4>
-							</div>
-							<div class="habit-card-body">
-								<span class="add-habit-category" id="add_new_habit_category">+</span>
-							</div>
-						</div>
 					</div>
 
 					<div class="model" id="add_habit_model">
@@ -106,29 +97,19 @@
 						</div>
 					</div>
 
-					<div class="model" id="add_habit_category_model">
-						<div class="model-header">
-							<h1>Add category:</h1>
-						</div>
-						<div class="model-body">
-							<label for="habit_category_main_title" aria-label="habit_category_main_title">Title:</label>
-							<input class="habit-category-input" name="habit_category_form_title" id="habit_category_main_title" type="text" placeholder="Title"/>
-
-							<label for="habit_category_main_description" aria-label="habit_category_main_description">Description:</label>
-							<input class="habit-category-input" name="habit_category_form_description" id="habit_category_main_description" type="textarea" placeholder="description"/>
-
-							<button class="habit-managment-submit-button" type="submit" name="habit_category_main_submit" id="add_habit_category_submit">Continue</button>
-						</div>
-					</div>
-
-					<div class="model" id="add_habit_change_model">
+					<div class="model" id="change_habit_model">
 						<div class="model-header">
 							<h1>Change habit</h1>
 						</div>
 						<div class="model-body">
-							<form method="post" action="/update">
+							<form method="post" action="/update" id="change_habit">
+								<input class="hidden" name="change_habit_form_id" value=""/>
+
 								<label for="change_habit_main_title" aria-label="change_habit_main_title">Habit title:</label>
 								<input class="change-habit-input" name="change_habit_form_title" placeholder="Habit title" id="change_habit_main_title" type="text"/>
+
+								<label for="habit_main_category" aria-label="habit_main_category">Habit category:</label>
+								<input class="habit-input" list="category_list_habit" name="habit_form_category" placeholder="Habit category" id="habit_main_category" type="text"/>
 								
 								<fieldset class="radio-button-group-horizontal change-habit-group">
 									<label class="show label-left" for="good_main_type" aria-label="good_main_type">Good

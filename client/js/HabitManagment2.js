@@ -7,7 +7,7 @@ var main = function() {
             var li = '<li class="habit" id="'+id+'">' + name 
             + ' <i class="fa fa-check habit-check" aria-hidden="true"></i>'
             + ' <i class="fa fa-times delete-habit" aria-hidden="true"></i>'
-            + ' <i class="fa fa-cog change-habit" data-habit="add_habit_change_model" aria-hidden="true"></i></li>';
+            + ' <i class="fa fa-cog change-habit" data-habit="change_habit_model"></i></li>';
             return li;
         } else {
             return false;
@@ -47,12 +47,10 @@ var main = function() {
     /* Adding a habit by sending a request to the server 
     * We use serialize method because it is easy 
     */
-    $("#add_habit").submit(function(event) {
+    $("#add_habit, #change_habit").submit(function(event) {
         event.preventDefault();
         var $form = $(this);
-        console.log("test");
         var formData = JSON.stringify($form.serializeArray());
-        console.log(formData);
         $.ajax({
             type: $form.attr("method"),
             url: $form.attr("action"),
