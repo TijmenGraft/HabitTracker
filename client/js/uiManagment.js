@@ -63,7 +63,7 @@ $(document).ready(function() {
     $(".page-nav").on("click", function(openScreens) {
         console.log(this);
         //$(this.attr("id"))
-        if($(this).child(hasClass(".page-active"))) {
+        if($(li < this).hasClass(".page-active")) {
             $(this).children.removeClass(".page-active");
             console.log("Page is no longer active");
         }else if(openScreens < maxOpenScreenDec) {
