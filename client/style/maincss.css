@@ -66,10 +66,13 @@ nav .lower-nav .page-active {
 
 .active {
 	display: block !important;
+	float: left;
+	width: 100%;
 }
 
 .habit-card {
 	width: 24%;
+	min-width: 200px;
 	display: block;
 	border: 1px #1F4660 solid;
 	text-align: center;
@@ -78,6 +81,7 @@ nav .lower-nav .page-active {
 	overflow-y: hidden;
 	overflow-x: hidden;
 	align-self: flex-start;
+	margin: 5px;
 }
 
 .habit-card-header {
@@ -142,4 +146,8 @@ nav .lower-nav .page-active {
 	-webkit-transition: background-color 250ms ease-in;
 	-ms-transition: background-color 250ms ease-in;
 	transition: background-color 250ms ease-in;
+}
+
+div .habit-card-header h4{
+	overflow-x: auto;
 }
