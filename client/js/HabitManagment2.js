@@ -5,9 +5,9 @@ var main = function() {
         if($("#" + id).length == 0) {
             console.log(name);
             var li = '<li class="habit" id="'+id+'">' + name 
-            + ' <i class="fa fa-check habit-check" aria-hidden="true"></i>'
+            + ' <ul class="icon-group" id="icons"><i class="fa fa-check habit-check" aria-hidden="true"></i>'
             + ' <i class="fa fa-times delete-habit" aria-hidden="true"></i>'
-            + ' <i class="fa fa-cog change-habit" data-habit="change_habit_model"></i></li>';
+            + ' <i class="fa fa-cog change-habit" data-habit="change_habit_model"></i></ul></li>';
             return li;
         } else {
             return false;

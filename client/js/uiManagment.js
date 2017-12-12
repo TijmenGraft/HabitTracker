@@ -96,7 +96,7 @@ $(document).ready(function() {
     });
 
     var screenWidth = $("body").width();
-    var maxOpenScreensFloat = screenWidth/500;
+    var maxOpenScreensFloat = screenWidth/442;
     var maxOpenScreenDec = maxOpenScreensFloat.toFixed();
     if(maxOpenScreenDec > 4){
         maxOpenScreenDec = 4;

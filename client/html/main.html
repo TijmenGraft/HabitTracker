@@ -43,16 +43,15 @@
 							<div class="habit-card-body">
 								<ul class="habit-list" id="general_habit_list">
 									<li class="habit">Good habit example 
-										<i class="fa fa-check habit-check" aria-hidden="true"></i>
-										<i class="fa fa-times delete-habit" aria-hidden="true"></i>
-										<i class="fa fa-cog change-habit" data-habit="add_habit_change_model" aria-hidden="true"></i>
+										<ul class="icon-group" id="icons">
+											<i class="fa fa-check habit-check" aria-hidden="true"></i>
+											<i class="fa fa-times delete-habit" aria-hidden="true"></i>
+											<i class="fa fa-cog change-habit" data-habit="add_habit_change_model" aria-hidden="true"></i>
+										</ul>
 									</li>
 									<li class="habit">Bad habit example</li>
 								</ul>
 								<span class="add-habit" id="add_habit_to_general" data-habit="add_habit_model">+</span>
-							</div>
-							<div class="habit-card-footer">
-								<p>Test</p>
 							</div>
 						</div>
 					</div>
@@ -168,9 +167,13 @@
 				
 				<div id="stats_page" class="page">
 					<div class="page-content-wrapper">
-						<h2>Stats</h2>
-						<p>Here will be some charts for tracking your habits</p>
-						<p>Also the calander will be here</p>
+						<div class="page-content-header">
+							<h2>Stats</h2>
+						</div>
+						<div class="page-content-main">
+							<p>Here will be some charts for tracking your habits</p>
+							<p>Also the calander will be here</p>
+						</div>
 					</div>
 				</div>
 				
