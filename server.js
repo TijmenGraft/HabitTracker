@@ -19,6 +19,7 @@ app.use(bodyParser.urlencoded({
 }));
 
 //global variablesid, firstName, middleName, surname, age, gender, bank, articles
+var nextHabitId = 4;
 
 var users = [];
 var user1 = {
@@ -38,7 +39,7 @@ users.push(user1);
 
 var habits = [];
     var h1 = {
-        id: "0",
+        id: 0,
         name: "Jog everyday",
         type: "1",
         category: "sports",
@@ -48,7 +49,7 @@ var habits = [];
         endDate: "5-12-2018"
     };
     var h2 = {
-        id: "1",
+        id: 1,
         name: "Stop gaming",
         type: "0",
         category: "gaming",
@@ -58,7 +59,7 @@ var habits = [];
         endDate: "5-12-2018"
     };
     var h3 = {
-        id: "2",
+        id: 2,
         name: "Take the stairs",
         type: "1",
         category: "walking",
@@ -68,7 +69,7 @@ var habits = [];
         endDate: "5-12-2018"
     };
     var h4 = {
-        id: "3",
+        id: 3,
         name: "Go to the gym",
         type: "1",
         category: "sports",
@@ -84,7 +85,7 @@ var habits = [];
 
 var habitsDataIdContains = function(id) {
     for(var i = 0; i < habits.length; i++) {
-        if(habits[i].id === id) {
+        if(habits[i].id == id) {
             return true;
         }
     }
@@ -93,7 +94,7 @@ var habitsDataIdContains = function(id) {
 
 var habitsPosition = function(id) {
     for(var i = 0; i < habits.length; i++) {
-        if(habits[i].id === id) {
+        if(habits[i].id == id) {
             return i;
         }
     }
@@ -102,7 +103,7 @@ var habitsPosition = function(id) {
 
 var selectHabitById = function(id) {
     for(var i = 0; i < habits.length; i++) {
-        if(habits[i].id === id) {
+        if(habits[i].id == id) {
             return habits[i];
         }
     }
@@ -159,18 +160,16 @@ app.get("/showHabits", function(req, res) {
 app.post("/addHabit", function(req,res){
     var formObj = JSON.stringify(req.body);
     var JsonObj = JSON.parse(formObj);
-    var lastHabit = habits[habits.length - 1];
-    var newHabitId = parseInt(lastHabit["id"]) + 1;
-    var newHabit = habitHandelingFormData(newHabitId,JsonObj);
-    console.log(habits);
+    var newHabit = habitHandelingFormData(nextHabitId,JsonObj);
+    ++nextHabitId;
     habits.push(newHabit);
-    console.log(habits);
     res.send(formObj);
 });
 
 app.get("/requestHabit", function(req,res) {
     console.log("I have a get request from requestHabit");
     var habitId = req.query.id;
+    console.log(habitId);
     var selectedHabit = selectHabitById(habitId);
     if(selectedHabit === false) {
         console.log("Couldnt find the habit");
@@ -189,13 +188,16 @@ app.post("/update", function(req, res) {
     var id = JsonObj[0].value;
     JsonObj.splice(0,1);
     var updateHabit = habitHandelingFormData(id,JsonObj);
-    console.log(updateHabit);
     var position = habitsPosition(id);
-    console.log(habits)
-    Habits.splice(position,1);
+    console.log(position);
+    console.log("BEFORE \n");
     console.log(habits);
-    Habits.splice(position,0,updateHabit);
+    habits.splice(position,1);
+    habits.splice(--position,0,updateHabit);
+    console.log("UPDATE \n")
     console.log(habits);
+
+    res.send(updateHabit);
 });
 
 app.post("/register", function(req,res) {

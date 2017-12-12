@@ -1,5 +1,6 @@
 $(document).ready(function() {
     var openModel = "";
+    window.blocker = false;
 
     $("input[type=checkbox]").on("click",function() {
         console.log($(this));
@@ -50,12 +51,15 @@ $(document).ready(function() {
         console.log("toggler clicked");
         var modelId = '#' + $(this).attr("data-habit") + '';
         openModelFunction(modelId);
+        blocker = true;
     })
 
     $("#overview_page").on("click",".change-habit", function() {
+        blocker = true;
         var modelId = '#' + $(this).attr("data-habit") + '';
         openModelFunction(modelId);
         var habitId = $(this).parent().attr("id");
+        $("#"+habitId).remove();
         $.getJSON(
             "../requestHabit?id="+habitId, 
             populateChangeHabitForm
