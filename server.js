@@ -10,7 +10,21 @@ const formidable = require("formidable");
 const bodyParser = require('body-parser')
 const PersonConstructor = require('./client/js/Person.js');
 const util = require("util");
+const mysql = require("mysql");
 var app = express();
+var con = mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "Kungfu1998",
+    database: "WDatabase"
+});
+
+con.connect(function(err) {
+    if(err) {
+        console.log(err);
+    }
+    console.log("Connected");
+});
 
 app.use(express.static(__dirname + '/client'));
 app.use(bodyParser.json());
