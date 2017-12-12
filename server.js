@@ -10,7 +10,21 @@ const formidable = require("formidable");
 const bodyParser = require('body-parser')
 const PersonConstructor = require('./client/js/Person.js');
 const util = require("util");
+const mysql = require("mysql");
 var app = express();
+var con = mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "Kungfu1998",
+    database: "WDatabase"
+});
+
+con.connect(function(err) {
+    if(err) {
+        console.log(err);
+    }
+    console.log("Connected");
+});
 
 app.use(express.static(__dirname + '/client'));
 app.use(bodyParser.json());
@@ -19,6 +33,7 @@ app.use(bodyParser.urlencoded({
 }));
 
 //global variablesid, firstName, middleName, surname, age, gender, bank, articles
+var nextHabitId = 4;
 
 var users = [];
 var user1 = {
@@ -38,44 +53,48 @@ users.push(user1);
 
 var habits = [];
     var h1 = {
-        id: "0",
+        id: 0,
         name: "Jog everyday",
-        type: "good",
+        type: "1",
         category: "sports",
         frequency: "[ma,tu]",
         description: "I need to jog everyday",
         startDate: "5-12-2017",
-        endDate: "5-12-2018"
+        endDate: "5-12-2018",
+        checkDate: []
     };
     var h2 = {
-        id: "1",
+        id: 1,
         name: "Stop gaming",
-        type: "bad",
+        type: "0",
         category: "gaming",
-        frequency: "[ma,tu,we,th,fr,sa,su]",
+        frequency: "[ma,tu,we,th,fr,sat,sun]",
         description: "I need to stop gaming so often",
         startDate: "5-12-2017",
-        endDate: "5-12-2018"
+        endDate: "5-12-2018",
+        checkDate: []
     };
     var h3 = {
-        id: "2",
+        id: 2,
         name: "Take the stairs",
-        type: "bad",
+        type: "1",
         category: "walking",
-        frequency: "[ma,tu,we,th,fr,sa,su]",
+        frequency: "[ma,tu,we,th,fr,sat,sun]",
         description: "I need to stop gaming so often",
         startDate: "5-12-2017",
-        endDate: "5-12-2018"
+        endDate: "5-12-2018",
+        checkDate: []
     };
     var h4 = {
-        id: "3",
+        id: 3,
         name: "Go to the gym",
-        type: "good",
+        type: "1",
         category: "sports",
         frequency: "[ma,tu]",
         description: "A great man with great responsibilities",
         startDate: "10-12-2017",
-        endDate: "15-12-2017"
+        endDate: "15-12-2017",
+        checkDate: []
     };
     habits.push(h1);
     habits.push(h2);
@@ -83,32 +102,50 @@ var habits = [];
     habits.push(h4);
 
 var habitsDataIdContains = function(id) {
-    console.log("length:" + habits.length);
     for(var i = 0; i < habits.length; i++) {
-        console.log(habits[i].id);
-        if(habits[i].id === id) {
+        if(habits[i].id == id) {
             return true;
         }
     }
     return false;
 }
 
-var selectHabitById = function(id) {
-    console.log("length: " + habits.length);
+var habitsPosition = function(id) {
     for(var i = 0; i < habits.length; i++) {
-        if(habits[i].id === id) {
+        if(habits[i].id == id) {
+            return i;
+        }
+    }
+    return false;
+}
+
+var selectHabitById = function(id) {
+    for(var i = 0; i < habits.length; i++) {
+        if(habits[i].id == id) {
             return habits[i];
         }
     }
+    return false;
 }
 
 var habitHandelingFormData = function(id,data) {
     var frequencyArr = [];
     var i = 3;
     while(data[i].name !== "habit_form_description") {
-        console.log(i+" "+data[i].value);
+        if(data[i].name == "change_habit_form_description") {
+            break;
+        }
         frequencyArr.push(data[i].value);
         ++i;
+    }
+    if(habitsDataIdContains(id)) {
+        var oldHabit = selectHabitById(id);
+        var startDate = oldHabit["startDate"];
+        var endDate = oldHabit["endDate"]; 
+    } else {
+        var i_2 = i;
+        var startDate = data[++i_2].value;
+        var endDate = data[++i_2].value;
     }
     var habit = {
         id: id,
@@ -117,10 +154,10 @@ var habitHandelingFormData = function(id,data) {
         category: data[1].value,
         frequency: frequencyArr,
         description: data[i].value,
-        startDate: data[++i].value,
-        endDate: data[++i].value
+        startDate: startDate,
+        endDate: endDate,
+        checkDate: []
     }
-    console.log(habit);
     return habit;
 }
 
@@ -136,47 +173,75 @@ app.get("/",function(req,res) {
 });
 
 app.get("/showHabits", function(req, res) {
-    console.log("todos requested");
     res.json(habits);
 });
 
 app.post("/addHabit", function(req,res){
     var formObj = JSON.stringify(req.body);
     var JsonObj = JSON.parse(formObj);
-    var lastHabit = habits[habits.length - 1];
-    var newHabitId = parseInt(lastHabit["id"]) + 1;
-    var newHabit = habitHandelingFormData(newHabitId,JsonObj);
+    var newHabit = habitHandelingFormData(nextHabitId,JsonObj);
+    ++nextHabitId;
     habits.push(newHabit);
     res.send(formObj);
 });
 
 app.get("/requestHabit", function(req,res) {
-    console.log("I have a get request from requestHabit");
     var habitId = req.query.id;
-    var selectedHabit = selectHabitById(habitId);
     console.log(habitId);
-    console.log(selectedHabit);
-    res.send("get reacting");
+    var selectedHabit = selectHabitById(habitId);
+    if(selectedHabit === false) {
+        res.status(404).json({
+            error: "Couldnt find the habit"
+        });
+    } else {
+        console.log(selectedHabit);
+        res.json(selectedHabit);
+    }
 });
 
-app.get("/update", function(req, res) {
-    var queryData = url.parse(req.url, true).query;
-    console.log(queryData);
-    if(queryData.id !== undefined && habitsDataIdContains(queryData.id)) {
-        console.log("could find it");
-        var position = habitsDataIdPosition(queryData.id);
-        console.log("Position:" + position);
-        habits[position] = {
-            id: queryData.id,
-            name: queryData.change_habit_form_title,
-            type: queryData.change_habit_form_type,
-            category: "sport",
-            frequency: queryData.change_habit_form_frequency,
-            description: queryData.change_habit_form_description,
-            startDate: queryData.change_habit_form_start_date,
-            endDate: queryData.change_habit_form_end_date
-        }
+app.post("/update", function(req, res) {
+    var formObj = JSON.stringify(req.body);
+    var JsonObj = JSON.parse(formObj);
+    var id = JsonObj[0].value;
+    JsonObj.splice(0,1);
+    var updateHabit = habitHandelingFormData(id,JsonObj);
+    var position = habitsPosition(id);
+    console.log(position);
+    console.log("BEFORE \n");
+    console.log(habits);
+    habits.splice(position,1);
+    habits.splice(--position,0,updateHabit);
+    console.log("UPDATE \n")
+    console.log(habits);
+
+    res.send(updateHabit);
+});
+
+app.get("/habitDone", function(req,res) {
+    var habitId = req.query.id;
+    var selectedHabit = selectHabitById(habitId);
+    var today = new Date();
+    console.log(today);
+    var day = today.getDate();
+    var month = today.getMonth()+1;
+    var year = today.getFullYear();
+    var input = day + "-" + month + "-" + year;
+    selectedHabit.checkDate.push(input);
+    console.log(selectedHabit.checkDate);
+    if(selectedHabit === false) {
+        res.status(404).json({
+            error: "Couldnt update the habit"
+        });
+    } else {
+        res.json("Checked successfull");
     }
+    console.log("Request habitdone with: "+habitId);
+});
+
+app.get("/removeHabit", function(req,res) {
+    var habitId = req.query.id;
+    var position = habitsPosition(habitId);
+    habits.splice(position,1);
 });
 
 app.post("/register", function(req,res) {

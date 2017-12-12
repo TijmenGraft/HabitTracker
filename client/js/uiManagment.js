@@ -1,5 +1,10 @@
 $(document).ready(function() {
     var openModel = "";
+    window.blocker = false;
+
+    $("input[type=checkbox]").on("click",function() {
+        console.log($(this));
+    })
 
     var openModelFunction = function(id) {
         $(id).toggleClass("model-open")
@@ -8,32 +13,74 @@ $(document).ready(function() {
             opacity: 1
         }, 100)
         openModel = id;
-    }
+    };
+
+    var populateChangeHabitForm = function(Habit) {
+        console.log("Calling populate habit form");
+        console.log(Habit);
+        var frequencyArr = Habit.frequency;
+        $("input[name=change_habit_form_frequency]").each(function() {
+            var currentElement = $(this).val();
+            if(frequencyArr.indexOf(currentElement) !== -1) {
+                $(this).attr("checked", true);
+            }
+        });
+        $("input[name=change_habit_form_type]").each(function() {
+            var currentElement = $(this).val();
+            if(Habit.type === currentElement) {
+                $(this).attr("checked", true);
+            }
+        });
+        $("#change_habit_main_id").val(Habit.id);
+        $("#change_habit_main_title").val(Habit.name);
+        $("#change_habit_main_category").val(Habit.category);
+        $("#change_habit_main_description").val(Habit.description);
+    };
+
+    $("input[type=checkbox], input[type=radio]").on("click", function(e){
+        console.log(this);
+        if($(this).attr("checked")) {
+            console.log("This is checked");
+            $(this).attr("checked", false);
+        }
+        console.log("Checkbox or radio clicked");
+    });
 
 
     $("#overview_page").on("click",".add-habit, .add-habit-category", function() {
         console.log("toggler clicked");
         var modelId = '#' + $(this).attr("data-habit") + '';
         openModelFunction(modelId);
+        blocker = true;
     })
 
     $("#overview_page").on("click",".change-habit", function() {
-        console.log("toggler clicked");
+        blocker = true;
         var modelId = '#' + $(this).attr("data-habit") + '';
         openModelFunction(modelId);
         var habitId = $(this).parent().attr("id");
-        console.log(habitId);
-        $.getJSON({
-            url: '/requestHabit?id='+habitId,
-            function(data,status) {
-                if(status === 200) {
-                    console.log("successfull" + data);
-                } else {
-                    console.log("failure");
-                }
-            }
-        });
-    })
+        $("#"+habitId).remove();
+        $.getJSON(
+            "../requestHabit?id="+habitId, 
+            populateChangeHabitForm
+        );
+    });
+
+    $("#overview_page").on("click",".habit-check", function() {
+        var habitId = $(this).parent().attr("id");
+        $.getJSON(
+            "../habitDone?id="+habitId, 
+        );
+    });
+
+    $("#overview_page").on("click",".delete-habit", function() {
+        var habitId = $(this).parent().attr("id");
+        $("#"+habitId).remove();
+        $.getJSON(
+            "../removeHabit?id="+habitId, 
+        );
+    });
+
 
     $(document).keyup(function(e) {
         if(e.keyCode == 27) {

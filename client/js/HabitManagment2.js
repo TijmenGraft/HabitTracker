@@ -38,12 +38,14 @@ var main = function() {
     }
 
     setInterval(function() {
-        $.getJSON("../showHabits", showHabits);
-    },3000)
+        if(!blocker) {
+            console.log("Didnt get blocked");
+            $.getJSON("../showHabits", showHabits);
+        } else {
+            console.log("I got blocked");
+        }
+    },1000)
 
-    $("#add_habit_submit").on("click", function() {
-        console.log("Add habit");
-    });
     /* Adding a habit by sending a request to the server 
     * We use serialize method because it is easy 
     */
@@ -51,6 +53,7 @@ var main = function() {
         event.preventDefault();
         var $form = $(this);
         var formData = JSON.stringify($form.serializeArray());
+        console.log(formData);
         $.ajax({
             type: $form.attr("method"),
             url: $form.attr("action"),
@@ -59,13 +62,12 @@ var main = function() {
             dataType: "json",
             success: function(data) {
                 console.log("Data was send correctly");
-                console.log(data);
-                console.log(data.habit_form_title);
-                console.log("Hello world");
+                blocker = false;
             },
             error: function(data) {
                 console.log("Couldnt send the data");
                 console.log(data);
+                blocker = false;
             },
         });
     })

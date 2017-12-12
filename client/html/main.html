@@ -103,13 +103,13 @@
 						</div>
 						<div class="model-body">
 							<form method="post" action="/update" id="change_habit">
-								<input class="hidden" name="change_habit_form_id" value=""/>
+								<input class="hidden" name="change_habit_form_id" id="change_habit_main_id" value=""/>
 
 								<label for="change_habit_main_title" aria-label="change_habit_main_title">Habit title:</label>
 								<input class="change-habit-input" name="change_habit_form_title" placeholder="Habit title" id="change_habit_main_title" type="text"/>
 
-								<label for="habit_main_category" aria-label="habit_main_category">Habit category:</label>
-								<input class="habit-input" list="category_list_habit" name="habit_form_category" placeholder="Habit category" id="habit_main_category" type="text"/>
+								<label for="change_habit_main_category" aria-label="change_habit_main_category">Habit category:</label>
+								<input class="habit-input" list="category_list_habit" name="habit_form_category" placeholder="Habit category" id="change_habit_main_category" type="text"/>
 								
 								<fieldset class="radio-button-group-horizontal change-habit-group">
 									<label class="show label-left" for="good_main_type" aria-label="good_main_type">Good
@@ -159,11 +159,6 @@
 								<label for="change_habit_main_description" aria-label="change_habit_main_description">Description:</label>
 								<input class="change-habit-input" name="change_habit_form_description" placeholder="A short description of the habit" id="change_habit_main_description" type="text"/>
 
-								<label for="change_habit_main_startDate" aria-label="change_habit_main_startDate">Startdate:</label>
-								<input class="change-habit-input" name="change_habit_form_start_date" id="change_habit_main_startDate" type="date"/>
-
-								<label for="change_habit_main_endDate" aria-label="change_habit_main_endDate">endDate:</label>
-								<input class="change-habit-input" name="change_habit_form_end_date" id="change_habit_main_endDate" placeholder="End date" type="date"/>
 
 								<button class="habit-managment-submit-button" type="submit" name="habit_change_main_submit" value="change" id="change_habit_submit">Change</button>
 							</form>
