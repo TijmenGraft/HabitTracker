@@ -104,17 +104,55 @@ $(document).ready(function() {
         maxOpenScreenDec = 1;
     }
     maxOpenScreenDec = maxOpenScreenDec - 1;
+    openScreens = 0;
+
+    var windowOpeningAndClosing = function() {
+        var i = 0;
+        $(".page").each(function() {
+            if($(this).hasClass("active")) {
+                ++i;
+            }   
+        });
+        var pageWidth = 100/i+"%";
+        $(".page").each(function() {
+            if($(this).hasClass("active")) {
+                $(this).css({
+                    "width":pageWidth
+                });
+            }
+        });
+    }
 
     console.log(screenWidth + " Open screens: " + maxOpenScreenDec);
-    $(".page-nav").on("click", function(i) {
-        console.log(this);
-        //$(this.attr("id"))
-        if($(this > li).hasClass(".page-active")) {
-            console.log("Page is active");
-        }else if(i < maxOpenScreenDec) {
-            console.log("true");
-
+    $(".page-nav").on("click", function() {
+        var target = $(this).attr("href");
+        if($(target).hasClass("active")) {
+            $(this).find("li").toggleClass("page-active");
+            $(target).toggleClass("active");
+            windowOpeningAndClosing();
+            --openScreens;
+        } else {
+            if(openScreens <= maxOpenScreenDec) {
+                $(this).find("li").toggleClass("page-active");
+                $(target).toggleClass("active");
+                windowOpeningAndClosing();
+                ++openScreens;
+            } else {
+                console.log(openScreens);
+                console.log("You should close a page");
+            }
         }
+        //$(this.attr("id"))
+        // if($(this).find("li").hasClass(".page-active")) {
+        //     $(this).find("li").removeClass(".page-active");
+        //     console.log("Page is no longer active");
+        // }else if(openScreens < maxOpenScreenDec) {
+        //     $(this).find("li").addClass(".page-active");
+        //     ++openScreens;
+        //     console.log("Page is now active");
+        // }else if(openScreens == maxOpenScreenDec){
+        //     console.log("Too many pages active. Close one first.");
+        // }
     });
 
     $("a").on("click", function(event) {
