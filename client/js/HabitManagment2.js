@@ -39,7 +39,7 @@ var main = function() {
 
     setInterval(function() {
         $.getJSON("../showHabits", showHabits);
-    },3000)
+    },1)
 
     /* Adding a habit by sending a request to the server 
     * We use serialize method because it is easy 
@@ -48,6 +48,7 @@ var main = function() {
         event.preventDefault();
         var $form = $(this);
         var formData = JSON.stringify($form.serializeArray());
+        console.log(formData);
         $.ajax({
             type: $form.attr("method"),
             url: $form.attr("action"),

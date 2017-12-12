@@ -40,7 +40,7 @@ var habits = [];
     var h1 = {
         id: "0",
         name: "Jog everyday",
-        type: "good",
+        type: "1",
         category: "sports",
         frequency: "[ma,tu]",
         description: "I need to jog everyday",
@@ -50,9 +50,9 @@ var habits = [];
     var h2 = {
         id: "1",
         name: "Stop gaming",
-        type: "bad",
+        type: "0",
         category: "gaming",
-        frequency: "[ma,tu,we,th,fr,sa,su]",
+        frequency: "[ma,tu,we,th,fr,sat,sun]",
         description: "I need to stop gaming so often",
         startDate: "5-12-2017",
         endDate: "5-12-2018"
@@ -60,9 +60,9 @@ var habits = [];
     var h3 = {
         id: "2",
         name: "Take the stairs",
-        type: "bad",
+        type: "1",
         category: "walking",
-        frequency: "[ma,tu,we,th,fr,sa,su]",
+        frequency: "[ma,tu,we,th,fr,sat,sun]",
         description: "I need to stop gaming so often",
         startDate: "5-12-2017",
         endDate: "5-12-2018"
@@ -70,7 +70,7 @@ var habits = [];
     var h4 = {
         id: "3",
         name: "Go to the gym",
-        type: "good",
+        type: "1",
         category: "sports",
         frequency: "[ma,tu]",
         description: "A great man with great responsibilities",
@@ -83,11 +83,18 @@ var habits = [];
     habits.push(h4);
 
 var habitsDataIdContains = function(id) {
-    console.log("length:" + habits.length);
     for(var i = 0; i < habits.length; i++) {
-        console.log(habits[i].id);
         if(habits[i].id === id) {
             return true;
+        }
+    }
+    return false;
+}
+
+var habitsPosition = function(id) {
+    for(var i = 0; i < habits.length; i++) {
+        if(habits[i].id === id) {
+            return i;
         }
     }
     return false;
@@ -106,9 +113,20 @@ var habitHandelingFormData = function(id,data) {
     var frequencyArr = [];
     var i = 3;
     while(data[i].name !== "habit_form_description") {
-        console.log(i+" "+data[i].value);
+        if(data[i].name == "change_habit_form_description") {
+            break;
+        }
         frequencyArr.push(data[i].value);
         ++i;
+    }
+    if(habitsDataIdContains(id)) {
+        var oldHabit = selectHabitById(id);
+        var startDate = oldHabit["startDate"];
+        var endDate = oldHabit["endDate"]; 
+    } else {
+        var i_2 = i;
+        var startDate = data[++i_2].value;
+        var endDate = data[++i_2].value;
     }
     var habit = {
         id: id,
@@ -117,10 +135,9 @@ var habitHandelingFormData = function(id,data) {
         category: data[1].value,
         frequency: frequencyArr,
         description: data[i].value,
-        startDate: data[++i].value,
-        endDate: data[++i].value
+        startDate: startDate,
+        endDate: endDate
     }
-    console.log(habit);
     return habit;
 }
 
@@ -145,7 +162,9 @@ app.post("/addHabit", function(req,res){
     var lastHabit = habits[habits.length - 1];
     var newHabitId = parseInt(lastHabit["id"]) + 1;
     var newHabit = habitHandelingFormData(newHabitId,JsonObj);
+    console.log(habits);
     habits.push(newHabit);
+    console.log(habits);
     res.send(formObj);
 });
 
@@ -164,24 +183,19 @@ app.get("/requestHabit", function(req,res) {
     }
 });
 
-app.get("/update", function(req, res) {
-    var queryData = url.parse(req.url, true).query;
-    console.log(queryData);
-    if(queryData.id !== undefined && habitsDataIdContains(queryData.id)) {
-        console.log("could find it");
-        var position = habitsDataIdPosition(queryData.id);
-        console.log("Position:" + position);
-        habits[position] = {
-            id: queryData.id,
-            name: queryData.change_habit_form_title,
-            type: queryData.change_habit_form_type,
-            category: "sport",
-            frequency: queryData.change_habit_form_frequency,
-            description: queryData.change_habit_form_description,
-            startDate: queryData.change_habit_form_start_date,
-            endDate: queryData.change_habit_form_end_date
-        }
-    }
+app.post("/update", function(req, res) {
+    var formObj = JSON.stringify(req.body);
+    var JsonObj = JSON.parse(formObj);
+    var id = JsonObj[0].value;
+    JsonObj.splice(0,1);
+    var updateHabit = habitHandelingFormData(id,JsonObj);
+    console.log(updateHabit);
+    var position = habitsPosition(id);
+    console.log(habits)
+    Habits.splice(position,1);
+    console.log(habits);
+    Habits.splice(position,0,updateHabit);
+    console.log(habits);
 });
 
 app.post("/register", function(req,res) {

@@ -1,6 +1,10 @@
 $(document).ready(function() {
     var openModel = "";
 
+    $("input[type=checkbox]").on("click",function() {
+        console.log($(this));
+    })
+
     var openModelFunction = function(id) {
         $(id).toggleClass("model-open")
         $(id).animate({
@@ -8,14 +12,38 @@ $(document).ready(function() {
             opacity: 1
         }, 100)
         openModel = id;
-    }
+    };
 
     var populateChangeHabitForm = function(Habit) {
         console.log("Calling populate habit form");
-        for(var key in Habit) {
-            console.log(Habit[key]);
+        console.log(Habit);
+        var frequencyArr = Habit.frequency;
+        $("input[name=change_habit_form_frequency]").each(function() {
+            var currentElement = $(this).val();
+            if(frequencyArr.indexOf(currentElement) !== -1) {
+                $(this).attr("checked", true);
+            }
+        });
+        $("input[name=change_habit_form_type]").each(function() {
+            var currentElement = $(this).val();
+            if(Habit.type === currentElement) {
+                $(this).attr("checked", true);
+            }
+        });
+        $("#change_habit_main_id").val(Habit.id);
+        $("#change_habit_main_title").val(Habit.name);
+        $("#change_habit_main_category").val(Habit.category);
+        $("#change_habit_main_description").val(Habit.description);
+    };
+
+    $("input[type=checkbox], input[type=radio]").on("click", function(e){
+        console.log(this);
+        if($(this).attr("checked")) {
+            console.log("This is checked");
+            $(this).attr("checked", false);
         }
-    }
+        console.log("Checkbox or radio clicked");
+    });
 
 
     $("#overview_page").on("click",".add-habit, .add-habit-category", function() {
