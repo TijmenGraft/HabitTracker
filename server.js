@@ -46,7 +46,8 @@ var habits = [];
         frequency: "[ma,tu]",
         description: "I need to jog everyday",
         startDate: "5-12-2017",
-        endDate: "5-12-2018"
+        endDate: "5-12-2018",
+        checkDate: []
     };
     var h2 = {
         id: 1,
@@ -56,7 +57,8 @@ var habits = [];
         frequency: "[ma,tu,we,th,fr,sat,sun]",
         description: "I need to stop gaming so often",
         startDate: "5-12-2017",
-        endDate: "5-12-2018"
+        endDate: "5-12-2018",
+        checkDate: []
     };
     var h3 = {
         id: 2,
@@ -66,7 +68,8 @@ var habits = [];
         frequency: "[ma,tu,we,th,fr,sat,sun]",
         description: "I need to stop gaming so often",
         startDate: "5-12-2017",
-        endDate: "5-12-2018"
+        endDate: "5-12-2018",
+        checkDate: []
     };
     var h4 = {
         id: 3,
@@ -76,7 +79,8 @@ var habits = [];
         frequency: "[ma,tu]",
         description: "A great man with great responsibilities",
         startDate: "10-12-2017",
-        endDate: "15-12-2017"
+        endDate: "15-12-2017",
+        checkDate: []
     };
     habits.push(h1);
     habits.push(h2);
@@ -137,7 +141,8 @@ var habitHandelingFormData = function(id,data) {
         frequency: frequencyArr,
         description: data[i].value,
         startDate: startDate,
-        endDate: endDate
+        endDate: endDate,
+        checkDate: []
     }
     return habit;
 }
@@ -167,12 +172,10 @@ app.post("/addHabit", function(req,res){
 });
 
 app.get("/requestHabit", function(req,res) {
-    console.log("I have a get request from requestHabit");
     var habitId = req.query.id;
     console.log(habitId);
     var selectedHabit = selectHabitById(habitId);
     if(selectedHabit === false) {
-        console.log("Couldnt find the habit");
         res.status(404).json({
             error: "Couldnt find the habit"
         });
@@ -198,6 +201,33 @@ app.post("/update", function(req, res) {
     console.log(habits);
 
     res.send(updateHabit);
+});
+
+app.get("/habitDone", function(req,res) {
+    var habitId = req.query.id;
+    var selectedHabit = selectHabitById(habitId);
+    var today = new Date();
+    console.log(today);
+    var day = today.getDate();
+    var month = today.getMonth()+1;
+    var year = today.getFullYear();
+    var input = day + "-" + month + "-" + year;
+    selectedHabit.checkDate.push(input);
+    console.log(selectedHabit.checkDate);
+    if(selectedHabit === false) {
+        res.status(404).json({
+            error: "Couldnt update the habit"
+        });
+    } else {
+        res.json("Checked successfull");
+    }
+    console.log("Request habitdone with: "+habitId);
+});
+
+app.get("/removeHabit", function(req,res) {
+    var habitId = req.query.id;
+    var position = habitsPosition(habitId);
+    habits.splice(position,1);
 });
 
 app.post("/register", function(req,res) {

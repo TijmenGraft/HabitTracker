@@ -66,7 +66,22 @@ $(document).ready(function() {
         );
     });
 
-    
+    $("#overview_page").on("click",".habit-check", function() {
+        var habitId = $(this).parent().attr("id");
+        $.getJSON(
+            "../habitDone?id="+habitId, 
+        );
+    });
+
+    $("#overview_page").on("click",".delete-habit", function() {
+        var habitId = $(this).parent().attr("id");
+        $("#"+habitId).remove();
+        $.getJSON(
+            "../removeHabit?id="+habitId, 
+        );
+    });
+
+
     $(document).keyup(function(e) {
         if(e.keyCode == 27) {
             if(!(!openModel.trim())) {
