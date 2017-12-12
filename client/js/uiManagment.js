@@ -132,7 +132,7 @@ $(document).ready(function() {
             windowOpeningAndClosing();
             --openScreens;
         } else {
-            if(openScreens <= maxOpenScreenDec) {
+            if(openScreens < maxOpenScreenDec) {
                 $(this).find("li").toggleClass("page-active");
                 $(target).toggleClass("active");
                 windowOpeningAndClosing();
