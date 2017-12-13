@@ -15,6 +15,7 @@ var main = function() {
     }
 
     var showHabits = function(Habits) {
+        console.log(Habits);
         for(var key in Habits) {
             var temp = Habits[key].category;
             var CategoryId = "#" + Habits[key].category + "_habit";
@@ -44,7 +45,7 @@ var main = function() {
         } else {
             console.log("I got blocked");
         }
-    },1000)
+    },10000)
 
     /* Adding a habit by sending a request to the server 
     * We use serialize method because it is easy 

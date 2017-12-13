@@ -16,13 +16,16 @@ var con = mysql.createConnection({
     host: "localhost",
     user: "root",
     password: "Kungfu1998",
-    database: "WDatabase"
+    database: "habittracker"
 });
 
 con.connect(function(err) {
     if(err) {
         console.log(err);
     }
+    // con.query('INSERT INTO habit VALUES("0","Sports","2","test","1","2018-12-27","2019-12-12","3")', function(err,rows,fields) {
+    //     console.log("Addding data");
+    // });
     console.log("Connected");
 });
 
@@ -101,6 +104,33 @@ var habits = [];
     habits.push(h3);
     habits.push(h4);
 
+var queryToHabit = function(row) {
+    let dateArr = [];
+    con.query("SELECT DW.day_of_week_name FROM habit_day_of_week AS HW JOIN day_of_week AS DW ON HW.day_id = DW.day_of_week_id WHERE HW.habit_id ="+row.id,function(err,rows,field) {
+        dateArr = [];
+        if(!err) {
+            for(var i = 0; i < rows.length; ++i) {
+                var date = rows[i].day_of_week_name;
+                dateArr.push(date)
+            }
+             dateArr;
+        }
+    });
+    console.log("Date array:\n")
+    console.log(dateArr);
+    var habit = {
+        id: row.id,
+        name: row.title,
+        type: row.habit_type,
+        frequency: dateArr,
+        category: row.habit_category_name,
+        description: row.habit_description,
+        startDate: row.habit_start_date,
+        endDate: row.habit_end_date
+    }
+    console.log(habit);
+}
+
 var habitsDataIdContains = function(id) {
     for(var i = 0; i < habits.length; i++) {
         if(habits[i].id == id) {
@@ -173,6 +203,17 @@ app.get("/",function(req,res) {
 });
 
 app.get("/showHabits", function(req, res) {
+    var data = [];
+    con.query("SELECT H.id, H.habit_title, H.habit_description, H.habit_type, H.habit_start_date, H.habit_end_date, HC.habit_category_name FROM HABIT AS H JOIN habit_category AS HC ON H.habit_category_id = HC.habit_category_id", function(err, rows, fields) {
+        if(!err) {
+            for(var i = 0; i < rows.length; i++) {
+                var newHabit = queryToHabit(rows[i]);
+                data.push(rows[i]);
+            }
+        } else {
+            console.log("Something went wrong");
+        }
+    });
     res.json(habits);
 });
 
@@ -206,14 +247,8 @@ app.post("/update", function(req, res) {
     JsonObj.splice(0,1);
     var updateHabit = habitHandelingFormData(id,JsonObj);
     var position = habitsPosition(id);
-    console.log(position);
-    console.log("BEFORE \n");
-    console.log(habits);
     habits.splice(position,1);
     habits.splice(--position,0,updateHabit);
-    console.log("UPDATE \n")
-    console.log(habits);
-
     res.send(updateHabit);
 });
 
