@@ -61,13 +61,13 @@
     	<div class="register-big" id="register">
             <div class="user-managment">
                 <span class="register-span">
-                    <a href="#register"><h1>Register</h1></a>
+                    <a href="#register" data-form="register_form"><h1>Register</h1></a>
                 </span>
                 <span class="login-span">
-                    <a href="#register"><h1>Login</h1></a>
+                    <a href="#register" data-form="login_form"><h1>Login</h1></a>
                 </span>
             </div>
-            <form method="post" action="/register">
+            <form method="post" action="/register" id="register_form" class="show">
                 <label for="register_nav_email" aria-label="register_nav_email">Your email:</label>
                 <input class="login-input" name="reg_form_email" placeholder="Test@yourremail.com" id="register_nav_email" type="email"/>
 
@@ -82,7 +82,7 @@
 
                 <button class="login-submit-button" type="submit" name="reg_nav_submit" value="continue">Continue</button>
             </form>
-            <form method="post" action="/login">
+            <form method="post" action="/login" id="login_form" class="hidden">
                 <label for="login_nav_username" aria-label="login_nav_username">Your username:</label>
                 <input class="login-input" name="login_form_username" placeholder="Username or email" id="login_nav_username" type="text"/>
 

@@ -22,13 +22,17 @@ $(document).ready(function() {
         $("input[name=change_habit_form_frequency]").each(function() {
             var currentElement = $(this).val();
             if(frequencyArr.indexOf(currentElement) !== -1) {
-                $(this).attr("checked", true);
+                // $(this).checked
+                console.log($(this))  
+                console.log($(this)[0].checked);
+                $(this)[0].checked = true;
+                console.log($(this)[0].checked);
             }
         });
         $("input[name=change_habit_form_type]").each(function() {
             var currentElement = $(this).val();
             if(Habit.type === currentElement) {
-                $(this).attr("checked", true);
+                $(this).checked = true;
             }
         });
         $("#change_habit_main_id").val(Habit.id);
@@ -58,8 +62,8 @@ $(document).ready(function() {
         blocker = true;
         var modelId = '#' + $(this).attr("data-habit") + '';
         openModelFunction(modelId);
-        var habitId = $(this).parent().attr("id");
-        $("#"+habitId).remove();
+        var habitId = $(this).parent().parent().attr("id");
+        $("#"+habitId).remove().remove();
         $.getJSON(
             "../requestHabit?id="+habitId, 
             populateChangeHabitForm
@@ -67,14 +71,14 @@ $(document).ready(function() {
     });
 
     $("#overview_page").on("click",".habit-check", function() {
-        var habitId = $(this).parent().attr("id");
+        var habitId = $(this).parent().parent().attr("id");
         $.getJSON(
             "../habitDone?id="+habitId, 
         );
     });
 
     $("#overview_page").on("click",".delete-habit", function() {
-        var habitId = $(this).parent().attr("id");
+        var habitId = $(this).parent().parent().attr("id");
         $("#"+habitId).remove();
         $.getJSON(
             "../removeHabit?id="+habitId, 
@@ -142,17 +146,6 @@ $(document).ready(function() {
                 console.log("You should close a page");
             }
         }
-        //$(this.attr("id"))
-        // if($(this).find("li").hasClass(".page-active")) {
-        //     $(this).find("li").removeClass(".page-active");
-        //     console.log("Page is no longer active");
-        // }else if(openScreens < maxOpenScreenDec) {
-        //     $(this).find("li").addClass(".page-active");
-        //     ++openScreens;
-        //     console.log("Page is now active");
-        // }else if(openScreens == maxOpenScreenDec){
-        //     console.log("Too many pages active. Close one first.");
-        // }
     });
 
     $("a").on("click", function(event) {
@@ -172,4 +165,23 @@ $(document).ready(function() {
         e.stopImmediatePropagation();
         $(this).toggleClass("label-trigger-state");
     });
+
+    $(".login-span,.register-span").on("click",function(){
+        var form = $(this).find("a").attr("data-form");
+        if(form == "login_form") {
+            if($("#register_form").hasClass("show")) {
+                $("#register_form").removeClass("show");
+                $("#register_form").addClass("hidden");
+                if($("#login_form").hasClass("hidden")) {
+                    $("#login_form").removeClass("hidden");
+                    $("#login_form").addClass("show");
+                }
+            }
+        } else {
+            $("#register_form").toggleClass("show");
+            $("#login_form").toggleClass("show");
+        }
+        console.log();
+        console.log($(this).first().attr("data-form"))
+    })
 });
