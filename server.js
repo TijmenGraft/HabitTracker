@@ -19,6 +19,26 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
+var con = mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "Kungfu1998",
+    database: "habitsdatabase"
+});
+
+con.connect(function(err){
+    if(err) {
+        console.log(err);
+    }
+    var query = "SELECT * FROM user";
+    con.query(query, function(err,result) {
+        if(err) {
+            console.log(err);
+        }
+        console.log("test"+result);
+    })
+});
+
 //global variablesid, firstName, middleName, surname, age, gender, bank, articles
 var nextHabitId = 4;
 
