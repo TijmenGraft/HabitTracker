@@ -1,48 +1,31 @@
 nav {
 	overflow: auto;
 	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	flex-wrap: nowrap;
+	flex-direction: row;
+	box-shadow: 0px 10px 5px #aaaaaa;
+}
+
+nav ul {
+	flex-grow: 2;
+	display: inline-flex;
+	justify-content: flex-end;
 }
 
 nav ul li {
-	font-size: 30pt;
-	margin-right: 0.5em;
-	background-color: transparent;
-	float: right;
-}
-
-.main-menu li:hover {
-	background-color: #3B7886;
-	-webkit-transition: background-color 500ms linear;
-	-ms-transition: background-color 500ms linear;
-	transition: background-color 500ms linear;
-}
-
-.nav-menu li:hover {
-	background-color: #1F4660;
-	-webkit-transition: background-color 500ms linear;
-	-ms-transition: background-color 500ms linear;
-	transition: background-color 500ms linear;
-}
-
-nav .main-menu {
-	overflow: auto;
-	width: 100%;	
-	padding-top: 1.5em;
-	background-color: #1F4660;
-}
-
-nav .main-menu li:first-child {
-	float: left !important;
-}
-
-nav .nav-menu {
-	overflow: auto;
-	width: 100%;
-	background-color: #3B7886;
-}
-
-.nav-menu li {
 	font-size: 24pt;
+	margin: 0 1%;
+	text-align: center;
+}
+
+nav ul li a:hover {
+	border-bottom: 5px solid transparent;
+	border-image: linear-gradient(to right, green); /*TODO*/
+	border-image-slice: 1;
+	transition: border-width 100ms ease-in;
 }
 
 main {
@@ -61,6 +44,17 @@ main {
 
 .fancy-circle img {
 	max-width: 100%;
+}
+
+.fancy-circle img:hover {
+	position: relative;
+	animation: bounce 750ms infinite;
+	animation-direction: alternate;
+}
+
+@keyframes bounce {
+	0% { bottom: 0; }
+	100% { bottom: 1em; }
 }
 
 .register-big {
