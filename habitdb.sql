@@ -118,4 +118,19 @@ INSERT INTO habit VALUES(1,1,"going to school",1,"We need to get wiser","2017-12
 INSERT INTO habit VALUES(2,2,"Do 100 pushups",1,"To get ready for summer we need do excersise now","2017-12-15","2017-6-5");
 INSERT INTO habit VALUES(3,2,"Walk a mile a day",1,"It is said that if you walk a mile a day you keep the cancer away","2017-12-15","2018-12-15");
 INSERT INTO habit VALUES(4,null,"Going with the bike to school","2017-12-15","2018-12-15")
-
+/*Giving all habits frequencys*/
+INSERT INTO frequency VALUES(1,1);
+INSERT INTO frequency VALUES(1,2);
+INSERT INTO frequency VALUES(1,3);
+INSERT INTO frequency VALUES(2,1);
+INSERT INTO frequency VALUES(3,5);
+INSERT INTO frequency VALUES(3,4);
+INSERT INTO frequency VALUES(4,1);
+INSERT INTO frequency VALUES(4,2);
+INSERT INTO frequency VALUES(4,3);
+INSERT INTO frequency VALUES(4,4);
+INSERT INTO frequency VALUES(4,5);
+INSERT INTO frequency VALUES(4,6);
+INSERT INTO frequency VALUES(4,7);
+INSERT INTO frequency VALUES(5,2);
+INSERT INTO frequency VALUES(5,4);

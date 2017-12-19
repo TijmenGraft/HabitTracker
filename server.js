@@ -13,84 +13,57 @@ const util = require("util");
 const mysql = require("mysql");
 var app = express();
 
+var con = mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "Kungfu1998",
+    database: "habitdatabase"
+});
+
 app.use(express.static(__dirname + '/client'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: true
 }));
 
-//global variablesid, firstName, middleName, surname, age, gender, bank, articles
-var nextHabitId = 4;
 
-var users = [];
-var user1 = {
-    traits: {
-        id: 0,
-        firstName: "Tijmen",
-        middleName: "van",
-        surName: "Graft",
-        age: "19",
-        gender: "male",
-        categoryList: [],
-        bank: 0,
-        articles: []
-    }
-}
-users.push(user1);
+/* SETTING UP
+* this is the most important method of our application
+* this sets up the db connection and fetches all the data from the db
+* this also makes sure that they are formatted correctly
+* this is an asychronozid method
+* this calls to other function that manipulate with the sql data
+* the methods are toHabit and getTimes
+*/
+var nextHabitId = 9999;
+var sqlHabits = [];
+(function setUp() {
+    console.log("Setting up storage");
+    var maxID = "SELECT habit_id FROM habit ORDER BY habit_id DESC LIMIT 1;";
+    con.query(maxID, function(err, result) {
+        if(err) {
+            console.log(err)
+        }
+        nextHabitId = ++result[0].habit_id;
+    }) ;
+    var query = "SELECT H.habit_id, H.title, H.type, HC.title AS category, H.description, H.startdate, H.enddate FROM habit AS H JOIN habitlistcatelog AS HC ON H.in_list_id = HC.habit_list_id WHERE H.in_list_id IS NOT NULL";
+    con.query(query, function(err,result) {
+        if(err) {
+            console.log(err);
+        }
+        for(var i = 0; i < result.length; ++i) {
+            var habit = toHabit(result[i]);
+            var id = habit.id;
+            var frequency = getTimes(id);
+            sqlHabits.push(habit);
+        }
+    });
+})();
 
-var habits = [];
-    var h1 = {
-        id: 0,
-        name: "Jog everyday",
-        type: "1",
-        category: "sports",
-        frequency: "[ma,tu]",
-        description: "I need to jog everyday",
-        startDate: "5-12-2017",
-        endDate: "5-12-2018",
-        checkDate: []
-    };
-    var h2 = {
-        id: 1,
-        name: "Stop gaming",
-        type: "0",
-        category: "gaming",
-        frequency: "[ma,tu,we,th,fr,sat,sun]",
-        description: "I need to stop gaming so often",
-        startDate: "5-12-2017",
-        endDate: "5-12-2018",
-        checkDate: []
-    };
-    var h3 = {
-        id: 2,
-        name: "Take the stairs",
-        type: "1",
-        category: "walking",
-        frequency: "[ma,tu,we,th,fr,sat,sun]",
-        description: "I need to stop gaming so often",
-        startDate: "5-12-2017",
-        endDate: "5-12-2018",
-        checkDate: []
-    };
-    var h4 = {
-        id: 3,
-        name: "Go to the gym",
-        type: "1",
-        category: "sports",
-        frequency: "[ma,tu]",
-        description: "A great man with great responsibilities",
-        startDate: "10-12-2017",
-        endDate: "15-12-2017",
-        checkDate: []
-    };
-    habits.push(h1);
-    habits.push(h2);
-    habits.push(h3);
-    habits.push(h4);
 
 var habitsDataIdContains = function(id) {
-    for(var i = 0; i < habits.length; i++) {
-        if(habits[i].id == id) {
+    for(var i = 0; i < sqlHabits.length; i++) {
+        if(sqlHabits[i].id == id) {
             return true;
         }
     }
@@ -98,8 +71,8 @@ var habitsDataIdContains = function(id) {
 }
 
 var habitsPosition = function(id) {
-    for(var i = 0; i < habits.length; i++) {
-        if(habits[i].id == id) {
+    for(var i = 0; i < sqlHabits.length; i++) {
+        if(sqlHabits[i].id == id) {
             return i;
         }
     }
@@ -107,13 +80,59 @@ var habitsPosition = function(id) {
 }
 
 var selectHabitById = function(id) {
-    for(var i = 0; i < habits.length; i++) {
-        if(habits[i].id == id) {
-            return habits[i];
+    for(var i = 0; i < sqlHabits.length; i++) {
+        if(sqlHabits[i].id == id) {
+            return sqlHabits[i];
         }
     }
     return false;
 }
+
+var checkIfCategoryExsits = function(category) {
+    for(var i = 0; i < sqlHabits.length; ++i) {
+        if(sqlHabits[i].category == category) {
+            return true;
+        }
+    }
+    return false;
+}
+/* DATA MANIPULATION
+* toHabit: gets a sequal row and start progressing also compatible with other type of json formats of the habit
+* will not give a frequency to it another method will do that
+
+* getTimes: will add the frequency to the habit it requires the id of the desired habit 
+
+* habitHadnelingFormData: handels the form data from a user and makes a habit of it
+*/
+var toHabit = function(data) {
+    var habit = {
+        id: data.habit_id,
+        name: data.title,
+        type: data.type,
+        category: data.category,
+        frequency: [],
+        description: data.description,
+        startDate: data.startdate,
+        endDate: data.enddate
+    }
+    return habit;
+}
+
+var getTimes = function(id) {
+    var frequency = [];
+    var selectFrequency = 'SELECT D.date_name FROM frequency AS F JOIN dates AS D ON F.date_id = D.date_id WHERE F.habit_id = ? ORDER BY F.date_id ASC';
+    con.query(selectFrequency, [id], function(err, result) {
+        if(err) {
+            console.log(err)
+        }
+        for(var i2 = 0; i2< result.length; ++i2) {
+            frequency.push(result[i2].date_name)
+        }
+        sqlHabits[habitsPosition(id)].frequency = frequency;
+    });
+}
+
+
 
 var habitHandelingFormData = function(id,data) {
     var frequencyArr = [];
@@ -148,6 +167,55 @@ var habitHandelingFormData = function(id,data) {
     return habit;
 }
 
+var test = function(x) {
+    console.log("test" + x);
+}
+
+var sqlInsertHabit = function(exsits, habit, callback) {
+    callback();
+    var inlist = 0;
+    if(!exsits) {
+        var addCat = "INSERT INTO habitlistcatelog (owned_by,title) VALUES ?";
+        values = [
+            ["1",habit.category]
+        ];
+        con.query(addCat, [values], function(err,result) {
+            if(err) {
+                console.log(err);
+            }
+            inlist = result.insertId;
+            callback(inlist,habit.id);
+        });
+    } else {
+        var selectCat = "SELECT habit_list_id FROM habitlistcatelog WHERE title = ?"
+        con.query(selectCat, [habit.category], function(err,result) {
+            if(err) {
+                console.log(err);
+            }
+            inlist = result[0].habit_list_id;
+            callback(inlist,habit.id);
+        }) 
+    }
+    var insertQuery = "INSERT INTO habit VALUES ?";
+    var values = [
+        [ habit.id, null, habit.name, habit.type, habit.description, habit.startdate, habit.endDate ]
+    ];
+    con.query(insertQuery, [values], function(err,result) {
+        if(err) {
+            console.log(err);
+        }
+    });
+};
+
+var setInList = function(list_id,habit_id) {
+    var updateListId = "UPDATE habit SET in_list_id = ? WHERE habit_id = ?";
+    con.query(updateListId,[list_id,habit_id], function(err,result) {
+        if(err) {
+            console.log(err);
+        }
+    });
+};
+
 app.get("/",function(req,res) {
 	console.log(req.url);
 	if (req.method.toLowerCase() == 'get') {
@@ -160,15 +228,17 @@ app.get("/",function(req,res) {
 });
 
 app.get("/showHabits", function(req, res) {
-    res.json(habits);
+    res.json(sqlHabits);
 });
 
 app.post("/addHabit", function(req,res){
     var formObj = JSON.stringify(req.body);
     var JsonObj = JSON.parse(formObj);
+    var newCat = checkIfCategoryExsits(JsonObj[1].value);
     var newHabit = habitHandelingFormData(nextHabitId,JsonObj);
     ++nextHabitId;
-    habits.push(newHabit);
+    sqlInsertHabit(newCat, newHabit, setInList);
+    sqlHabits.push(newHabit);
     res.send(formObj);
 });
 
@@ -193,14 +263,8 @@ app.post("/update", function(req, res) {
     JsonObj.splice(0,1);
     var updateHabit = habitHandelingFormData(id,JsonObj);
     var position = habitsPosition(id);
-    console.log(position);
-    console.log("BEFORE \n");
-    console.log(habits);
-    habits.splice(position,1);
-    habits.splice(--position,0,updateHabit);
-    console.log("UPDATE \n")
-    console.log(habits);
-
+    sqlHabits.splice(position,1);
+    sqlHabits.splice(--position,0,updateHabit);
     res.send(updateHabit);
 });
 
@@ -228,7 +292,11 @@ app.get("/habitDone", function(req,res) {
 app.get("/removeHabit", function(req,res) {
     var habitId = req.query.id;
     var position = habitsPosition(habitId);
-    habits.splice(position,1);
+    sqlHabits.splice(position,1);
+    var deleteQuery = "DELETE FROM habit WHERE habit_id = ?";
+    con.query(deleteQuery, [habitId], function(err,result) {
+        console.log(result.affectedRows)
+    });
 });
 
 app.post("/register", function(req,res) {
