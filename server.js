@@ -473,8 +473,22 @@ app.get("/analytics", function(req,res) {
         if(err){console.log(err)}
             console.log(result);
         var temp = [];
+        for(var i = 0; i < 7; ++i) {
+            var d = new Date();
+            d.setDate(d.getDate()-i);
+            var endMonth = d.getMonth();
+            var endDate = d.getFullYear() + "-" + (++endMonth) + "-" + d.getDate();
+            temp.push([endDate,0])
+        }
         for(var i = 0; i < result.length; ++i) {
-            temp.push([result[i].startdate,result[i].newHabits]);
+            var d = new Date(result[i].startdate);
+            for(var x = 0; x < temp.length; ++x) {
+                var checkDate = new Date(temp[x][0]);
+                if(checkDate.getTime() == d.getTime()) {
+                    temp[x][1] == result[i].newHabits;
+                    console.log(true)
+                }
+            }
             if(i == result.length-1) {
                 analyticData.habitsPastSevenDays = temp;
             }
