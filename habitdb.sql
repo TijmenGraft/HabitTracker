@@ -49,7 +49,7 @@ CREATE TABLE IF NOT EXISTS dates(
 
 CREATE TABLE IF NOT EXISTS habit_done(
 	habit_id int(6),
-	date_done int(6),
+	date_done date,
 	bonus boolean DEFAULT 0,
 	CONSTRAINT PK_HABIT_ID_DATE_DONE PRIMARY KEY(habit_id,date_done)
 );
@@ -58,7 +58,7 @@ CREATE TABLE IF NOT EXISTS frequency(
 	habit_id int(6),
 	date_id int(6),
 	CONSTRAINT PK_HABIT_ID_DATE_ID PRIMARY KEY(habit_id,date_id),
-	CONSTRAINT FK_HABIT_ID FOREIGN KEY(habit_id) REFERENCES habit(habit_id),
+	CONSTRAINT FK_HABIT_ID FOREIGN KEY(habit_id) REFERENCES habit(habit_id) ON DELETE CASCADE,
 	CONSTRAINT FK_DATE_ID FOREIGN KEY(date_id) REFERENCES dates(date_id)
 );
 
@@ -76,7 +76,7 @@ CREATE TABLE IF NOT EXISTS article(
 	article_description text,
 	article_price int(6) NOT NULL,
 	CONSTRAINT PK_ARTICLE_ID PRIMARY KEY(article_id),
-	CONSTRAINT FK_CATEGORY_ID FOREIGN KEY(category_id) REFERENCES article_category(category_id),
+	CONSTRAINT FK_CATEGORY_ID FOREIGN KEY(category_id) REFERENCES article_category(category_id) ,
 	CONSTRAINT CH_ARTICLE_PRICE CHECK (article_price > 0)
 );
 
@@ -110,14 +110,14 @@ INSERT INTO dates VALUES(7,"su","sunday");
 /*Creating on user to try shit out*/
 INSERT INTO users (username,password,email,firstname,middlename,lastname,gender,age) VALUES("tijmen","kungfu1998","tijmengraft@gmail.com","tijmen","van","graft","male",19);
 /*Creating 2 habitlist*/
-INSERT INTO habitlistcatelog VALUES(0,1,"general","A small little description of the general habit catelog");
-INSERT INTO habitlistcatelog VALUES(1,1,"sport","A small little description of the sport habit catelog");
+INSERT INTO habitlistcatelog(owned_by,title,description) VALUES(1,"general","A small little description of the general habit catelog");
+INSERT INTO habitlistcatelog(owned_by,title,description) VALUES(2,1,"sport","A small little description of the sport habit catelog");
 /*Creating five habits 4 beloning to a catelog and one to the backlog*/
-INSERT INTO habit VALUES(0,1,"sleeping",1,"Sleeping is an important thing in your life","2017-12-15","2018-12-15");
-INSERT INTO habit VALUES(1,1,"going to school",1,"We need to get wiser","2017-12-15","2017-8-15");
-INSERT INTO habit VALUES(2,2,"Do 100 pushups",1,"To get ready for summer we need do excersise now","2017-12-15","2017-6-5");
-INSERT INTO habit VALUES(3,2,"Walk a mile a day",1,"It is said that if you walk a mile a day you keep the cancer away","2017-12-15","2018-12-15");
-INSERT INTO habit VALUES(4,null,"Going with the bike to school","2017-12-15","2018-12-15")
+INSERT INTO habit(in_list_id,title,type,description,startdate,enddate) VALUES(1,"sleeping",1,"Sleeping is an important thing in your life","2017-12-15","2018-12-15");
+INSERT INTO habit(in_list_id,title,type,description,startdate,enddate) VALUES(1,"going to school",1,"We need to get wiser","2017-12-15","2017-8-15");
+INSERT INTO habit(in_list_id,title,type,description,startdate,enddate) VALUES(2,"Do 100 pushups",1,"To get ready for summer we need do excersise now","2017-12-15","2017-6-5");
+INSERT INTO habit(in_list_id,title,type,description,startdate,enddate) VALUES(2,"Walk a mile a day",1,"It is said that if you walk a mile a day you keep the cancer away","2017-12-15","2018-12-15");
+INSERT INTO habit(in_list_id,title,type,description,startdate,enddate) VALUES(null,"Going with the bike to school","2017-12-15","2018-12-15");
 /*Giving all habits frequencys*/
 INSERT INTO frequency VALUES(1,1);
 INSERT INTO frequency VALUES(1,2);
@@ -132,5 +132,3 @@ INSERT INTO frequency VALUES(4,4);
 INSERT INTO frequency VALUES(4,5);
 INSERT INTO frequency VALUES(4,6);
 INSERT INTO frequency VALUES(4,7);
-INSERT INTO frequency VALUES(5,2);
-INSERT INTO frequency VALUES(5,4);

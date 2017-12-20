@@ -57,13 +57,13 @@
 								<input class="habit-radio" name="habit_form_type" id="habit_main_type" type="radio" value="0">Bad
 
 								<label for="habit_main_frequency" aria-label="habit_main_frequency">Frequency:</label>
-								<input class="habit-radio" name="habit_form_frequency" type="checkbox" value="ma" checked>Monday
+								<input class="habit-radio" name="habit_form_frequency" type="checkbox" value="mo" checked>Monday
 								<input class="habit-radio" name="habit_form_frequency" type="checkbox" value="tu">Tuesday
 								<input class="habit-radio" name="habit_form_frequency" type="checkbox" value="we">Wednesday
 								<input class="habit-radio" name="habit_form_frequency" type="checkbox" value="th">Thursday
 								<input class="habit-radio" name="habit_form_frequency" type="checkbox" value="fr">Friday
-								<input class="habit-radio" name="habit_form_frequency" type="checkbox" value="sat">Saturday
-								<input class="habit-radio" name="habit_form_frequency" type="checkbox" value="sun">Sunday
+								<input class="habit-radio" name="habit_form_frequency" type="checkbox" value="sa">Saturday
+								<input class="habit-radio" name="habit_form_frequency" type="checkbox" value="su">Sunday
 				
 								<label for="habit_main_description" aria-label="habit_main_description">Description:</label>
 								<input class="habit-input" value="little text" name="habit_form_description" placeholder="A short description of the habit" id="habit_main_description" type="text"/>
@@ -92,18 +92,15 @@
 
 								<label for="change_habit_main_category" aria-label="change_habit_main_category">Habit category:</label>
 								<input class="habit-input" list="category_list_habit" name="habit_form_category" placeholder="Habit category" id="change_habit_main_category" type="text"/>
+
+								<label class="show" for="good_main_type" aria-label="good_main_type">Good</label>
+								<input class="change-habit-radio" name="change_habit_form_type" id="good_main_type" type="radio" value="1">
 								
-								<fieldset class="radio-button-group-horizontal change-habit-group">
-									<label class="show label-left" for="good_main_type" aria-label="good_main_type">Good
-										<input class="change-habit-radio" name="change_habit_form_type" id="good_main_type" type="radio" value="1">
-									</label>
-									<label class="show label-right" for="bad_main_type" aria-label="good_main_type">Bad
-										<input class="change-habit-radio" name="change_habit_form_type" id="change_habit_main_type" type="radio" value="0">
-									</label>
-								</fieldset>
+								<label class="show" for="bad_main_type" aria-label="good_main_type">Bad	</label>
+								<input class="change-habit-radio" name="change_habit_form_type" id="change_habit_main_type" type="radio" value="0">
 
 								<label class="show" for="mo_main_frequency" aria-label="mo_main_frequency">Mo</label>
-								<input class="change-habit-radio" id="mo_main_frequency" name="change_habit_form_frequency" type="checkbox" value="ma">
+								<input class="change-habit-radio" id="mo_main_frequency" name="change_habit_form_frequency" type="checkbox" value="mo">
 
 								<label class="show" for="tu_main_frequency" aria-label="tu_main_frequency">Tu</label>
 								<input class="change-habit-radio" id="tu_main_frequency" name="change_habit_form_frequency" type="checkbox" value="tu">
@@ -118,10 +115,10 @@
 								<input class="change-habit-radio" id="fr_main_frequency" name="change_habit_form_frequency" type="checkbox" value="fr">
 
 								<label class="show" for="sa_main_frequency" aria-label="sa_main_frequency">Sa</label>
-								<input class="change-habit-radio" id="sa_main_frequency" name="change_habit_form_frequency" type="checkbox" value="sat">
+								<input class="change-habit-radio" id="sa_main_frequency" name="change_habit_form_frequency" type="checkbox" value="sa">
 
 								<label class="show" for="su_main_frequency" aria-label="su_main_frequency">Su</label>
-								<input class="change-habit-radio" id="su_main_frequency" name="change_habit_form_frequency" type="checkbox" value="sun">
+								<input class="change-habit-radio" id="su_main_frequency" name="change_habit_form_frequency" type="checkbox" value="su">
 								
 				
 								<label for="change_habit_main_description" aria-label="change_habit_main_description">Description:</label>

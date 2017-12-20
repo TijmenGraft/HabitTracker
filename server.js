@@ -41,8 +41,9 @@ var analyticData = {
         sa: 0,
         su: 0
     },
-
 }
+var test = "totalHabit";
+console.log("Test" + analyticData.totalHabitOnDay.ma)
 
 app.use(express.static(__dirname + '/client'));
 app.use(bodyParser.json());
@@ -137,7 +138,8 @@ var toHabit = function(data) {
         frequency: [],
         description: data.description,
         startDate: data.startdate,
-        endDate: data.enddate
+        endDate: data.enddate,
+        checkDate: []
     }
     return habit;
 }
@@ -191,12 +193,8 @@ var habitHandelingFormData = function(id,data) {
     return habit;
 }
 
-var test = function(x) {
-    console.log("test" + x);
-}
 
 var sqlInsertHabit = function(exsits, habit, callback, callbackFreq) {
-    callbackFreq(habit.id,habit.frequency);
     var inlist = 0;
     if(!exsits) {
         var addCat = "INSERT INTO habitlistcatelog (owned_by,title) VALUES ?";
@@ -228,8 +226,37 @@ var sqlInsertHabit = function(exsits, habit, callback, callbackFreq) {
         if(err) {
             console.log(err);
         }
+        callbackFreq(habit.id,habit.frequency);
     });
 };
+
+var sqlUpdateHabit = function(exsists,habit,callbackDeleteFrequency,callbackUpdateHabitlist,callbackSetInList) {
+    callbackDeleteFrequency(habit.id,habit.frequency,setFrequency);
+    callbackUpdateHabitlist(exsists,habit,callbackSetInList);
+    var updateHabit = "UPDATE habit SET title = ?, type = ?, description = ? WHERE habit_id = ?";
+    con.query(updateHabit, [habit.name,habit.type,habit.description,habit.id], function(err,result) {
+        if(err){console.log(err);}
+        console.log(result.affectedRows);
+    })
+}
+
+var sqlHabitDone = function(habit,date) {
+    var daysOfWeek = ["mo","tu","we","th","fr","sa","su"];
+    var bonus = false;
+    if(habit.frequency.indexOf(daysOfWeek[date.getDay()]) == -1) {
+        bonus = true;
+    }
+    var month = date.getMonth();
+    var sqlDateFormat = date.getFullYear() + "-" + (++month) + "-" + date.getDate();
+    var insertHabitDoneQuery = "INSERT INTO habit_done VALUES ?";
+    var values = [
+        [habit.id,sqlDateFormat,bonus]
+    ];
+    con.query(insertHabitDoneQuery, [values], function(err,result) {
+        if(err){ console.log(err);}
+        console.log(result.affectedRows);
+    });
+}
 
 var setInList = function(list_id,habit_id) {
     var updateListId = "UPDATE habit SET in_list_id = ? WHERE habit_id = ?";
@@ -243,6 +270,9 @@ var setInList = function(list_id,habit_id) {
 var setFrequency = function(id,habitFrequency) {
     var insertFrequency = "INSERT INTO frequency VALUES (?, (SELECT date_id FROM dates WHERE date_name = ?))";
     for(var i = 0; i < habitFrequency.length; ++i) {
+        if(habitFrequency[i] == "ma") {
+            habitFrequency[i] = "mo";
+        }
         con.query(insertFrequency, [id,habitFrequency[i]], function(err,result) {
             if(err) {
                 console.log(err);
@@ -251,6 +281,41 @@ var setFrequency = function(id,habitFrequency) {
         })
     }
 };
+
+var deleteFrequency = function(id,habitFrequency,callbackSetFrequency) {
+    var deleteFrequencyQuery = "DELETE FROM frequency WHERE habit_id = ?";
+    con.query(deleteFrequencyQuery,[id], function(err,result) {
+        if(err){console.log(err);}
+        console.log(result);
+        if(callbackSetFrequency && habitFrequency) {
+            callbackSetFrequency(id,habitFrequency);
+        }
+    });
+};
+
+var updateHabitList = function(exsits,habit,callbackSetInList) {
+    var inlist = 0;
+    if(!exsits) {
+        var addCat = "INSERT INTO habitlistcatelog (owned_by,title) VALUES ?";
+        values = [
+            ["1",habit.category]
+        ];
+        con.query(addCat, [values], function(err,result) {
+            if(err) { console.log(err); }
+            inlist = result.insertId;
+            callbackSetInList(inlist,habit.id);
+        });
+    } else {
+        var selectCat = "SELECT habit_list_id FROM habitlistcatelog WHERE title = ?"
+        con.query(selectCat, [habit.category], function(err,result) {
+            if(err) {
+                console.log(err);
+            }
+            inlist = result[0].habit_list_id;
+            callbackSetInList(inlist,habit.id);
+        }) 
+    }
+}
 
 var analyticsDataHandel = function() {
 
@@ -302,6 +367,8 @@ app.post("/update", function(req, res) {
     var id = JsonObj[0].value;
     JsonObj.splice(0,1);
     var updateHabit = habitHandelingFormData(id,JsonObj);
+    var newCat = checkIfCategoryExsits(JsonObj[1].value);
+    sqlUpdateHabit(newCat,updateHabit,deleteFrequency,updateHabitList,setInList);
     var position = habitsPosition(id);
     sqlHabits.splice(position,1);
     sqlHabits.splice(--position,0,updateHabit);
@@ -318,7 +385,7 @@ app.get("/habitDone", function(req,res) {
     var year = today.getFullYear();
     var input = day + "-" + month + "-" + year;
     selectedHabit.checkDate.push(input);
-    console.log(selectedHabit.checkDate);
+    sqlHabitDone(selectedHabit,today);
     if(selectedHabit === false) {
         res.status(404).json({
             error: "Couldnt update the habit"
@@ -326,7 +393,6 @@ app.get("/habitDone", function(req,res) {
     } else {
         res.json("Checked successfull");
     }
-    console.log("Request habitdone with: "+habitId);
 });
 
 app.get("/removeHabit", function(req,res) {
@@ -335,6 +401,7 @@ app.get("/removeHabit", function(req,res) {
     sqlHabits.splice(position,1);
     var deleteQuery = "DELETE FROM habit WHERE habit_id = ?";
     con.query(deleteQuery, [habitId], function(err,result) {
+        if(err){console.log(err);}
         console.log(result.affectedRows)
     });
 });
@@ -363,13 +430,14 @@ app.post("/login", function(req,res) {
 app.get("/analytics", function(req,res) {
     var days = [1,2,3,4,5,6,7];
     //COUNT ALL THE HABITS
-    var countHabits = "SELECT COUNT(*) FROM habit";
+    var countHabits = "SELECT COUNT(*) AS allHabits FROM habit";
     con.query(countHabits, function(err,result) {
         if(err) { console.log(err); }
+        analyticData.totalHabit = result[0].allHabits;
         console.log(result[0])
     });
     //COUNT ALL THE HABITS WHO NEED TO BE DONE ON A CERTAIN DAY
-    var countHabitsOnDay = "SELECT COUNT(habit_id) FROM frequency WHERE date_id = ?";
+    var countHabitsOnDay = "SELECT COUNT(habit_id) as allHabitsOnDay FROM frequency WHERE date_id = ?";
     for(var i = 0; i < days.length; ++i) {
         con.query(countHabitsOnDay, [days[i]], function(err,result){
             if(err) {console.log(err)}
@@ -377,13 +445,13 @@ app.get("/analytics", function(req,res) {
         });
     }
     //COUNT ALL THE COMPLETED HABITS 
-    var countCompletedHabits = "SELECT COUNT(*) FROM habit_done";
-    con.query(completedHabits, function(err,result) {
+    var countCompletedHabits = "SELECT COUNT(*) AS completedHabits FROM habit_done";
+    con.query(countCompletedHabits, function(err,result) {
         if(err) {console.log(err)}
         console.log(result[0]);
     });
     //COUNT ALL THE COMPLETED HABITS COMPLETED ON A CERTAIN DAY
-    var countCompletedHabitsOnDay = "SELECT COUNT(habit_id) FROM habit_done WHERE date_done = ?";
+    var countCompletedHabitsOnDay = "SELECT COUNT(habit_id) AS completedHabitsOnDay FROM habit_done WHERE date_done = ?";
     for(var i = 0; i < days.length; ++i) {
         con.query(countCompletedHabitsOnDay, [days[i]], function(err,result) {
             if(err) {console.log(err)}
