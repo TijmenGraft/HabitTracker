@@ -20,6 +20,30 @@ var con = mysql.createConnection({
     database: "habitdatabase"
 });
 
+var analyticData = {
+    totalHabit: 0,
+    totalHabitOnDay: {
+        ma: 0,
+        tu: 0,
+        we: 0,
+        th: 0,
+        fr: 0,
+        sa: 0,
+        su: 0
+    },
+    habitsCompleted: 0,
+    habitsCompletedOnDay: {
+        ma: 0,
+        tu: 0,
+        we: 0,
+        th: 0,
+        fr: 0,
+        sa: 0,
+        su: 0
+    },
+
+}
+
 app.use(express.static(__dirname + '/client'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -171,8 +195,8 @@ var test = function(x) {
     console.log("test" + x);
 }
 
-var sqlInsertHabit = function(exsits, habit, callback) {
-    callback();
+var sqlInsertHabit = function(exsits, habit, callback, callbackFreq) {
+    callbackFreq(habit.id,habit.frequency);
     var inlist = 0;
     if(!exsits) {
         var addCat = "INSERT INTO habitlistcatelog (owned_by,title) VALUES ?";
@@ -216,6 +240,22 @@ var setInList = function(list_id,habit_id) {
     });
 };
 
+var setFrequency = function(id,habitFrequency) {
+    var insertFrequency = "INSERT INTO frequency VALUES (?, (SELECT date_id FROM dates WHERE date_name = ?))";
+    for(var i = 0; i < habitFrequency.length; ++i) {
+        con.query(insertFrequency, [id,habitFrequency[i]], function(err,result) {
+            if(err) {
+                console.log(err);
+            }
+            console.log(result);
+        })
+    }
+};
+
+var analyticsDataHandel = function() {
+
+};
+
 app.get("/",function(req,res) {
 	console.log(req.url);
 	if (req.method.toLowerCase() == 'get') {
@@ -237,7 +277,7 @@ app.post("/addHabit", function(req,res){
     var newCat = checkIfCategoryExsits(JsonObj[1].value);
     var newHabit = habitHandelingFormData(nextHabitId,JsonObj);
     ++nextHabitId;
-    sqlInsertHabit(newCat, newHabit, setInList);
+    sqlInsertHabit(newCat, newHabit, setInList, setFrequency);
     sqlHabits.push(newHabit);
     res.send(formObj);
 });
@@ -318,6 +358,38 @@ app.post("/login", function(req,res) {
 	var username = req.body.login_form_username; //continue here
     var password = req.body.login_form_password;
     console.log(username + " " + password);
+});
+
+app.get("/analytics", function(req,res) {
+    var days = [1,2,3,4,5,6,7];
+    //COUNT ALL THE HABITS
+    var countHabits = "SELECT COUNT(*) FROM habit";
+    con.query(countHabits, function(err,result) {
+        if(err) { console.log(err); }
+        console.log(result[0])
+    });
+    //COUNT ALL THE HABITS WHO NEED TO BE DONE ON A CERTAIN DAY
+    var countHabitsOnDay = "SELECT COUNT(habit_id) FROM frequency WHERE date_id = ?";
+    for(var i = 0; i < days.length; ++i) {
+        con.query(countHabitsOnDay, [days[i]], function(err,result){
+            if(err) {console.log(err)}
+            console.log(result[0])
+        });
+    }
+    //COUNT ALL THE COMPLETED HABITS 
+    var countCompletedHabits = "SELECT COUNT(*) FROM habit_done";
+    con.query(completedHabits, function(err,result) {
+        if(err) {console.log(err)}
+        console.log(result[0]);
+    });
+    //COUNT ALL THE COMPLETED HABITS COMPLETED ON A CERTAIN DAY
+    var countCompletedHabitsOnDay = "SELECT COUNT(habit_id) FROM habit_done WHERE date_done = ?";
+    for(var i = 0; i < days.length; ++i) {
+        con.query(countCompletedHabitsOnDay, [days[i]], function(err,result) {
+            if(err) {console.log(err)}
+            console.log(result[0]);
+        })
+    }
 });
 
 app.get("*", function(req,res){

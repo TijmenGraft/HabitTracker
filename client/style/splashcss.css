@@ -1,3 +1,7 @@
+.nav-wrapper {
+	height: 154px;
+}
+
 nav {
 	overflow: auto;
 	width: 100%;
@@ -23,9 +27,28 @@ nav ul li {
 
 nav ul li a:hover {
 	border-bottom: 5px solid transparent;
-	border-image: linear-gradient(to right, green); /*TODO*/
+	border-image: linear-gradient(to right, #3acfd5 0%, #3a4ed5 100%); /*TODO*/
 	border-image-slice: 1;
 	transition: border-width 100ms ease-in;
+}
+
+.smallNav {
+	background-color: #fff;
+	position: fixed;
+	top: 0;
+	z-index: 1;
+}
+
+.smallNav img {
+	display: none;
+}
+
+.smallNav ul {
+	justify-content: space-around;
+}
+
+.smallNav ul li {
+	padding: 0.5em 0;
 }
 
 main {

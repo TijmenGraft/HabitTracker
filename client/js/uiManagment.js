@@ -1,5 +1,6 @@
 $(document).ready(function() {
     var openModel = "";
+    var mainTopPosition = $("main").offset().top;
     window.blocker = false;
 
     $("input[type=checkbox]").on("click",function() {
@@ -151,8 +152,11 @@ $(document).ready(function() {
     $("a").on("click", function(event) {
         if(this.hash !== "") {
             var hash = this.hash;
+            var top = $(hash).offset().top;
+            top -= $("#topNav").height() * 0.5; 
+            console.log(top);
             $("html, body").animate({
-                scrollTop: $(hash).offset().top
+                scrollTop: top
             }, 800, function(){
                 window.location.hash = hash;
             });
@@ -170,18 +174,32 @@ $(document).ready(function() {
         var form = $(this).find("a").attr("data-form");
         if(form == "login_form") {
             if($("#register_form").hasClass("show")) {
-                $("#register_form").removeClass("show");
-                $("#register_form").addClass("hidden");
+                $("#register_form").removeClass("show").addClass("hidden");
+                $("#register_form").fadeOut(250, function() {console.log("form fadeOut")});
                 if($("#login_form").hasClass("hidden")) {
-                    $("#login_form").removeClass("hidden");
-                    $("#login_form").addClass("show");
+                    $("#login_form").removeClass("hidden").addClass("show");
+                    $("#login_form").fadeIn(250, function() {console.log("form fadeOut")});
                 }
             }
         } else {
-            $("#register_form").toggleClass("show");
-            $("#login_form").toggleClass("show");
+            $("#login_form").removeClass("show").addClass("hidden");
+            $("#login_form").fadeOut(250, function() {console.log("form fadeOut")});
+            if($("#register_form").hasClass("hidden")) {
+                $("#register_form").removeClass("hidden").addClass("show");
+                $("#register_form").fadeIn(250, function() {console.log("form fadeOut")});
+            }
         }
-        console.log();
-        console.log($(this).first().attr("data-form"))
+    });
+
+    $(document).scroll(function() {
+        if($(document).scrollTop() >= mainTopPosition && !($("#topNav").hasClass("smallNav"))) {
+            $("#topNav").slideDown("slow", function() {
+                console.log("test");
+                $("#topNav").toggleClass("smallNav");
+            });
+        } else if($(document).scrollTop() < mainTopPosition && $("#topNav").hasClass("smallNav")) {
+            console.log(false);
+            $("#topNav").toggleClass("smallNav");
+        }
     })
 });
