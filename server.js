@@ -22,28 +22,18 @@ var con = mysql.createConnection({
 
 var analyticData = {
     totalHabit: 0,
-    totalHabitOnDay: {
-        ma: 0,
-        tu: 0,
-        we: 0,
-        th: 0,
-        fr: 0,
-        sa: 0,
-        su: 0
-    },
+    totalHabitOnDay: [
+        0,0,0,0,0,0,0
+    ],
     habitsCompleted: 0,
-    habitsCompletedOnDay: {
-        ma: 0,
-        tu: 0,
-        we: 0,
-        th: 0,
-        fr: 0,
-        sa: 0,
-        su: 0
-    },
+    habitsCompletedOnDay: [
+        0,0,0,0,0,0,0
+    ],
+    habitsPastSevenDays: [
+    ]
 }
 var test = "totalHabit";
-console.log("Test" + analyticData.totalHabitOnDay.ma)
+console.log("Test" + analyticData.totalHabitOnDay[0])
 
 app.use(express.static(__dirname + '/client'));
 app.use(bodyParser.json());
@@ -317,6 +307,24 @@ var updateHabitList = function(exsits,habit,callbackSetInList) {
     }
 }
 
+var sqlAnalyticTotalHabitOnDAy = function(i,date) {
+    var countHabitsOnDay = "SELECT COUNT(habit_id) as allHabitsOnDay FROM frequency WHERE date_id = ?";
+    con.query(countHabitsOnDay, [date], function(err,result){
+        if(err) {console.log(err)}
+        analyticData.totalHabitOnDay[i] = result[0].allHabitsOnDay;
+        console.log(result[0])
+    });
+}
+
+var sqlAnalyticHabitDoneOnDay = function(i,date) {
+    var countCompletedHabitsOnDay = "SELECT COUNT(habit_id) AS completedHabitsOnDay FROM habit_done WHERE date_done = ?";
+    con.query(countCompletedHabitsOnDay, [date], function(err,result) {
+        if(err) {console.log(err)}
+        console.log(result[0]);
+        analyticData.habitsCompletedOnDay[i] = result[0].completedHabitsOnDay;
+    })
+}
+
 var analyticsDataHandel = function() {
 
 };
@@ -437,27 +445,42 @@ app.get("/analytics", function(req,res) {
         console.log(result[0])
     });
     //COUNT ALL THE HABITS WHO NEED TO BE DONE ON A CERTAIN DAY
-    var countHabitsOnDay = "SELECT COUNT(habit_id) as allHabitsOnDay FROM frequency WHERE date_id = ?";
     for(var i = 0; i < days.length; ++i) {
-        con.query(countHabitsOnDay, [days[i]], function(err,result){
-            if(err) {console.log(err)}
-            console.log(result[0])
-        });
+        sqlAnalyticTotalHabitOnDAy(i,days[i]);
     }
     //COUNT ALL THE COMPLETED HABITS 
     var countCompletedHabits = "SELECT COUNT(*) AS completedHabits FROM habit_done";
     con.query(countCompletedHabits, function(err,result) {
         if(err) {console.log(err)}
         console.log(result[0]);
+        analyticData.habitsCompleted = result[0].completedHabits;
     });
     //COUNT ALL THE COMPLETED HABITS COMPLETED ON A CERTAIN DAY
-    var countCompletedHabitsOnDay = "SELECT COUNT(habit_id) AS completedHabitsOnDay FROM habit_done WHERE date_done = ?";
     for(var i = 0; i < days.length; ++i) {
-        con.query(countCompletedHabitsOnDay, [days[i]], function(err,result) {
-            if(err) {console.log(err)}
-            console.log(result[0]);
-        })
+        sqlAnalyticHabitDoneOnDay(i,days[i]);
+        
     }
+    //COUNT ALL THE HABITS MADE ON A CERTAIN DAY
+    var d = new Date();
+    var startMonth = d.getMonth();
+    var startDate = d.getFullYear() + "-" + (++startMonth) + "-" + d.getDate();
+    d.setDate(d.getDate()-7);
+    var endMonth = d.getMonth();
+    var endDate = d.getFullYear() + "-" + (++endMonth) + "-" + d.getDate();
+    console.log()
+    var countHabitsMadeOnInterval = "SELECT COUNT(startdate) AS newHabits, startdate FROM habit WHERE startdate BETWEEN ? AND ? GROUP BY startdate"
+    con.query(countHabitsMadeOnInterval,[endDate,startDate],function(err,result) {
+        if(err){console.log(err)}
+            console.log(result);
+        var temp = [];
+        for(var i = 0; i < result.length; ++i) {
+            temp.push([result[i].startdate,result[i].newHabits]);
+            if(i == result.length-1) {
+                analyticData.habitsPastSevenDays = temp;
+            }
+        }
+    });
+    res.json(analyticData);
 });
 
 app.get("*", function(req,res){
