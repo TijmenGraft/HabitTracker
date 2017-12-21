@@ -111,13 +111,13 @@ INSERT INTO dates VALUES(7,"su","sunday");
 INSERT INTO users (username,password,email,firstname,middlename,lastname,gender,age) VALUES("tijmen","kungfu1998","tijmengraft@gmail.com","tijmen","van","graft","male",19);
 /*Creating 2 habitlist*/
 INSERT INTO habitlistcatelog(owned_by,title,description) VALUES(1,"general","A small little description of the general habit catelog");
-INSERT INTO habitlistcatelog(owned_by,title,description) VALUES(2,1,"sport","A small little description of the sport habit catelog");
+INSERT INTO habitlistcatelog(owned_by,title,description) VALUES(1,"sport","A small little description of the sport habit catelog");
 /*Creating five habits 4 beloning to a catelog and one to the backlog*/
 INSERT INTO habit(in_list_id,title,type,description,startdate,enddate) VALUES(1,"sleeping",1,"Sleeping is an important thing in your life","2017-12-15","2018-12-15");
 INSERT INTO habit(in_list_id,title,type,description,startdate,enddate) VALUES(1,"going to school",1,"We need to get wiser","2017-12-15","2017-8-15");
 INSERT INTO habit(in_list_id,title,type,description,startdate,enddate) VALUES(2,"Do 100 pushups",1,"To get ready for summer we need do excersise now","2017-12-15","2017-6-5");
 INSERT INTO habit(in_list_id,title,type,description,startdate,enddate) VALUES(2,"Walk a mile a day",1,"It is said that if you walk a mile a day you keep the cancer away","2017-12-15","2018-12-15");
-INSERT INTO habit(in_list_id,title,type,description,startdate,enddate) VALUES(null,"Going with the bike to school","2017-12-15","2018-12-15");
+INSERT INTO habit(in_list_id,title,type,description,startdate,enddate) VALUES(null,"Going with the bike to school",1,"sports is important","2017-12-15","2018-12-15");
 /*Giving all habits frequencys*/
 INSERT INTO frequency VALUES(1,1);
 INSERT INTO frequency VALUES(1,2);

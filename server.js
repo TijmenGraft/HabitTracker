@@ -30,6 +30,8 @@ var analyticData = {
         0,0,0,0,0,0,0
     ],
     habitsPastSevenDays: [
+    ],
+    habitsGoodVsBad: [
     ]
 }
 var test = "totalHabit";
@@ -210,7 +212,7 @@ var sqlInsertHabit = function(exsits, habit, callback, callbackFreq) {
     }
     var insertQuery = "INSERT INTO habit VALUES ?";
     var values = [
-        [ habit.id, null, habit.name, habit.type, habit.description, habit.startdate, habit.endDate ]
+        [ habit.id, null, habit.name, habit.type, habit.description, habit.startDate, habit.endDate ]
     ];
     con.query(insertQuery, [values], function(err,result) {
         if(err) {
@@ -320,8 +322,8 @@ var sqlAnalyticHabitDoneOnDay = function(i,date) {
     var countCompletedHabitsOnDay = "SELECT COUNT(habit_id) AS completedHabitsOnDay FROM habit_done WHERE date_done = ?";
     con.query(countCompletedHabitsOnDay, [date], function(err,result) {
         if(err) {console.log(err)}
-        console.log(result[0]);
-        analyticData.habitsCompletedOnDay[i] = result[0].completedHabitsOnDay;
+        console.log(date);
+        analyticData.habitsCompletedOnDay[i] = [date,result[0].completedHabitsOnDay];
     })
 }
 
@@ -457,8 +459,11 @@ app.get("/analytics", function(req,res) {
     });
     //COUNT ALL THE COMPLETED HABITS COMPLETED ON A CERTAIN DAY
     for(var i = 0; i < days.length; ++i) {
-        sqlAnalyticHabitDoneOnDay(i,days[i]);
-        
+        var d = new Date();
+        d.setDate(d.getDate()-i);
+        var endMonth = d.getMonth();
+        var date = d.getFullYear() + "-" + (++endMonth) + "-" + d.getDate();
+        sqlAnalyticHabitDoneOnDay(i,date);
     }
     //COUNT ALL THE HABITS MADE ON A CERTAIN DAY
     var d = new Date();
@@ -482,15 +487,35 @@ app.get("/analytics", function(req,res) {
         }
         for(var i = 0; i < result.length; ++i) {
             var d = new Date(result[i].startdate);
+            var checkSumMonth = d.getMonth();
+            var checkSum = d.getFullYear() + "-" + (++checkSumMonth) + "-" + d.getDate();
             for(var x = 0; x < temp.length; ++x) {
                 var checkDate = new Date(temp[x][0]);
-                if(checkDate.getTime() == d.getTime()) {
-                    temp[x][1] == result[i].newHabits;
-                    console.log(true)
+                var toCheckDate = new Date(checkSum);
+                if(checkDate.getTime() == toCheckDate.getTime()) {
+                    temp[x][1] = result[i].newHabits;
+                    console.log(temp[x][1]);
+                    console.log(result[i].newHabits);
                 }
             }
             if(i == result.length-1) {
+                console.log("sending back data");
+
                 analyticData.habitsPastSevenDays = temp;
+                console.log(analyticData);
+            }
+        }
+    });
+    //COUNT GOOD VS BAD HABITS WITH A FREQUENCY HIGHER THAN 0
+    var countHabitsGoodVsBad = "SELECT COUNT(habit_id) AS goodBadHabit FROM habit AS H1 WHERE H1.type = 1 AND (SELECT COUNT(*) FROM frequency AS FQ WHERE FQ.habit_id = H1.habit_id > 0)UNION ALL SELECT COUNT(habit_id) AS badHabits FROM habit AS H2 WHERE H2.type = 0 AND (SELECT COUNT(*) FROM frequency AS FQ WHERE FQ.habit_id = H2.habit_id > 0)"
+    con.query(countHabitsGoodVsBad, function(err,result) {
+        if(err){console.log(err);}
+        console.log(result);
+        var temp = [];
+        for(var i = 0; i < result.length; ++i) {
+            temp.push(result[i].goodBadHabit);
+            if(i == result.length - 1) {
+                analyticData.habitsGoodVsBad = temp;
             }
         }
     });
