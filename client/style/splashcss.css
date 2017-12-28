@@ -32,6 +32,8 @@ nav ul li a:hover {
 	transition: border-width 100ms ease-in;
 }
 
+
+
 .smallNav {
 	background-color: #fff;
 	position: fixed;

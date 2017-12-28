@@ -11,6 +11,7 @@ const bodyParser = require('body-parser')
 const PersonConstructor = require('./client/js/Person.js');
 const util = require("util");
 const mysql = require("mysql");
+const sqlModuleHabit = require("./client/js/module/sqlModuleHabit");
 var app = express();
 
 var con = mysql.createConnection({
@@ -136,19 +137,7 @@ var toHabit = function(data) {
     return habit;
 }
 
-var getTimes = function(id) {
-    var frequency = [];
-    var selectFrequency = 'SELECT D.date_name FROM frequency AS F JOIN dates AS D ON F.date_id = D.date_id WHERE F.habit_id = ? ORDER BY F.date_id ASC';
-    con.query(selectFrequency, [id], function(err, result) {
-        if(err) {
-            console.log(err)
-        }
-        for(var i2 = 0; i2< result.length; ++i2) {
-            frequency.push(result[i2].date_name)
-        }
-        sqlHabits[habitsPosition(id)].frequency = frequency;
-    });
-}
+
 
 
 
@@ -183,130 +172,6 @@ var habitHandelingFormData = function(id,data) {
         checkDate: []
     }
     return habit;
-}
-
-
-var sqlInsertHabit = function(exsits, habit, callback, callbackFreq) {
-    var inlist = 0;
-    if(!exsits) {
-        var addCat = "INSERT INTO habitlistcatelog (owned_by,title) VALUES ?";
-        values = [
-            ["1",habit.category]
-        ];
-        con.query(addCat, [values], function(err,result) {
-            if(err) {
-                console.log(err);
-            }
-            inlist = result.insertId;
-            callback(inlist,habit.id);
-        });
-    } else {
-        var selectCat = "SELECT habit_list_id FROM habitlistcatelog WHERE title = ?"
-        con.query(selectCat, [habit.category], function(err,result) {
-            if(err) {
-                console.log(err);
-            }
-            inlist = result[0].habit_list_id;
-            callback(inlist,habit.id);
-        }) 
-    }
-    var insertQuery = "INSERT INTO habit VALUES ?";
-    var values = [
-        [ habit.id, null, habit.name, habit.type, habit.description, habit.startDate, habit.endDate ]
-    ];
-    con.query(insertQuery, [values], function(err,result) {
-        if(err) {
-            console.log(err);
-        }
-        callbackFreq(habit.id,habit.frequency);
-    });
-};
-
-var sqlUpdateHabit = function(exsists,habit,callbackDeleteFrequency,callbackUpdateHabitlist,callbackSetInList) {
-    callbackDeleteFrequency(habit.id,habit.frequency,setFrequency);
-    callbackUpdateHabitlist(exsists,habit,callbackSetInList);
-    var updateHabit = "UPDATE habit SET title = ?, type = ?, description = ? WHERE habit_id = ?";
-    con.query(updateHabit, [habit.name,habit.type,habit.description,habit.id], function(err,result) {
-        if(err){console.log(err);}
-        console.log(result.affectedRows);
-    })
-}
-
-var sqlHabitDone = function(habit,date) {
-    var daysOfWeek = ["mo","tu","we","th","fr","sa","su"];
-    var bonus = false;
-    if(habit.frequency.indexOf(daysOfWeek[date.getDay()]) == -1) {
-        bonus = true;
-    }
-    var month = date.getMonth();
-    var sqlDateFormat = date.getFullYear() + "-" + (++month) + "-" + date.getDate();
-    var insertHabitDoneQuery = "INSERT INTO habit_done VALUES ?";
-    var values = [
-        [habit.id,sqlDateFormat,bonus]
-    ];
-    con.query(insertHabitDoneQuery, [values], function(err,result) {
-        if(err){ console.log(err);}
-        console.log(result.affectedRows);
-    });
-}
-
-var setInList = function(list_id,habit_id) {
-    var updateListId = "UPDATE habit SET in_list_id = ? WHERE habit_id = ?";
-    con.query(updateListId,[list_id,habit_id], function(err,result) {
-        if(err) {
-            console.log(err);
-        }
-    });
-};
-
-var setFrequency = function(id,habitFrequency) {
-    var insertFrequency = "INSERT INTO frequency VALUES (?, (SELECT date_id FROM dates WHERE date_name = ?))";
-    for(var i = 0; i < habitFrequency.length; ++i) {
-        if(habitFrequency[i] == "ma") {
-            habitFrequency[i] = "mo";
-        }
-        con.query(insertFrequency, [id,habitFrequency[i]], function(err,result) {
-            if(err) {
-                console.log(err);
-            }
-            console.log(result);
-        })
-    }
-};
-
-var deleteFrequency = function(id,habitFrequency,callbackSetFrequency) {
-    var deleteFrequencyQuery = "DELETE FROM frequency WHERE habit_id = ?";
-    con.query(deleteFrequencyQuery,[id], function(err,result) {
-        if(err){console.log(err);}
-        console.log(result);
-        if(callbackSetFrequency && habitFrequency) {
-            callbackSetFrequency(id,habitFrequency);
-        }
-    });
-};
-
-var updateHabitList = function(exsits,habit,callbackSetInList) {
-    var inlist = 0;
-    if(!exsits) {
-        var addCat = "INSERT INTO habitlistcatelog (owned_by,title) VALUES ?";
-        values = [
-            ["1",habit.category]
-        ];
-        con.query(addCat, [values], function(err,result) {
-            if(err) { console.log(err); }
-            inlist = result.insertId;
-            callbackSetInList(inlist,habit.id);
-        });
-    } else {
-        var selectCat = "SELECT habit_list_id FROM habitlistcatelog WHERE title = ?"
-        con.query(selectCat, [habit.category], function(err,result) {
-            if(err) {
-                console.log(err);
-            }
-            inlist = result[0].habit_list_id;
-            callbackSetInList(inlist,habit.id);
-        }) 
-    }
 }
 
 var sqlAnalyticTotalHabitOnDAy = function(i,date) {
@@ -352,7 +217,7 @@ app.post("/addHabit", function(req,res){
     var newCat = checkIfCategoryExsits(JsonObj[1].value);
     var newHabit = habitHandelingFormData(nextHabitId,JsonObj);
     ++nextHabitId;
-    sqlInsertHabit(newCat, newHabit, setInList, setFrequency);
+    sqlModuleHabit.sqlInsertHabit(newCat, newHabit, sqlModuleHabit.setInList, sqlModuleHabit.setFrequency);
     sqlHabits.push(newHabit);
     res.send(formObj);
 });
@@ -378,7 +243,7 @@ app.post("/update", function(req, res) {
     JsonObj.splice(0,1);
     var updateHabit = habitHandelingFormData(id,JsonObj);
     var newCat = checkIfCategoryExsits(JsonObj[1].value);
-    sqlUpdateHabit(newCat,updateHabit,deleteFrequency,updateHabitList,setInList);
+    sqlModuleHabit.sqlUpdateHabit(newCat,sqlModuleHabit.updateHabit,sqlModuleHabit.deleteFrequency,sqlModuleHabit.updateHabitList,sqlModuleHabit.setInList);
     var position = habitsPosition(id);
     sqlHabits.splice(position,1);
     sqlHabits.splice(--position,0,updateHabit);
@@ -395,7 +260,7 @@ app.get("/habitDone", function(req,res) {
     var year = today.getFullYear();
     var input = day + "-" + month + "-" + year;
     selectedHabit.checkDate.push(input);
-    sqlHabitDone(selectedHabit,today);
+    sqlModuleHabit.sqlHabitDone(selectedHabit,today);
     if(selectedHabit === false) {
         res.status(404).json({
             error: "Couldnt update the habit"
@@ -409,11 +274,7 @@ app.get("/removeHabit", function(req,res) {
     var habitId = req.query.id;
     var position = habitsPosition(habitId);
     sqlHabits.splice(position,1);
-    var deleteQuery = "DELETE FROM habit WHERE habit_id = ?";
-    con.query(deleteQuery, [habitId], function(err,result) {
-        if(err){console.log(err);}
-        console.log(result.affectedRows)
-    });
+    sqlModuleHabit.deleteHabit(habitId);
 });
 
 app.post("/register", function(req,res) {

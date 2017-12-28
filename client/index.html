@@ -21,11 +21,11 @@
         <nav id="topNav">
             <img src="img/Frequent.jpg" alt="logo" title="frequent" />
             <ul class="main-menu">
-                <li><a href="#register">Sign in/up</a></li>
-                <li><a href="#concept">Concept</a></li>
-                <li><a href="#review">Review</a></li>
-                <li class="has-dropdown"><a href="#about">About</a></li>
-                <li><a href="#">Guide</a></li>
+                <li><a href="#register" id="singInUpLink">Sign in/up</a></li>
+                <li><a href="#concept" id="concenptLink">Concept</a></li>
+                <li><a href="#review" id="reviewLink">Review</a></li>
+                <li><a href="#about" id="aboutLink">About</a></li>
+                <li><a href="#" id="guideLink">Guide</a></li>
             </ul>
             <ul class="nav-menu" style="display: none;">
                 <li clas="one"><a href="#concept">Concept</a></li>
@@ -40,7 +40,7 @@
 
 	<main>
         <div class="fancy-circle-wrapper" id="concept">
-            <h1><a href="#concept">Concept</a></h1>
+            <h1><a href="#concept" data-destination="Concept">Concept</a></h1>
         	<span class="fancy-circle">
         		<img src="/img/create.png" alt="Create" title="Create"/>
         		<p>Create</p>
@@ -61,7 +61,7 @@
         		<p>Improve</p>
         	</span>
         </div>
-    	<div class="register-big" id="register">
+    	<div class="register-big" id="register" data-destination="Register">
             <div class="user-managment">
                 <span class="register-span">
                     <a href="#register" data-form="register_form"><h1>Register</h1></a>
@@ -96,7 +96,7 @@
             </form>
         </div>
 
-        <div class="reviews" id="review">
+        <div class="reviews" id="review" data-destination="Reviews">
             <h1><a href="#review">Reviews</a></h1>
             <div class="review-slider" id="review-slider">
                 <div class="review-dialog">

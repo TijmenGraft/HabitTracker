@@ -54,30 +54,23 @@ var main = function() {
 		chart.render();
 	}
 
-	var drawHabitVsHabitDone = function(habitVsHabitDoneArray) {
+	var drawHabitVsHabitDone = function(habitData,habitdoneData) {
 		var chart = new CanvasJS.Chart("habitVsHaitDoneContainer", {
 		theme: "light2", // "light1", "light2", "dark1", "dark2"
 		exportEnabled: false,
 		animationEnabled: true,
 		title: {
-			text: "Desktop Browser Market Share in 2016"
+			text: "Habit vs habit done"
 		},
 		data: [{
 			type: "pie",
-			startAngle: 25,
-			toolTipContent: "<b>{label}</b>: {y}%",
+			startAngle: 50,
 			showInLegend: "true",
 			legendText: "{label}",
 			indexLabelFontSize: 16,
-			indexLabel: "{label} - {y}%",
 			dataPoints: [
-				{ y: 51.08, label: "Chrome" },
-				{ y: 27.34, label: "Internet Explorer" },
-				{ y: 10.62, label: "Firefox" },
-				{ y: 5.02, label: "Microsoft Edge" },
-				{ y: 4.07, label: "Safari" },
-				{ y: 1.22, label: "Opera" },
-				{ y: 0.44, label: "Others" }
+				{ y: habitData, label: "Habit" },
+				{ y: habitdoneData, label: "Habit done" }
 			]
 		}]
 		});
@@ -152,12 +145,15 @@ var main = function() {
 				drawTotalHabitOnDayChart(data["totalHabitOnDay"])
 			} else if(key == "habitsPastSevenDays") {
 				drawHabitsMadeInPastSevenDays(data["habitsPastSevenDays"])
-			} else if(key == "habitsCompletedOnDay") {
-				drawHabitVsHabitDone(data["habitsCompletedOnDay	"]);
 			} else if(key == "habitsGoodVsBad") {
 				drawHabitGoodVsBad(data["habitsGoodVsBad"])	;
 			} else if(key == "habitsCompletedOnDay") {
+				console.log(data[key]);
 				drawHabitDoneLastSevenDay(data["habitsCompletedOnDay"])
+			} else if(key == "totalHabit") {
+				drawHabitVsHabitDone(data[key],data["habitsCompleted"])
+			} else {
+				console.log({foundBadKey: key, data: data[key]})
 			}
 		}
 	}

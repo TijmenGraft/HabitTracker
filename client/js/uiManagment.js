@@ -1,6 +1,11 @@
 $(document).ready(function() {
     var openModel = "";
-    var mainTopPosition = $("main").offset().top;
+    // var mainTopPosition = $("main").offset().top;
+    // var conceptPosition = $("#concept").offset().top;
+    // var registerPosition = $("#register").offset().top;
+    // var reviewPosition = $("#review").offset().top;
+    // var aboutPosition = $("#about").offset().top;
+
     window.blocker = false;
 
     $("input[type=checkbox]").on("click",function() {
@@ -73,6 +78,9 @@ $(document).ready(function() {
 
     $("#overview_page").on("click",".habit-check", function() {
         var habitId = $(this).parent().parent().attr("id");
+        $("#"+habitId).css({
+            "color": "green"
+        })
         $.getJSON(
             "../habitDone?id="+habitId, 
         );
@@ -200,6 +208,22 @@ $(document).ready(function() {
         } else if($(document).scrollTop() < mainTopPosition && $("#topNav").hasClass("smallNav")) {
             console.log(false);
             $("#topNav").toggleClass("smallNav");
+        } else if($("#topNav").hasClass("smallNav")) {
+            var y = $(document).scrollTop();
+            if(y >= conceptPosition && y < registerPosition) {
+                console.log("between concept and register");
+                $("#conceptLink").trigger("mouseover");
+                console.log($("#concenptLink"));
+            } else if(y >= registerPosition && y < reviewPosition) {
+                console.log("between register and review");
+                console.log($("#topNav ul li a"));
+            } else if(y >= reviewPosition && y < aboutPosition) {
+                console.log("between review and about");
+                console.log($("#topNav ul li a"));
+            } else if(y >= aboutPosition) {
+                console.log("between about and footer");
+                console.log($("#topNav ul li a"));
+            }
         }
     })
 });
