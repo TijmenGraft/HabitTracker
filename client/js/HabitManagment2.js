@@ -1,6 +1,5 @@
 var main = function() {
     "use strict";
-    var blocker = false;
 
     var addHabit = function(id,name,type) {
         if($("#" + id).length == 0) {
@@ -8,8 +7,6 @@ var main = function() {
             if(type == 1) {
                 background = "#00b200";
             }
-            console.log(name);
-            console.log(type);
             var li = '<li class="habit" id="'+id+'" style="background-color: '+background+'">' + name 
             + ' <ul class="icon-group" id="icons"><i class="fa fa-check habit-check" aria-hidden="true"></i>'
             + ' <i class="fa fa-times delete-habit" aria-hidden="true"></i>'
@@ -49,7 +46,7 @@ var main = function() {
             $.getJSON("../showHabits", showHabits);
         } else {
             console.log("I got blocked");
-        }
+        }   
     },1000)
 
     /* Adding a habit by sending a request to the server 

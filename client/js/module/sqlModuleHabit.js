@@ -1,5 +1,8 @@
 const mysql = require("mysql");
+const usefullFunction = require("./usefullFunction");
 
+var sqlHabits = [];
+var nextHabitId;
 var con = mysql.createConnection({
     host: "localhost",
     user: "root",
@@ -7,44 +10,103 @@ var con = mysql.createConnection({
     database: "habitdatabase"
 });
 
+(function setUp() {
+    console.log("Setting up storage");
+    var maxID = "SELECT habit_id FROM habit ORDER BY habit_id DESC LIMIT 1;";
+    con.query(maxID, function(err, result) {
+        if(err) {
+            console.log(err)
+        }
+        console.log(nextHabitId);
+        nextHabitId = ++result[0].habit_id;
+        console.log(nextHabitId);
+    });
+    var query = "SELECT H.habit_id, H.title, H.type, HC.title AS category, H.description, H.startdate, H.enddate FROM habit AS H JOIN habitlistcatelog AS HC ON H.in_list_id = HC.habit_list_id WHERE H.in_list_id IS NOT NULL";
+    con.query(query, function(err,result) {
+        if(err) {
+            console.log(err);
+        }
+        for(var i = 0; i < result.length; ++i) {
+            var habit = usefullFunction.toHabit(result[i]);
+            var id = habit.id;
+            var frequency = getTimes(sqlHabits,id,usefullFunction.habitsPosition);
+            sqlHabits.push(habit);
+        }
+    });
+})();
+
+var setFrequency = function(id,habitFrequency) {
+    var insertFrequency = "INSERT INTO frequency VALUES (?, (SELECT date_id FROM dates WHERE date_name = ?))";
+    for(var i = 0; i < habitFrequency.length; ++i) {
+        if(habitFrequency[i] == "ma") {
+            habitFrequency[i] = "mo";
+        }
+        con.query(insertFrequency, [id,habitFrequency[i]], function(err,result) {
+            if(err) {
+                console.log(err);
+            }
+            console.log(result);
+        })
+    }
+};
+
+var sqlInsertHabit = function(exsits, habit, callback, callbackFreq) {
+	console.log(habit);
+    var inlist = 0;
+    if(!exsits) {
+        var addCat = "INSERT INTO habitlistcatelog (owned_by,title) VALUES ?";
+        values = [
+            ["1",habit.category]
+        ];
+        con.query(addCat, [values], function(err,result) {
+            if(err) {
+                console.log(err);
+            }
+            inlist = result.insertId;
+            callback(inlist,habit.id);
+        });
+    } else {
+        var selectCat = "SELECT habit_list_id FROM habitlistcatelog WHERE title = ?"
+        con.query(selectCat, [habit.category], function(err,result) {
+            if(err) {
+                console.log(err);
+            }
+            inlist = result[0].habit_list_id;
+            callback(inlist,habit.id);
+        }) 
+    }
+    var insertQuery = "INSERT INTO habit VALUES ?";
+    var values = [
+        [ habit.id, null, habit.name, habit.type, habit.description, habit.startDate, habit.endDate ]
+    ];
+    con.query(insertQuery, [values], function(err,result) {
+        if(err) {
+            console.log(err);
+        }
+        callbackFreq(habit.id,habit.frequency);
+    });
+};
+
+var getTimes = function(sqlHabits,id,habitsPosition) {
+    var frequency = [];
+    var selectFrequency = 'SELECT D.date_name FROM frequency AS F JOIN dates AS D ON F.date_id = D.date_id WHERE F.habit_id = ? ORDER BY F.date_id ASC';
+    con.query(selectFrequency, [id], function(err, result) {
+        if(err) {
+            console.log(err)
+        }
+        console.log(result);
+        for(var i2 = 0; i2 < result.length; ++i2) {
+            frequency.push(result[i2].date_name)
+        }
+        sqlHabits[habitsPosition(sqlHabits,id)].frequency = frequency;
+    });
+}
+
 module.exports = {
-	sqlInsertHabit: function(exsits, habit, callback, callbackFreq) {
-	    var inlist = 0;
-	    if(!exsits) {
-	        var addCat = "INSERT INTO habitlistcatelog (owned_by,title) VALUES ?";
-	        values = [
-	            ["1",habit.category]
-	        ];
-	        con.query(addCat, [values], function(err,result) {
-	            if(err) {
-	                console.log(err);
-	            }
-	            inlist = result.insertId;
-	            callback(inlist,habit.id);
-	        });
-	    } else {
-	        var selectCat = "SELECT habit_list_id FROM habitlistcatelog WHERE title = ?"
-	        con.query(selectCat, [habit.category], function(err,result) {
-	            if(err) {
-	                console.log(err);
-	            }
-	            inlist = result[0].habit_list_id;
-	            callback(inlist,habit.id);
-	        }) 
-	    }
-	    var insertQuery = "INSERT INTO habit VALUES ?";
-	    var values = [
-	        [ habit.id, null, habit.name, habit.type, habit.description, habit.startDate, habit.endDate ]
-	    ];
-	    con.query(insertQuery, [values], function(err,result) {
-	        if(err) {
-	            console.log(err);
-	        }
-	        callbackFreq(habit.id,habit.frequency);
-	    });
-	},
+	sqlInsertHabit: sqlInsertHabit,
 
 	sqlUpdateHabit: function(exsists,habit,callbackDeleteFrequency,callbackUpdateHabitlist,callbackSetInList) {
+		console.log(habit);
 	    callbackDeleteFrequency(habit.id,habit.frequency,setFrequency);
 	    callbackUpdateHabitlist(exsists,habit,callbackSetInList);
 	    var updateHabit = "UPDATE habit SET title = ?, type = ?, description = ? WHERE habit_id = ?";
@@ -81,32 +143,20 @@ module.exports = {
 	    });
 	},
 
-	setFrequency: function(id,habitFrequency) {
-	    var insertFrequency = "INSERT INTO frequency VALUES (?, (SELECT date_id FROM dates WHERE date_name = ?))";
-	    for(var i = 0; i < habitFrequency.length; ++i) {
-	        if(habitFrequency[i] == "ma") {
-	            habitFrequency[i] = "mo";
-	        }
-	        con.query(insertFrequency, [id,habitFrequency[i]], function(err,result) {
-	            if(err) {
-	                console.log(err);
-	            }
-	            console.log(result);
-	        })
-	    }
-	},
+	setFrequency: setFrequency,
 
-	getTimes: function(id) {
+	getTimes: function(sqlHabits,id,habitsPosition) {
 	    var frequency = [];
 	    var selectFrequency = 'SELECT D.date_name FROM frequency AS F JOIN dates AS D ON F.date_id = D.date_id WHERE F.habit_id = ? ORDER BY F.date_id ASC';
 	    con.query(selectFrequency, [id], function(err, result) {
 	        if(err) {
 	            console.log(err)
 	        }
-	        for(var i2 = 0; i2< result.length; ++i2) {
+	        console.log(result);
+	        for(var i2 = 0; i2 < result.length; ++i2) {
 	            frequency.push(result[i2].date_name)
 	        }
-	        sqlHabits[habitsPosition(id)].frequency = frequency;
+	        sqlHabits[habitsPosition(sqlHabits,id)].frequency = frequency;
 	    });
 	},
 
@@ -151,5 +201,8 @@ module.exports = {
 	        if(err){console.log(err);}
 	        console.log(result.affectedRows)
 	    });
-	}
+	},
+
+	sqlHabits: sqlHabits,
+	nextHabitId: nextHabitId
 }
