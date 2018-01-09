@@ -93,6 +93,14 @@ main{
 	margin-bottom: 100px;
 }
 
+ul li[data-type="1"] {
+	background-color: #00b200 !important;
+}
+
+ul li[data-type="0"] {
+	background-color: tomato !important;
+}
+
 footer{
 	position: fixed;
 	bottom: 0;

@@ -84,11 +84,37 @@ var checkIfCategoryExsits = function(sqlHabits,category) {
     return false;
 }
 
+var organiseIntoCategory = function(sqlHabits) {
+    var habits = {};
+    for (var i = sqlHabits.length - 1; i >= 0; i--) {
+        if(!(sqlHabits[i].category in habits)) {
+            habits[sqlHabits[i].category] = [];
+            habits[sqlHabits[i].category].push(sqlHabits[i]);
+        } else {
+            habits[sqlHabits[i].category].push(sqlHabits[i]);
+        }
+        
+    }
+    return habits;
+}
+
+var allCategories = function(sqlHabits) {
+    var categories = [];
+    for (var i = sqlHabits.length - 1; i >= 0; i--) {
+        if(categories.indexOf(sqlHabits[i].category) === -1) {
+            categories.push(sqlHabits[i].category)
+        }
+    }
+    return categories;
+}
+
 module.exports = {
     habitsDataIdContains: habitsDataIdContains,
     habitsPosition: habitsPosition,
     selectHabitById: selectHabitById,
     checkIfCategoryExsits: checkIfCategoryExsits,
     habitHandelingFormData: habitHandelingFormData,
-    toHabit: toHabit
+    toHabit: toHabit,
+    organiseIntoCategory: organiseIntoCategory,
+    allCategories: allCategories
 };

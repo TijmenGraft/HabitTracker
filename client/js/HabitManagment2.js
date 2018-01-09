@@ -40,14 +40,14 @@ var main = function() {
         }
     }
 
-    setInterval(function() {
-        if(!blocker) {
-            console.log("Didnt get blocked");
-            $.getJSON("../showHabits", showHabits);
-        } else {
-            console.log("I got blocked");
-        }   
-    },1000)
+    // setInterval(function() {
+    //     if(!blocker) {
+    //         console.log("Didnt get blocked");
+    //         $.getJSON("../showHabits", showHabits);
+    //     } else {
+    //         console.log("I got blocked");
+    //     }   
+    // },1000)
 
     /* Adding a habit by sending a request to the server 
     * We use serialize method because it is easy 

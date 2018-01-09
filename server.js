@@ -14,13 +14,11 @@ const sqlModuleHabit = require("./client/js/module/sqlModuleHabit");
 const sqlModuleAnalytics = require("./client/js/module/sqlModuleAnalytics");
 const usefullFunction = require("./client/js/module/usefullFunction");
 const register = require("./client/js/module/registerModule");
+const ejs = require('ejs');
 var app = express();
 
 var habitArr = sqlModuleHabit.sqlHabits;
 var nextHabitId = sqlModuleHabit.nextHabitId;
-console.log(sqlModuleHabit.nextHabitId);
-console.log(nextHabitId);
-
 
 var analyticData = {
     totalHabit: 0,
@@ -43,6 +41,11 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
+app.set('views',__dirname + '/template');
+app.set('view engine', 'ejs');
+
+require('./extra/router.js')(app,habitArr,sqlModuleHabit,sqlModuleAnalytics,usefullFunction);
+
 
 /* SETTING UP
 * this is the most important method of our application
@@ -61,75 +64,6 @@ app.use(bodyParser.urlencoded({
 
 * habitHadnelingFormData: handels the form data from a user and makes a habit of it
 */
-
-
-app.get("/showHabits", function(req, res) {
-    res.json(habitArr);
-});
-
-app.post("/addHabit", function(req,res){
-    var formObj = JSON.stringify(req.body);
-    var JsonObj = JSON.parse(formObj);
-    var newCat = usefullFunction.checkIfCategoryExsits(JsonObj[1].value);
-    var newHabit = usefullFunction.habitHandelingFormData(habitArr,sqlModuleHabit.nextHabitId,JsonObj);
-    console.log(newHabit);
-    ++nextHabitId;
-    sqlModuleHabit.sqlInsertHabit(newCat, newHabit, sqlModuleHabit.setInList, sqlModuleHabit.setFrequency);
-    habitArr.push(newHabit);
-    res.send(formObj);
-});
-
-app.get("/requestHabit", function(req,res) {
-    var habitId = req.query.id;
-    var selectedHabit = usefullFunction.selectHabitById(habitId);
-    if(selectedHabit === false) {
-        res.status(404).json({
-            error: "Couldnt find the habit"
-        });
-    } else {
-        res.json(selectedHabit);
-    }
-});
-
-app.post("/update", function(req, res) {
-    var formObj = JSON.stringify(req.body);
-    var JsonObj = JSON.parse(formObj);
-    var id = JsonObj[0].value;
-    JsonObj.splice(0,1);
-    var updateHabit = usefullFunction.habitHandelingFormData(id,JsonObj);
-    var newCat = usefullFunction.checkIfCategoryExsits(JsonObj[1].value);
-    sqlModuleHabit.sqlUpdateHabit(newCat,updateHabit,sqlModuleHabit.deleteFrequency,sqlModuleHabit.updateHabitList,sqlModuleHabit.setInList);
-    var position = usefullFunction.habitsPosition(id);
-    habitArr.splice(position,1);
-    habitArr.splice(--position,0,updateHabit);
-    res.send(updateHabit);
-});
-
-app.get("/habitDone", function(req,res) {
-    var habitId = req.query.id;
-    var selectedHabit = usefullFunction.selectHabitById(habitId);
-    var today = new Date();
-    var day = today.getDate();
-    var month = today.getMonth()+1;
-    var year = today.getFullYear();
-    var input = day + "-" + month + "-" + year;
-    selectedHabit.checkDate.push(input);
-    sqlModuleHabit.sqlHabitDone(selectedHabit,today);
-    if(selectedHabit === false) {
-        res.status(404).json({
-            error: "Couldnt update the habit"
-        });
-    } else {
-        res.json("Checked successfull");
-    }
-});
-
-app.get("/removeHabit", function(req,res) {
-    var habitId = req.query.id;
-    var position = usefullFunction.habitsPosition(habitId);
-    habitArr.splice(position,1);
-    sqlModuleHabitusefullFunction.deleteHabit(habitId);
-});
 
 app.use("/register",register);
 
