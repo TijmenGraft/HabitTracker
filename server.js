@@ -10,10 +10,10 @@ const formidable = require("formidable");
 const bodyParser = require('body-parser');
 const PersonConstructor = require('./client/js/Person.js');
 const util = require("util");
-const sqlModuleHabit = require("./client/js/module/sqlModuleHabit");
-const sqlModuleAnalytics = require("./client/js/module/sqlModuleAnalytics");
-const usefullFunction = require("./client/js/module/usefullFunction");
-const register = require("./client/js/module/registerModule");
+const sqlModuleHabit = require("./extra/sqlModuleHabit");
+const sqlModuleAnalytics = require("./extra/sqlModuleAnalytics");
+const usefullFunction = require("./extra/usefullFunction");
+const register = require("./extra/registerModule");
 const ejs = require('ejs');
 var app = express();
 
@@ -44,7 +44,7 @@ app.use(bodyParser.urlencoded({
 app.set('views',__dirname + '/template');
 app.set('view engine', 'ejs');
 
-require('./extra/router.js')(app,habitArr,sqlModuleHabit,sqlModuleAnalytics,usefullFunction);
+require('./extra/router.js')(app,habitArr);
 
 
 /* SETTING UP

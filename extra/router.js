@@ -1,11 +1,14 @@
 const path = require('path');
+const sqlModuleHabit = require('./sqlModuleHabit');
+const usefullFunction = require('./usefullFunction');
+const sqlModuleAnalytics = require('./sqlModuleAnalytics');
 
 function logger(req,res,next) {
 	console.log('%s\t%s\t%s', new Date(), req.method, req.url);
 	next();
 }
 
-module.exports = function(app,habitArr,sqlModuleHabit,sqlModuleAnalytics,usefullFunction) {
+module.exports = function(app,habitArr) {
 	app.use(logger);
 
 	app.get("/showHabits", function(req, res) {
@@ -23,13 +26,22 @@ module.exports = function(app,habitArr,sqlModuleHabit,sqlModuleAnalytics,usefull
 		res.render('addHabitTemplate.ejs',{ category_array: categories});
 	});
 
-	app.post("/addHabit", function(req,res){
+	app.post("/addHabit", async function(req,res){
 	    var formObj = JSON.stringify(req.body);
 	    var JsonObj = JSON.parse(formObj);
 	    var newCat = usefullFunction.checkIfCategoryExsits(JsonObj[1].value);
-	    var newHabit = usefullFunction.habitHandelingFormData(habitArr,sqlModuleHabit.nextHabitId,JsonObj);
-	    console.log(newHabit);
-	    ++nextHabitId;
+	    try {
+	    	console.log("this before that")
+	    	let a = await sqlModuleHabit.getMaxId();
+	    	console.log("that after this")
+	    	console.log("this should be a number %s",newHabit);
+		    sqlModuleHabit.sqlInsertHabit(newCat, newHabit, sqlModuleHabit.setInList, sqlModuleHabit.setFrequency);
+		    habitArr.push(newHabit);
+		    res.send(formObj);
+	    } catch(e) {
+	    	console.log(e);
+	    }
+	    console.log("this should be a number %s",newHabit);
 	    sqlModuleHabit.sqlInsertHabit(newCat, newHabit, sqlModuleHabit.setInList, sqlModuleHabit.setFrequency);
 	    habitArr.push(newHabit);
 	    res.send(formObj);

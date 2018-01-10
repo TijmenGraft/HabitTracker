@@ -1,9 +1,9 @@
-const mysql = require("mysql");
+const con = require("mysql-promise")();
 const usefullFunction = require("./usefullFunction");
 
 var sqlHabits = [];
 var nextHabitId;
-var con = mysql.createConnection({
+con.configure({
     host: "localhost",
     user: "root",
     password: "Kungfu1998",
@@ -12,15 +12,6 @@ var con = mysql.createConnection({
 
 (function setUp() {
     console.log("Setting up storage");
-    var maxID = "SELECT habit_id FROM habit ORDER BY habit_id DESC LIMIT 1;";
-    con.query(maxID, function(err, result) {
-        if(err) {
-            console.log(err)
-        }
-        console.log(nextHabitId);
-        nextHabitId = ++result[0].habit_id;
-        console.log(nextHabitId);
-    });
     var query = "SELECT H.habit_id, H.title, H.type, HC.title AS category, H.description, H.startdate, H.enddate FROM habit AS H JOIN habitlistcatelog AS HC ON H.in_list_id = HC.habit_list_id WHERE H.in_list_id IS NOT NULL";
     con.query(query, function(err,result) {
         if(err) {
@@ -34,6 +25,25 @@ var con = mysql.createConnection({
         }
     });
 })();
+/*
+* handleDataForm is the function
+* data is de data provided by users
+* sqlHabits is de array
+*/
+var getMaxId = async function(){
+	var maxID = "SELECT habit_id FROM habit ORDER BY habit_id DESC LIMIT 1;";
+    let res = await con.query(maxID);
+    return res[0][0].habit_id;
+    // console.log(res[0].habit_id);
+    // return res[0][0].habit_id;
+
+    // function(err, result) {
+    //     if(err) {
+    //         console.log(err)
+    //     }
+    //     return nextHabitId = ++result[0].habit_id;
+    // }
+}
 
 var setFrequency = function(id,habitFrequency) {
     var insertFrequency = "INSERT INTO frequency VALUES (?, (SELECT date_id FROM dates WHERE date_name = ?))";
@@ -51,7 +61,7 @@ var setFrequency = function(id,habitFrequency) {
 };
 
 var sqlInsertHabit = function(exsits, habit, callback, callbackFreq) {
-	console.log(habit);
+	console.log("insert habit: %s",habit);
     var inlist = 0;
     if(!exsits) {
         var addCat = "INSERT INTO habitlistcatelog (owned_by,title) VALUES ?";
@@ -104,6 +114,7 @@ var getTimes = function(sqlHabits,id,habitsPosition) {
 
 module.exports = {
 	sqlInsertHabit: sqlInsertHabit,
+	getMaxId: getMaxId,
 
 	sqlUpdateHabit: function(exsists,habit,callbackDeleteFrequency,callbackUpdateHabitlist,callbackSetInList) {
 		console.log(habit);

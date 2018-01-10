@@ -120,6 +120,12 @@ footer{
 	width: 100%;
 }
 
+.habit-wrapper {
+	float: left;
+	width: 100%;
+	margin-top: 1em;
+}
+
 .habit-card {
 	width: 24%;
 	min-width: 200px;
@@ -133,6 +139,7 @@ footer{
 	overflow-x: hidden;
 	align-self: stretch;
 	margin: 5px;
+	float: left;
 }
 
 .habit-card-header {
@@ -161,6 +168,21 @@ footer{
 	font-weight: bold;
 	color: lime;
 	padding: 0.25em;
+	background-color: #1F4660;
+	float: left;
+	width: 60%;
+	text-align: center;
+	margin: 0 20%;
+	-webkit-transition: background-color 250ms ease-in;
+	-ms-transition: background-color 250ms ease-in;
+	transition: background-color 250ms ease-in;
+}
+
+.add-habit:hover {
+	background-color: #007399;
+	-webkit-transition: background-color 250ms ease-in;
+	-ms-transition: background-color 250ms ease-in;
+	transition: background-color 250ms ease-in;
 }
 
 .habit-input, .habit-category-input, .change-habit-input {

@@ -22,16 +22,13 @@ module.exports = {
 	    var countHabitsOnDay = "SELECT COUNT(habit_id) as allHabitsOnDay FROM frequency WHERE date_id = ?";
 	    con.query(countHabitsOnDay, [days[i]], function(err,result){
 	        if(err) {console.log(err)}
-	        return result[0].allHabitsOnDay;
-	        console.log(result[0])
-	    });
+	        return result[0].allHabitsOnDay;	    });
 	},
 
 	countAllCompletedHabits: function() {
 		var countCompletedHabits = "SELECT COUNT(*) AS completedHabits FROM habit_done";
 		con.query(countCompletedHabits, function(err,result) {
 	        if(err) {console.log(err)}
-	        console.log(result[0]);
 	        analyticData.habitsCompleted = result[0].completedHabits;
 	    });
 	},
@@ -40,7 +37,6 @@ module.exports = {
 	    var countCompletedHabitsOnDay = "SELECT COUNT(habit_id) AS completedHabitsOnDay FROM habit_done WHERE date_done = ?";
 	    con.query(countCompletedHabitsOnDay, [date], function(err,result) {
 	        if(err) {console.log(err)}
-	        console.log(date);
 	        return [date,result[0].completedHabitsOnDay];
 	    })
 	},
@@ -72,8 +68,6 @@ module.exports = {
 	                var toCheckDate = new Date(checkSum);
 	                if(checkDate.getTime() == toCheckDate.getTime()) {
 	                    temp[x][1] = result[i].newHabits;
-	                    console.log(temp[x][1]);
-	                    console.log(result[i].newHabits);
 	                }
 	            }
 	            if(i == result.length-1) {
@@ -87,7 +81,6 @@ module.exports = {
 		var countHabitsGoodVsBad = "SELECT COUNT(habit_id) AS goodBadHabit FROM habit AS H1 WHERE H1.type = 1 AND (SELECT COUNT(*) FROM frequency AS FQ WHERE FQ.habit_id = H1.habit_id > 0)UNION ALL SELECT COUNT(habit_id) AS badHabits FROM habit AS H2 WHERE H2.type = 0 AND (SELECT COUNT(*) FROM frequency AS FQ WHERE FQ.habit_id = H2.habit_id > 0)"
 	    con.query(countHabitsGoodVsBad, function(err,result) {
 	        if(err){console.log(err);}
-	        console.log(result);
 	        var temp = [];
 	        for(var i = 0; i < result.length; ++i) {
 	            temp.push(result[i].goodBadHabit);
