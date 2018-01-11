@@ -26,25 +26,24 @@ module.exports = function(app,habitArr) {
 		res.render('addHabitTemplate.ejs',{ category_array: categories});
 	});
 
-	app.post("/addHabit", async function(req,res){
+	app.post("/addHabit", async function(req,res,next){
 	    var formObj = JSON.stringify(req.body);
 	    var JsonObj = JSON.parse(formObj);
-	    var newCat = usefullFunction.checkIfCategoryExsits(JsonObj[1].value);
+	    var newCat = await usefullFunction.checkIfCategoryExsits(habitArr,JsonObj[1].value);
 	    try {
-	    	console.log("this before that")
 	    	let a = await sqlModuleHabit.getMaxId();
-	    	console.log("that after this")
-	    	console.log("this should be a number %s",newHabit);
+	    	let newHabit = await usefullFunction.habitHandelingFormData(habitArr,a,JsonObj);
 		    sqlModuleHabit.sqlInsertHabit(newCat, newHabit, sqlModuleHabit.setInList, sqlModuleHabit.setFrequency);
 		    habitArr.push(newHabit);
-		    res.send(formObj);
+		    res.end('{"success" : "Updated Successfully", "status" : 200}');
 	    } catch(e) {
 	    	console.log(e);
 	    }
-	    console.log("this should be a number %s",newHabit);
-	    sqlModuleHabit.sqlInsertHabit(newCat, newHabit, sqlModuleHabit.setInList, sqlModuleHabit.setFrequency);
-	    habitArr.push(newHabit);
-	    res.send(formObj);
+	});
+
+	app.get('/requestHabit/:habitId', function(req,res,next) {
+		let habit = usefullFunction.selectHabitById(habitArr,req.params.habitId);
+		res.render('updateHabitTemplate.ejs', {habit_obj: habit});
 	});
 
 	app.get("/requestHabit", function(req,res) {
@@ -96,6 +95,6 @@ module.exports = function(app,habitArr) {
 	    var habitId = req.query.id;
 	    var position = usefullFunction.habitsPosition(habitId);
 	    habitArr.splice(position,1);
-	    sqlModuleHabitusefullFunction.deleteHabit(habitId);
+	    sqlModuleHabit.deleteHabit(habitId);
 	});
 }

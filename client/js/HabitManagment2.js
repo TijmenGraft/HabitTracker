@@ -64,8 +64,8 @@ var main = function() {
             contentType: "application/json",
             dataType: "json",
             success: function(data) {
-                console.log("Data was send correctly");
                 blocker = false;
+                window.location.href = "/html/habits";
             },
             error: function(data) {
                 console.log("Couldnt send the data");

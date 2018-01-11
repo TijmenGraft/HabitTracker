@@ -1,0 +1,54 @@
+<!DOCTYPE htlm>
+<html>
+	<head>
+		<meta charset="UTF-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+	    <title>Your cockpit</title>
+	    <link href="/style/framework.css" rel="stylesheet" type="text/css"/>
+	    <link href="/style/maincss.css" rel="stylesheet" type="text/css"/>
+	    <link href="/font-awesome-4.7.0/css/font-awesome.css" rel="stylesheet" type="text/css"/>
+	    <link href="https://fonts.googleapis.com/css?family=Lato|Roboto+Slab" rel="stylesheet">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script type="text/javascript" src="/js/Habit.js"></script>
+		<script type="text/javascript" src="/js/HabitList.js"></script>
+		<script type="text/javascript" src="/js/Person.js"></script>
+		<script type="text/javascript" src="/js/Article.js"></script>
+		<script type="text/javascript" src="/js/HabitManagment2.js"></script>
+		<script type="text/javascript" src="/js/uiManagment.js"></script>
+	</head>
+	<body>
+		<p>Update page</p>
+		<form method="post" action="/update" id="change_habit">
+			<input class="hidden" name="change_habit_form_id" id="change_habit_main_id" value="<%= habit_obj.id %>"/>
+
+			<label for="change_habit_main_title" aria-label="change_habit_main_title">Habit title:</label>
+			<input class="change-habit-input" name="change_habit_form_title" placeholder="Habit title" value="<%= habit_obj.name %>" id="change_habit_main_title" type="text"/>
+
+			<label for="change_habit_main_category" aria-label="change_habit_main_category">Habit category:</label>
+			<input class="habit-input" list="category_list_habit" name="habit_form_category" placeholder="Habit category" value="<%= habit_obj.category %>" id="change_habit_main_category" type="text"/>
+
+			<label class="show" for="good_main_type" aria-label="good_main_type">Good</label>
+			<input class="change-habit-radio" name="change_habit_form_type" id="good_main_type" type="radio" value="1" <% if(habit_obj.type == 1){%>checked<%}%>>
+			
+			<label class="show" for="bad_main_type" aria-label="good_main_type">Bad	</label>
+			<input class="change-habit-radio" name="change_habit_form_type" id="change_habit_main_type" type="radio" value="0" <% if(habit_obj.type == 0){%>checked<%}%>>
+
+			<%
+				let days = ["mo","tu","we","th","fr","sa","su"];
+				for (var i = 0; i < days.length; ++i) {
+					let checked;
+					if(habit_obj.frequency.indexOf(days[i]) !== -1) {
+						checked = "checked"
+					}
+					%><input <%= checked %> class="change-habit-radio" id="<%= days[i]%>_main_frequency" name="change_habit_form_frequency" type="checkbox" value="<%= days[i]%>"><%= days[i]%><%
+				}
+			%>
+			
+			<label for="change_habit_main_description" aria-label="change_habit_main_description">Description:</label>
+			<input class="change-habit-input" name="change_habit_form_description" placeholder="A short description of the habit" id="change_habit_main_description" type="text" value="<%= habit_obj.description %>"/>
+
+
+			<button class="habit-managment-submit-button" type="submit" name="habit_change_main_submit" value="change" id="change_habit_submit">Change</button>
+		</form>
+	</body>
+</html>

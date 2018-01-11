@@ -66,13 +66,11 @@ $(document).ready(function() {
 
     $("#overview_page").on("click",".change-habit", function() {
         blocker = true;
-        var modelId = '#' + $(this).attr("data-habit") + '';
-        openModelFunction(modelId);
-        var habitId = $(this).parent().parent().attr("id");
-        $("#"+habitId).remove().remove();
+        var habitId = $(this).attr("id");
+        $("#"+habitId).parent().parent().remove();
+        console.log(habitId);
         $.getJSON(
-            "../requestHabit?id="+habitId, 
-            populateChangeHabitForm
+            "/requestHabit/"+habitId 
         );
     });
 
@@ -87,8 +85,8 @@ $(document).ready(function() {
     });
 
     $("#overview_page").on("click",".delete-habit", function() {
-        var habitId = $(this).parent().parent().attr("id");
-        $("#"+habitId).remove();
+        var habitId = $(this).attr("id");
+        $("#"+habitId).parent().parent().remove();
         $.getJSON(
             "../removeHabit?id="+habitId, 
         );

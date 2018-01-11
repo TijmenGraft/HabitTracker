@@ -4,6 +4,7 @@
   "description": "this is the habittracker package.json",
   "main": "server.js",
   "dependencies": {
+    "ejs": "^2.5.7",
     "express": "^4.16.2",
     "formidable": "^1.1.1",
     "mysql": "^2.15.0",
