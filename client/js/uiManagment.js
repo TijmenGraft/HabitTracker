@@ -68,10 +68,7 @@ $(document).ready(function() {
         blocker = true;
         var habitId = $(this).attr("id");
         $("#"+habitId).parent().parent().remove();
-        console.log(habitId);
-        $.getJSON(
-            "/requestHabit/"+habitId 
-        );
+        window.location.href = "/requestHabit/"+habitId;
     });
 
     $("#overview_page").on("click",".habit-check", function() {

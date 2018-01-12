@@ -42,8 +42,10 @@ module.exports = function(app,habitArr) {
 	});
 
 	app.get('/requestHabit/:habitId', function(req,res,next) {
-		let habit = usefullFunction.selectHabitById(habitArr,req.params.habitId);
-		res.render('updateHabitTemplate.ejs', {habit_obj: habit});
+		var habit = usefullFunction.selectHabitById(habitArr,req.params.habitId);
+		console.log(habit);
+		console.log("trying to render");
+		res.render('updateHabitTemplate.ejs',{ habit_obj: habit });
 	});
 
 	app.get("/requestHabit", function(req,res) {
@@ -63,9 +65,9 @@ module.exports = function(app,habitArr) {
 	    var JsonObj = JSON.parse(formObj);
 	    var id = JsonObj[0].value;
 	    JsonObj.splice(0,1);
-	    var updateHabit = usefullFunction.habitHandelingFormData(id,JsonObj);
-	    var newCat = usefullFunction.checkIfCategoryExsits(JsonObj[1].value);
-	    sqlModuleHabit.sqlUpdateHabit(newCat,updateHabit,sqlModuleHabit.deleteFrequency,sqlModuleHabit.updateHabitList,sqlModuleHabit.setInList);
+	    var updateHabit = usefullFunction.habitHandelingFormData(habitArr,id,JsonObj);
+	    var newCat = usefullFunction.checkIfCategoryExsits(habitArr,JsonObj[1].value);
+	    sqlModuleHabit.sqlUpdateHabit(newCat,updateHabit,sqlModuleHabit.deleteFrequency,sqlModuleHabit.updateHabitList,sqlModuleHabit.setInList,sqlModuleHabit.updateHabitList);
 	    var position = usefullFunction.habitsPosition(id);
 	    habitArr.splice(position,1);
 	    habitArr.splice(--position,0,updateHabit);

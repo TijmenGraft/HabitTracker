@@ -47,18 +47,13 @@ var getMaxId = async function(){
     // }
 }
 
-var setFrequency = function(id,habitFrequency) {
+var setFrequency = async function(id,habitFrequency) {
     var insertFrequency = "INSERT INTO frequency VALUES (?, (SELECT date_id FROM dates WHERE date_name = ?))";
     for(var i = 0; i < habitFrequency.length; ++i) {
         if(habitFrequency[i] == "ma") {
             habitFrequency[i] = "mo";
         }
-        con.query(insertFrequency, [id,habitFrequency[i]], function(err,result) {
-            if(err) {
-                console.log(err);
-            }
-            console.log(result);
-        })
+        await con.query(insertFrequency, [id,habitFrequency[i]]);
     }
 };
 
@@ -101,20 +96,37 @@ var getTimes = function(sqlHabits,id,habitsPosition) {
     });
 }
 
+var sqlUpdateHabit = async function(exsists,habit,callbackDeleteFrequency,callbackUpdateHabitlist,callbackSetInList,updateHabitList) {
+	console.log("++++Handeling sqlUpdateHabit++++");
+	console.log("updating habit");
+	console.log(exsists);
+	var updateHabit = "UPDATE habit SET title = ?, type = ?, description = ? WHERE habit_id = ?";
+    con.query(updateHabit, [habit.name,habit.type,habit.description,habit.id], function(err,result) {
+        if(err){console.log(err);}
+        console.log(result.affectedRows);
+    });
+    console.log("habit updated");
+	console.log("deleteting frequency");
+    await callbackDeleteFrequency(habit.id);
+    console.log("deleteting successfull");
+    console.log("setting frequency");
+    await setFrequency(habit.id,habit.frequency);
+    console.log("setting successfull");
+    console.log("updating habit list");
+    let result = await updateHabitList(exsists,habit);
+    console.log(result);
+    console.log("updating habit list successfull");
+
+    //continue here destroy the callback
+    
+    callbackUpdateHabitlist(exsists,habit,callbackSetInList);
+}
+
 module.exports = {
 	sqlInsertHabit: sqlInsertHabit,
 	getMaxId: getMaxId,
 
-	sqlUpdateHabit: function(exsists,habit,callbackDeleteFrequency,callbackUpdateHabitlist,callbackSetInList) {
-		console.log(habit);
-	    callbackDeleteFrequency(habit.id,habit.frequency,setFrequency);
-	    callbackUpdateHabitlist(exsists,habit,callbackSetInList);
-	    var updateHabit = "UPDATE habit SET title = ?, type = ?, description = ? WHERE habit_id = ?";
-	    con.query(updateHabit, [habit.name,habit.type,habit.description,habit.id], function(err,result) {
-	        if(err){console.log(err);}
-	        console.log(result.affectedRows);
-	    })
-	},
+	sqlUpdateHabit: sqlUpdateHabit,
 
 	sqlHabitDone: function(habit,date) {
 	    var daysOfWeek = ["mo","tu","we","th","fr","sa","su"];
@@ -159,38 +171,30 @@ module.exports = {
 	    });
 	},
 
-	deleteFrequency: function(id,habitFrequency,callbackSetFrequency) {
+	deleteFrequency: function(id) {
+		console.log("++++Handeling sqlDeleteFrequency++++");
 	    var deleteFrequencyQuery = "DELETE FROM frequency WHERE habit_id = ?";
-	    con.query(deleteFrequencyQuery,[id], function(err,result) {
-	        if(err){console.log(err);}
-	        console.log(result);
-	        if(callbackSetFrequency && habitFrequency) {
-	            callbackSetFrequency(id,habitFrequency);
-	        }
-	    });
+	    con.query(deleteFrequencyQuery,[id]);
 	},	
 
-	updateHabitList: function(exsits,habit,callbackSetInList) {
-	    var inlist = 0;
+	updateHabitList: async function(exsits,habit,callbackSetInList) {
+		console.log("++++Handeling updateHabitList++++");
+	    let inlist = 0;
 	    if(!exsits) {
 	        var addCat = "INSERT INTO habitlistcatelog (owned_by,title) VALUES ?";
 	        values = [
 	            ["1",habit.category]
 	        ];
-	        con.query(addCat, [values], function(err,result) {
-	            if(err) { console.log(err); }
-	            inlist = result.insertId;
-	            callbackSetInList(inlist,habit.id);
-	        });
+	        let result = await con.query(addCat, [values]);
+	        console.log(result[0].insertId);
+	        inlist = result[0].insertId;
+	        console.log(inlist);
+	        return inlist;
 	    } else {
 	        var selectCat = "SELECT habit_list_id FROM habitlistcatelog WHERE title = ?"
-	        con.query(selectCat, [habit.category], function(err,result) {
-	            if(err) {
-	                console.log(err);
-	            }
-	            inlist = result[0].habit_list_id;
-	            callbackSetInList(inlist,habit.id);
-	        }) 
+	        let result = await con.query(selectCat, [habit.category]);
+	        inlist = result[0][0].habit_list_id;
+	        return inlist;
 	    }
 	},
 

@@ -1,4 +1,5 @@
 var habitHandelingFormData = function(sqlHabit,id,data) {
+    console.log("++++Handeling form data++++");
     var frequencyArr = [];
     var i = 3;
     console.log(id);
@@ -29,7 +30,6 @@ var habitHandelingFormData = function(sqlHabit,id,data) {
         endDate: endDate,
         checkDate: []
     }
-    console.log(habit);
     return habit;
 }
 
