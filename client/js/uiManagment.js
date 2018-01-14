@@ -1,10 +1,10 @@
 $(document).ready(function() {
     var openModel = "";
-    // var mainTopPosition = $("main").offset().top;
-    // var conceptPosition = $("#concept").offset().top;
-    // var registerPosition = $("#register").offset().top;
-    // var reviewPosition = $("#review").offset().top;
-    // var aboutPosition = $("#about").offset().top;
+    var mainTopPosition = $("main").offset().top;
+    var conceptPosition = $("#concept").offset().top;
+    var registerPosition = $("#register").offset().top;
+    var reviewPosition = $("#review").offset().top;
+    var aboutPosition = $("#about").offset().top;
 
     window.blocker = false;
 

@@ -66,9 +66,10 @@ module.exports = function(app,habitArr) {
 	    var id = JsonObj[0].value;
 	    JsonObj.splice(0,1);
 	    var updateHabit = usefullFunction.habitHandelingFormData(habitArr,id,JsonObj);
+	    console.log(updateHabit);
 	    var newCat = usefullFunction.checkIfCategoryExsits(habitArr,JsonObj[1].value);
 	    sqlModuleHabit.sqlUpdateHabit(newCat,updateHabit,sqlModuleHabit.deleteFrequency,sqlModuleHabit.updateHabitList,sqlModuleHabit.setInList,sqlModuleHabit.updateHabitList);
-	    var position = usefullFunction.habitsPosition(id);
+	    var position = usefullFunction.habitsPosition(habitArr,id);
 	    habitArr.splice(position,1);
 	    habitArr.splice(--position,0,updateHabit);
 	    res.send(updateHabit);
@@ -98,5 +99,13 @@ module.exports = function(app,habitArr) {
 	    var position = usefullFunction.habitsPosition(habitId);
 	    habitArr.splice(position,1);
 	    sqlModuleHabit.deleteHabit(habitId);
+	});
+
+	app.get('/login', function(req,res) {
+		console.log(req.body);
+	});
+
+	app.get('register', function(req,res) {
+
 	});
 }

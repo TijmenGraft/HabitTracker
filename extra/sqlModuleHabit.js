@@ -13,6 +13,11 @@ con.configure({
 (function setUp() {
     console.log("Setting up storage");
     var query = "SELECT H.habit_id, H.title, H.type, HC.title AS category, H.description, H.startdate, H.enddate FROM habit AS H JOIN habitlistcatelog AS HC ON H.in_list_id = HC.habit_list_id WHERE H.in_list_id IS NOT NULL";
+    var _frequency = async function(sqlHabits,id,habit) {
+    	var frequency = await getTimes(sqlHabits,id,usefullFunction.habitsPosition);
+    	habit.frequency = frequency;
+        sqlHabits.push(habit);
+    }
     con.query(query, function(err,result) {
         if(err) {
             console.log(err);
@@ -20,8 +25,7 @@ con.configure({
         for(var i = 0; i < result.length; ++i) {
             var habit = usefullFunction.toHabit(result[i]);
             var id = habit.id;
-            var frequency = getTimes(sqlHabits,id,usefullFunction.habitsPosition);
-            sqlHabits.push(habit);
+            _frequency(sqlHabits,id,habit);
         }
     });
 })();
@@ -81,22 +85,18 @@ var sqlInsertHabit = async function(exsits, habit, callback, callbackFreq) {
     callbackFreq(habit.id,habit.frequency);
 };
 
-var getTimes = function(sqlHabits,id,habitsPosition) {
+var getTimes = async function(sqlHabits,id,habitsPosition) {
+	console.log("++++Excecuting getTimes++++");
     var frequency = [];
     var selectFrequency = 'SELECT D.date_name FROM frequency AS F JOIN dates AS D ON F.date_id = D.date_id WHERE F.habit_id = ? ORDER BY F.date_id ASC';
-    con.query(selectFrequency, [id], function(err, result) {
-        if(err) {
-            console.log(err)
-        }
-        console.log(result);
-        for(var i2 = 0; i2 < result.length; ++i2) {
-            frequency.push(result[i2].date_name)
-        }
-        sqlHabits[habitsPosition(sqlHabits,id)].frequency = frequency;
-    });
+    let result = await con.query(selectFrequency, [id])
+    for(var i2 = 0; i2 < result[0].length; ++i2) {
+        frequency.push(result[0][i2].date_name)
+    }
+    return frequency;
 }
 
-var sqlUpdateHabit = async function(exsists,habit,callbackDeleteFrequency,callbackUpdateHabitlist,callbackSetInList,updateHabitList) {
+var sqlUpdateHabit = async function(exsists,habit,callbackDeleteFrequency,callbackUpdateHabitlist,setInList,updateHabitList) {
 	console.log("++++Handeling sqlUpdateHabit++++");
 	console.log("updating habit");
 	console.log(exsists);
@@ -116,10 +116,9 @@ var sqlUpdateHabit = async function(exsists,habit,callbackDeleteFrequency,callba
     let result = await updateHabitList(exsists,habit);
     console.log(result);
     console.log("updating habit list successfull");
-
-    //continue here destroy the callback
-    
-    callbackUpdateHabitlist(exsists,habit,callbackSetInList);
+    console.log("setting in the list");
+    await setInList(result,habit.id);
+    console.log("setting successfull");
 }
 
 module.exports = {
@@ -147,6 +146,7 @@ module.exports = {
 	},
 
 	setInList: async function(list_id,habit_id) {
+		console.log("++++Setting in list++++");
 		console.log("list %s",list_id);
 		console.log("habit %s",habit_id);
 	    var updateListId = "UPDATE habit SET in_list_id = ? WHERE habit_id = ?";
@@ -156,20 +156,7 @@ module.exports = {
 
 	setFrequency: setFrequency,
 
-	getTimes: function(sqlHabits,id,habitsPosition) {
-	    var frequency = [];
-	    var selectFrequency = 'SELECT D.date_name FROM frequency AS F JOIN dates AS D ON F.date_id = D.date_id WHERE F.habit_id = ? ORDER BY F.date_id ASC';
-	    con.query(selectFrequency, [id], function(err, result) {
-	        if(err) {
-	            console.log(err)
-	        }
-	        console.log(result);
-	        for(var i2 = 0; i2 < result.length; ++i2) {
-	            frequency.push(result[i2].date_name)
-	        }
-	        sqlHabits[habitsPosition(sqlHabits,id)].frequency = frequency;
-	    });
-	},
+	getTimes: getTimes,
 
 	deleteFrequency: function(id) {
 		console.log("++++Handeling sqlDeleteFrequency++++");
