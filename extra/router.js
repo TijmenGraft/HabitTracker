@@ -16,7 +16,7 @@ module.exports = function(app,habitArr) {
 	    res.render('habitPageTemplate.ejs',{habit_array: data})
 	});
 
-	app.get('/html/habits', function(req,res,next) {
+	app.get('/html[/-]habits', function(req,res,next) {
 		var data = usefullFunction.organiseIntoCategory(habitArr);
 	    res.render('habitPageTemplate.ejs',{habit_array: data});
 	});
@@ -107,5 +107,10 @@ module.exports = function(app,habitArr) {
 
 	app.get('register', function(req,res) {
 
+	});
+
+	app.get('/salt', function(req,res) {
+		console.log("sending salt");
+		res.end();
 	});
 }
