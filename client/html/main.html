@@ -16,6 +16,7 @@
 		<script type="text/javascript" src="D:\wd\repobin\HabitTracker\client/js/Article.js"></script>
 		<script type="text/javascript" src="D:\wd\repobin\HabitTracker\client/js/HabitManagment2.js"></script>
 		<script type="text/javascript" src="D:\wd\repobin\HabitTracker\client/js/uiManagment.js"></script>
+		<script type="text/javascript" src="D:\wd\repobin\HabitTracker\client/js/shopmodules/shopscript.js"></script>
 	</head>
 	<body>
 		<nav>
@@ -35,7 +36,7 @@
 			<datalist id="category_list_habit">
 			</datalist>
 			<div class="page-wrapper">
-				<div id="overview_page" class="active page">
+				<div id="overview_page" class="page">
 					<div class="page-content-wrapper" id="habit_wrapper">
 						<button type="button" class="add-habit"id="add_habit_to_general" data-habit="add_habit_model">Add habit</button>
 					</div>
@@ -131,10 +132,15 @@
 					</div>
 				</div>
 				
-				<div id="shop_page" class="page">
+				<div id="shop_page" class="active page">
 					<div class="page-content-wrapper">
 						<h2>Shop</h2>
 						<div class="shop-wrapper">
+							<div class="wallet" id="userWallet">
+								<p id="premiumCurrencyDisplay">Your premium currency should be displayed here.</p>
+								<button id="premiumCurrencyIncrease">Get more!</button>
+								<p id="currencyDisplay">Your currency should be displayed here.</p>
+							</div>
 							<div class="artikel" id="black_trouser_avatar">
 								<img src="" alt="black_trouser_avatar" title="New stylish black trouser"/>
 								<p>Use your points to buy this fancy trouser for your avatar</p>
