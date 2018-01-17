@@ -21,7 +21,8 @@ mysql.configure({
 				id: article.article_id,
 				name: article.article_name,
 				description: article.article_description,
-				category: article.category_name
+				category: article.category_name,
+				src: article.article_id + '_' + article.category_name + '.jpg'
 			})
 		});
 	})

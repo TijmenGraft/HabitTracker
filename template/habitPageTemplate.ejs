@@ -38,6 +38,11 @@
 							Add habit
 						</div>
 					</a>
+					<a href="/openlootbox" class="add-habit">
+						<div id="add_habit_to_general">
+							OPEN LOOTBOX
+						</div>
+					</a>
 					<div class="habit-wrapper">
 						<% for(var category in habit_array){ %>
 							<div class="habit-card" id="<%= category %>_habit">
@@ -80,9 +85,9 @@
 				<div class="page-content-wrapper">
 					<h2>Shop</h2>
 					<div class="shop-wrapper">
-						<% article_array.forEach(function(article) { %>
+						<% artical_array.forEach(function(article) { %>
 							<div class="artikel" id="<%= article.id %>">
-								<img src="" alt="<%= article.name %>" title="<%= article.name%>"/>
+								<img src="/img/<%= article.src %>" alt="<%= article.name %>" title="<%= article.name%>"/>
 								<p><%= article.description %></p>
 								<button type="button">Buy</button>
 							</div>
