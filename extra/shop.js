@@ -56,6 +56,7 @@ jQuery.fn.extend({
 });
 
 app.get("/extra/shop", function(req, res){
+	console.log("initialising shop");
 	con.query(query["currency"], function(err, result){
 		if(err){
 			console.log(err);
@@ -91,6 +92,7 @@ app.get("/extra/shop", function(req, res){
 		$(#dailyBonus).disable(true);
 	}
 	$(#dailyBonus).onclick = collectDaily;
+	console.log("shop initialised");
 });
 
 /*
