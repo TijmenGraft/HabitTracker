@@ -21,6 +21,7 @@ var app = express();
 var habitArr = sqlModuleHabit.sqlHabits;
 var nextHabitId = sqlModuleHabit.nextHabitId;
 
+
 var analyticData = {
     totalHabit: 0,
     totalHabitOnDay: [

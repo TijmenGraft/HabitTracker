@@ -132,3 +132,11 @@ INSERT INTO frequency VALUES(4,4);
 INSERT INTO frequency VALUES(4,5);
 INSERT INTO frequency VALUES(4,6);
 INSERT INTO frequency VALUES(4,7);
+/* adding categories to the shop */
+INSERT INTO article_category (category_name, category_description) VALUES("cosmetics","this styles your avatar");
+INSERT INTO article_category (category_name, category_description) VALUES("skins","this styles your webpage");
+/* adding articles to the shop */
+INSERT INTO article(article_name,category_id,article_description,article_price) VALUES("black pants",1,"this article gives black pants to your avatar",100);
+INSERT INTO article(article_name,category_id,article_description,article_price) VALUES("blue shirt",1,"this article gives a blue shirt to your avatar",100);
+INSERT INTO article(article_name,category_id,article_description,article_price) VALUES("fancy hat",1,"this article gives a fancy hat to your avatar",500);
+INSERT INTO article(article_name,category_id,article_description,article_price) VALUES("green theme",2,"this article gives a green layout to your webpage",10000);
