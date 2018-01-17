@@ -13,6 +13,7 @@ CREATE TABLE IF NOT EXISTS users (
 	bank int(9) DEFAULT 0,
 	shop_currency int(9) DEFAULT 1000,
 	shop_premium_currency int(6) DEFAULT 0,
+	last_daily_collect timestamp DEFAULT "1970 -01-01T00:00:00.00",
 	CONSTRAINT PK_USER_ID PRIMARY KEY(user_id),
 	CONSTRAINT UC_USERNAME UNIQUE(username),
 	CONSTRAINT CH_BANK CHECK (bank>=0)
