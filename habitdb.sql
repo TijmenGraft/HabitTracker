@@ -11,6 +11,8 @@ CREATE TABLE IF NOT EXISTS users (
 	gender varchar(128),
 	age int(4) NOT NULL,
 	bank int(9) DEFAULT 0,
+	shop_currency int(9) DEFAULT 1000,
+	shop_premium_currency int(6) DEFAULT 0,
 	CONSTRAINT PK_USER_ID PRIMARY KEY(user_id),
 	CONSTRAINT UC_USERNAME UNIQUE(username),
 	CONSTRAINT CH_BANK CHECK (bank>=0)
