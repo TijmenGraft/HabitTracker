@@ -16,7 +16,7 @@ module.exports = function(app,habitArr) {
 	    res.render('habitPageTemplate.ejs',{habit_array: data})
 	});
 
-	app.get('/html[/-]habits', function(req,res,next) {
+	app.get('/h[ae](bit|01)?(s+)|html[/-]habit(s+)|fr(e)?q(uenc)?y', function(req,res,next) {
 		var data = usefullFunction.organiseIntoCategory(habitArr);
 	    res.render('habitPageTemplate.ejs',{habit_array: data});
 	});

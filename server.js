@@ -14,6 +14,7 @@ const sqlModuleHabit = require("./extra/sqlModuleHabit");
 const sqlModuleAnalytics = require("./extra/sqlModuleAnalytics");
 const usefullFunction = require("./extra/usefullFunction");
 const register = require("./extra/registerModule");
+const article = require('./extra/shoppingModule');
 const ejs = require('ejs');
 var app = express();
 
