@@ -52,6 +52,7 @@ CREATE TABLE IF NOT EXISTS habit_done(
 	date_done date,
 	bonus boolean DEFAULT 0,
 	CONSTRAINT PK_HABIT_ID_DATE_DONE PRIMARY KEY(habit_id,date_done)
+	CONSTRAINT FK_HABIT_ID FOREIGN KEY(habit_id) REFERENCES habit(habit_id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS frequency(

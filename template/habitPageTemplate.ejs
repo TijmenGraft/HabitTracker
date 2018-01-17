@@ -80,11 +80,13 @@
 				<div class="page-content-wrapper">
 					<h2>Shop</h2>
 					<div class="shop-wrapper">
-						<div class="artikel" id="black_trouser_avatar">
-							<img src="" alt="black_trouser_avatar" title="New stylish black trouser"/>
-							<p>Use your points to buy this fancy trouser for your avatar</p>
-							<button type="button">Buy</button>
-						</div>
+						<% article_array.forEach(function(article) { %>
+							<div class="artikel" id="<%= article.id %>">
+								<img src="" alt="<%= article.name %>" title="<%= article.name%>"/>
+								<p><%= article.description %></p>
+								<button type="button">Buy</button>
+							</div>
+						<% }) %>
 					</div>
 				</div>
 			</div>

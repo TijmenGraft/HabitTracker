@@ -20,7 +20,7 @@ var app = express();
 
 var habitArr = sqlModuleHabit.sqlHabits;
 var nextHabitId = sqlModuleHabit.nextHabitId;
-
+var articlesArr = article.articles
 
 var analyticData = {
     totalHabit: 0,
@@ -46,7 +46,7 @@ app.use(bodyParser.urlencoded({
 app.set('views',__dirname + '/template');
 app.set('view engine', 'ejs');
 
-require('./extra/router.js')(app,habitArr);
+require('./extra/router.js')(app,habitArr,articlesArr);
 
 
 /* SETTING UP

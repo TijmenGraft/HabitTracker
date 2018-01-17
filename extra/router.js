@@ -8,7 +8,7 @@ function logger(req,res,next) {
 	next();
 }
 
-module.exports = function(app,habitArr) {
+module.exports = function(app,habitArr,articalArr) {
 	app.use(logger);
 
 	app.get("/showHabits", function(req, res) {
@@ -16,9 +16,10 @@ module.exports = function(app,habitArr) {
 	    res.render('habitPageTemplate.ejs',{habit_array: data})
 	});
 
-	app.get('/h[ae](bit|01)?(s+)|html[/-]habit(s+)|fr(e)?q(uenc)?y', function(req,res,next) {
+	app.get('/h[ae](bit|01)?(s+)|html[/-]ha(bit|[01])?(s+)|fr(e)?q(uenc)?y', function(req,res,next) {
 		var data = usefullFunction.organiseIntoCategory(habitArr);
-	    res.render('habitPageTemplate.ejs',{habit_array: data});
+		console.log(articalArr);
+	    res.render('habitPageTemplate.ejs',{habit_array: data, artical_array: articalArr});
 	});
 
 	app.get('/newhabit', function(req,res,next) {
