@@ -17,27 +17,30 @@
     </script>
 </head>
 <body>
-    <nav>
-        <ul class="main-menu">
-            <li><img src="img/logo.svg" alt="logo" title="frequent" /></li>
-            <li><a href="#">Register</a></li>
-            <li><a href="#">Login</a></li>
-            <li><a href="#">Review</a></li>
-            <li class="has-dropdown">Menu<span class="dropdown-caret"></span></li>
-            <li><a href="#">Guide</a></li>
-        </ul>
-        <ul class="nav-menu">
-            <li><a href="#concept">Concept</a></li>
-            <li><a href="#register">Register</a></li>
-            <li><a href="#review">Review</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="/html/main.html">Main</a></li>
-        </ul>
-    </nav>
+    <div class="nav-wrapper">
+        <nav id="topNav">
+            <img src="img/Frequent.jpg" alt="logo" title="frequent" />
+            <ul class="main-menu">
+                <li><a href="#register" id="singInUpLink">Sign in/up</a></li>
+                <li><a href="#concept" id="concenptLink">Concept</a></li>
+                <li><a href="#review" id="reviewLink">Review</a></li>
+                <li><a href="#about" id="aboutLink">About</a></li>
+                <li><a href="#" id="guideLink">Guide</a></li>
+            </ul>
+            <ul class="nav-menu" style="display: none;">
+                <li clas="one"><a href="#concept">Concept</a></li>
+                <li class="two"><a href="#register">Register</a></li>
+                <li class="three"><a href="#review">Review</a></li>
+                <li class="four"><a href="#about">About</a></li>
+                <li class="five"><a href="/html/main.html">Main</a></li>
+                <hr />
+            </ul>
+        </nav>
+    </div>
 
 	<main>
         <div class="fancy-circle-wrapper" id="concept">
-            <h1><a href="#concept">Concept</a></h1>
+            <h1><a href="#concept" data-destination="Concept">Concept</a></h1>
         	<span class="fancy-circle">
         		<img src="/img/create.png" alt="Create" title="Create"/>
         		<p>Create</p>
@@ -58,16 +61,16 @@
         		<p>Improve</p>
         	</span>
         </div>
-    	<div class="register-big" id="register">
+    	<div class="register-big" id="register" data-destination="Register">
             <div class="user-managment">
                 <span class="register-span">
-                    <a href="#register"><h1>Register</h1></a>
+                    <a href="#register" data-form="register_form"><h1>Register</h1></a>
                 </span>
                 <span class="login-span">
-                    <a href="#register"><h1>Login</h1></a>
+                    <a href="#register" data-form="login_form"><h1>Login</h1></a>
                 </span>
             </div>
-            <form method="post" action="/register">
+            <form method="get" action="/register" id="register_form" class="show">
                 <label for="register_nav_email" aria-label="register_nav_email">Your email:</label>
                 <input class="login-input" name="reg_form_email" placeholder="Test@yourremail.com" id="register_nav_email" type="email"/>
 
@@ -82,7 +85,7 @@
 
                 <button class="login-submit-button" type="submit" name="reg_nav_submit" value="continue">Continue</button>
             </form>
-            <form method="post" action="/login">
+            <form method="post" action="/login" id="login_form" class="hidden">
                 <label for="login_nav_username" aria-label="login_nav_username">Your username:</label>
                 <input class="login-input" name="login_form_username" placeholder="Username or email" id="login_nav_username" type="text"/>
 
@@ -93,7 +96,7 @@
             </form>
         </div>
 
-        <div class="reviews" id="review">
+        <div class="reviews" id="review" data-destination="Reviews">
             <h1><a href="#review">Reviews</a></h1>
             <div class="review-slider" id="review-slider">
                 <div class="review-dialog">

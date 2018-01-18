@@ -1,0 +1,30 @@
+{
+  "name": "habittracker",
+  "version": "1.0.0",
+  "description": "this is the habittracker package.json",
+  "main": "server.js",
+  "dependencies": {
+    "ejs": "^2.5.7",
+    "express": "^4.16.2",
+    "formidable": "^1.1.1",
+    "mysql": "^2.15.0",
+    "mysql-promise": "^4.1.0",
+    "nodemailer": "^4.4.0",
+    "upper-case": "^1.1.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TijmenGraft/HabitTracker.git"
+  },
+  "author": "Tijmen van Graft",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/TijmenGraft/HabitTracker/issues"
+  },
+  "homepage": "https://github.com/TijmenGraft/HabitTracker#readme"
+}

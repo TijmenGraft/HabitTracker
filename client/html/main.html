@@ -15,6 +15,7 @@
 		<script type="text/javascript" src="/js/Article.js"></script>
 		<script type="text/javascript" src="/js/HabitManagment2.js"></script>
 		<script type="text/javascript" src="/js/uiManagment.js"></script>
+		<script type="text/javascript" src="./extra/shop.js"></script>
 	</head>
 	<body>
 		<nav>
@@ -25,7 +26,7 @@
 			</ul>
 			<ul class="lower-nav">
 				<a href="#overview_page" class="page-nav"><li class="page-active">Overview</li></a>
-				<a href="#stats_page" class="page-nav"><li class="page-active">Stats</li></a>
+				<a href="#stats_page" class="page-nav"><li class="">Stats</li></a>
 				<a href="#shop_page" class="page-nav"><li class="">Shop</li></a>
 				<a href="#logbook_page" class="page-nav"><li class="">Logbook</li></a>
 			</ul>
@@ -36,25 +37,7 @@
 			<div class="page-wrapper">
 				<div id="overview_page" class="active page">
 					<div class="page-content-wrapper" id="habit_wrapper">
-						<div class="habit-card" id="general_habit">
-							<div class="habit-card-header">
-								<h4>General</h4>
-							</div>
-							<div class="habit-card-body">
-								<ul class="habit-list" id="general_habit_list">
-									<li class="habit">Good habit example 
-										<i class="fa fa-check habit-check" aria-hidden="true"></i>
-										<i class="fa fa-times delete-habit" aria-hidden="true"></i>
-										<i class="fa fa-cog change-habit" data-habit="add_habit_change_model" aria-hidden="true"></i>
-									</li>
-									<li class="habit">Bad habit example</li>
-								</ul>
-								<span class="add-habit" id="add_habit_to_general" data-habit="add_habit_model">+</span>
-							</div>
-							<div class="habit-card-footer">
-								<p>Test</p>
-							</div>
-						</div>
+						<button type="button" class="add-habit"id="add_habit_to_general" data-habit="add_habit_model">Add habit</button>
 					</div>
 
 					<div class="model" id="add_habit_model">
@@ -75,13 +58,13 @@
 								<input class="habit-radio" name="habit_form_type" id="habit_main_type" type="radio" value="0">Bad
 
 								<label for="habit_main_frequency" aria-label="habit_main_frequency">Frequency:</label>
-								<input class="habit-radio" name="habit_form_frequency" type="checkbox" value="ma" checked>Monday
+								<input class="habit-radio" name="habit_form_frequency" type="checkbox" value="mo" checked>Monday
 								<input class="habit-radio" name="habit_form_frequency" type="checkbox" value="tu">Tuesday
 								<input class="habit-radio" name="habit_form_frequency" type="checkbox" value="we">Wednesday
 								<input class="habit-radio" name="habit_form_frequency" type="checkbox" value="th">Thursday
 								<input class="habit-radio" name="habit_form_frequency" type="checkbox" value="fr">Friday
-								<input class="habit-radio" name="habit_form_frequency" type="checkbox" value="sat">Saturday
-								<input class="habit-radio" name="habit_form_frequency" type="checkbox" value="sun">Sunday
+								<input class="habit-radio" name="habit_form_frequency" type="checkbox" value="sa">Saturday
+								<input class="habit-radio" name="habit_form_frequency" type="checkbox" value="su">Sunday
 				
 								<label for="habit_main_description" aria-label="habit_main_description">Description:</label>
 								<input class="habit-input" value="little text" name="habit_form_description" placeholder="A short description of the habit" id="habit_main_description" type="text"/>
@@ -103,67 +86,32 @@
 						</div>
 						<div class="model-body">
 							<form method="post" action="/update" id="change_habit">
-								<input class="hidden" name="change_habit_form_id" value=""/>
+								<input class="hidden" name="change_habit_form_id" id="change_habit_main_id" value=""/>
 
 								<label for="change_habit_main_title" aria-label="change_habit_main_title">Habit title:</label>
 								<input class="change-habit-input" name="change_habit_form_title" placeholder="Habit title" id="change_habit_main_title" type="text"/>
 
-								<label for="habit_main_category" aria-label="habit_main_category">Habit category:</label>
-								<input class="habit-input" list="category_list_habit" name="habit_form_category" placeholder="Habit category" id="habit_main_category" type="text"/>
-								
-								<fieldset class="radio-button-group-horizontal change-habit-group">
-									<label class="show label-left" for="good_main_type" aria-label="good_main_type">Good
-										<input class="change-habit-radio" name="change_habit_form_type" id="good_main_type" type="radio" value="1">
-									</label>
-									<label class="show label-right" for="bad_main_type" aria-label="good_main_type">Bad
-										<input class="change-habit-radio" name="change_habit_form_type" id="change_habit_main_type" type="radio" value="0">
-									</label>
-								</fieldset>
+								<label for="change_habit_main_category" aria-label="change_habit_main_category">Habit category:</label>
+								<input class="habit-input" list="category_list_habit" name="habit_form_category" placeholder="Habit category" id="change_habit_main_category" type="text"/>
 
-								<fieldset class="change-habit-group">
-									<ul>
-										<li>
-											<label class="show label-left" for="mo_main_frequency" aria-label="mo_main_frequency">Mo
-												<input class="change-habit-radio" id="mo_main_frequency" name="change_habit_form_frequency" type="checkbox" value="ma">
-											</label>
-											<label class="show label-right" for="tu_main_frequency" aria-label="tu_main_frequency">Tu
-												<input class="change-habit-radio" id="tu_main_frequency" name="change_habit_form_frequency" type="checkbox" value="tu">
-											</label>
-										</li>
-										<li>
-											<label class="show label-left" for="we_main_frequency" aria-label="we_main_frequency">We
-												<input class="change-habit-radio" id="we_main_frequency" name="change_habit_form_frequency" type="checkbox" value="we">
-											</label>
-											<label class="show label-right" for="th_main_frequency" aria-label="th_main_frequency">Th
-												<input class="change-habit-radio" id="th_main_frequency" name="change_habit_form_frequency" type="checkbox" value="th">
-											</label>
-										</li>
-										<li>
-											<label class="show label-left" for="fr_main_frequency" aria-label="we_main_frequency">Fr
-												<input class="change-habit-radio" id="fr_main_frequency" name="change_habit_form_frequency" type="checkbox" value="fr">
-											</label>
-										</li>
-										<li>
-											<label class="show label-right" for="sa_main_frequency" aria-label="sa_main_frequency">Sa
-												<input class="change-habit-radio" id="sa_main_frequency" name="change_habit_form_frequency" type="checkbox" value="sat">
-											</label>
-										</li>
-										<li>
-											<label class="show label-right" for="su_main_frequency" aria-label="su_main_frequency">Su
-												<input class="change-habit-radio" id="su_main_frequency" name="change_habit_form_frequency" type="checkbox" value="sun">
-											</label>
-										</li>
-									</ul>
-								</fieldset>
+								<label class="show" for="good_main_type" aria-label="good_main_type">Good</label>
+								<input class="change-habit-radio" name="change_habit_form_type" id="good_main_type" type="radio" value="1">
+								
+								<label class="show" for="bad_main_type" aria-label="good_main_type">Bad	</label>
+								<input class="change-habit-radio" name="change_habit_form_type" id="change_habit_main_type" type="radio" value="0">
+
+								<input class="change-habit-radio" id="mo_main_frequency" name="change_habit_form_frequency" type="checkbox" value="mo">Mo
+								<input class="change-habit-radio" id="tu_main_frequency" name="change_habit_form_frequency" type="checkbox" value="tu">Tu
+								<input class="change-habit-radio" id="we_main_frequency" name="change_habit_form_frequency" type="checkbox" value="we">We
+								<input class="change-habit-radio" id="th_main_frequency" name="change_habit_form_frequency" type="checkbox" value="th">Th
+								<input class="change-habit-radio" id="fr_main_frequency" name="change_habit_form_frequency" type="checkbox" value="fr">Fr
+								<input class="change-habit-radio" id="sa_main_frequency" name="change_habit_form_frequency" type="checkbox" value="sa">Sa
+								<input class="change-habit-radio" id="su_main_frequency" name="change_habit_form_frequency" type="checkbox" value="su">Su
+								
 				
 								<label for="change_habit_main_description" aria-label="change_habit_main_description">Description:</label>
 								<input class="change-habit-input" name="change_habit_form_description" placeholder="A short description of the habit" id="change_habit_main_description" type="text"/>
 
-								<label for="change_habit_main_startDate" aria-label="change_habit_main_startDate">Startdate:</label>
-								<input class="change-habit-input" name="change_habit_form_start_date" id="change_habit_main_startDate" type="date"/>
-
-								<label for="change_habit_main_endDate" aria-label="change_habit_main_endDate">endDate:</label>
-								<input class="change-habit-input" name="change_habit_form_end_date" id="change_habit_main_endDate" placeholder="End date" type="date"/>
 
 								<button class="habit-managment-submit-button" type="submit" name="habit_change_main_submit" value="change" id="change_habit_submit">Change</button>
 							</form>
@@ -173,9 +121,13 @@
 				
 				<div id="stats_page" class="page">
 					<div class="page-content-wrapper">
-						<h2>Stats</h2>
-						<p>Here will be some charts for tracking your habits</p>
-						<p>Also the calander will be here</p>
+						<div class="page-content-header">
+							<h2>Stats</h2>
+						</div>
+						<div class="page-content-main">
+							<p>Here will be some charts for tracking your habits</p>
+							<p>Also the calander will be here</p>
+						</div>
 					</div>
 				</div>
 				
@@ -183,11 +135,22 @@
 					<div class="page-content-wrapper">
 						<h2>Shop</h2>
 						<div class="shop-wrapper">
+							<div class="wallet">
+								<p id="currencyDisplay">Your currency should be displayed here.</p>
+								<p id="premiumCurrencyDisplay">Your premium currency should be displayed here.</p>
+								<label for="trade">Exchange 100 premium currency for 1000 currency</label>
+								<label for="bonus">Collect your daily bonus of 100 premium currency</label>
+								<button name="trade" id="tradePremiumToCommon"></button>
+								<button name="bonus" id="dailyBonus"></button>
+							</div>
+
+							<!--
 							<div class="artikel" id="black_trouser_avatar">
 								<img src="" alt="black_trouser_avatar" title="New stylish black trouser"/>
 								<p>Use your points to buy this fancy trouser for your avatar</p>
 								<button type="button">Buy</button>
 							</div>
+							-->
 						</div>
 					</div>
 				</div>

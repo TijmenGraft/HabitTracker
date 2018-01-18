@@ -1,0 +1,122 @@
+<!doctype htlm>
+<html>
+	<head>
+		<meta charset="UTF-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+	    <title>Your cockpit</title>
+	    <link href="/style/framework.css" rel="stylesheet" type="text/css"/>
+	    <link href="/style/maincss.css" rel="stylesheet" type="text/css"/>
+	    <link href="/style/headerStyle.css" rel="stylesheet" type="text/css"/>
+	    <link href="/font-awesome-4.7.0/css/font-awesome.css" rel="stylesheet" type="text/css"/>
+	    <link href="https://fonts.googleapis.com/css?family=Lato|Roboto+Slab" rel="stylesheet">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script type="text/javascript" src="/js/Habit.js"></script>
+		<script type="text/javascript" src="/js/HabitList.js"></script>
+		<script type="text/javascript" src="/js/Person.js"></script>
+		<script type="text/javascript" src="/js/Article.js"></script>
+		<script type="text/javascript" src="/js/HabitManagment2.js"></script>
+		<script type="text/javascript" src="/js/uiManagment.js"></script>
+	</head>
+	<body>
+		<nav>
+			<ul class="upper-nav">
+				<li><a href="#"><img src="" alt="logo" title="Frequent"/></a></li>
+				<li><a href="#">Guide</a></li>
+				<li><a href="#">Setting</a></li>
+			</ul>
+			<ul class="lower-nav">
+				<a href="#overview_page" class="page-nav"><li class="page-active">Overview</li></a>
+				<a href="#stats_page" class="page-nav"><li class="">Stats</li></a>
+				<a href="#shop_page" class="page-nav"><li class="">Shop</li></a>
+				<a href="#logbook_page" class="page-nav"><li class="">Logbook</li></a>
+			</ul>
+		</nav>
+		<div class="page-wrapper">
+			<div id="overview_page" class="active page">
+				<div class="page-content-wrapper" id="habit_wrapper">
+					<a href="/newhabit" class="add-habit">
+						<div id="add_habit_to_general">
+							Add habit
+						</div>
+					</a>
+					<a href="/openlootbox" class="add-habit">
+						<div id="add_habit_to_general">
+							OPEN LOOTBOX
+						</div>
+					</a>
+					<div class="habit-wrapper">
+						<% for(var category in habit_array){ %>
+							<div class="habit-card" id="<%= category %>_habit">
+								<div class="habit-card-header">
+									<h4><%= category %></h4>
+								</div>
+								<div class="habit-card-body">
+									<ul ckass="habit-list">
+										<% habit_array[category].forEach(function(habit) { %>
+											<li data-type="<%= habit.type%>"><%= habit.name %>
+												<ul class="icon-group" id="icons">
+													<i id="<%= habit.id %>" class="fa fa-check habit-check" aria-hidden="true"></i>
+	            									<i id="<%= habit.id %>" class="fa fa-times delete-habit" aria-hidden="true"></i>
+	            									<i id="<%= habit.id %>" class="fa fa-cog change-habit" data-habit="change_habit_model"></i>
+												</ul>
+											</li> 
+										<% }) %>
+									</ul>
+								</div>
+								<div class="habit-card-footer"></div>
+							</div>
+						<% } %>
+					</div>
+				</div>
+			</div>
+
+			<div id="stats_page" class="page">
+				<div class="page-content-wrapper">
+					<div class="page-content-header">
+						<h2>Stats</h2>
+					</div>
+					<div class="page-content-main">
+						<p>Here will be some charts for tracking your habits</p>
+						<p>Also the calander will be here</p>
+					</div>
+				</div>
+			</div>
+			
+			<div id="shop_page" class="page">
+				<div class="page-content-wrapper">
+					<h2>Shop</h2>
+					<div class="shop-wrapper">
+						<% artical_array.forEach(function(article) { %>
+							<div class="artikel" id="<%= article.id %>">
+								<img src="/img/<%= article.src %>" alt="<%= article.name %>" title="<%= article.name%>"/>
+								<p><%= article.description %></p>
+								<button type="button">Buy</button>
+							</div>
+						<% }) %>
+					</div>
+				</div>
+			</div>
+			
+			<div id="logbook_page" class="page">
+				<div class="page-content-wrapper">
+					<h2>Logbook</h2>
+					<div class="logbook-wrapper">
+						<div class="logbook-menu">
+							<ul>
+								<li><a href="#">All</a></li>
+								<li><a href="#">General</a></li>
+								<li><a href="#">Sports</a></li>
+							</ul>
+						</div>
+						<div class="logbook-content">
+							<ul>
+								<li tag="general">Not yelling at the boss 29/11/2017</li>
+								<li tag="sports">Did my daily 200 pushups 29/11/2017</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
