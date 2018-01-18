@@ -15,6 +15,7 @@
 		<script type="text/javascript" src="/js/Article.js"></script>
 		<script type="text/javascript" src="/js/HabitManagment2.js"></script>
 		<script type="text/javascript" src="/js/uiManagment.js"></script>
+		<script type="text/javascript" src="./extra/shop.js"></script>
 	</head>
 	<body>
 		<nav>
@@ -134,11 +135,22 @@
 					<div class="page-content-wrapper">
 						<h2>Shop</h2>
 						<div class="shop-wrapper">
+							<div class="wallet">
+								<p id="currencyDisplay">Your currency should be displayed here.</p>
+								<p id="premiumCurrencyDisplay">Your premium currency should be displayed here.</p>
+								<label for="trade">Exchange 100 premium currency for 1000 currency</label>
+								<label for="bonus">Collect your daily bonus of 100 premium currency</label>
+								<button name="trade" id="tradePremiumToCommon"></button>
+								<button name="bonus" id="dailyBonus"></button>
+							</div>
+
+							<!--
 							<div class="artikel" id="black_trouser_avatar">
 								<img src="" alt="black_trouser_avatar" title="New stylish black trouser"/>
 								<p>Use your points to buy this fancy trouser for your avatar</p>
 								<button type="button">Buy</button>
 							</div>
+							-->
 						</div>
 					</div>
 				</div>

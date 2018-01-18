@@ -1,5 +1,3 @@
-
-
 CREATE TABLE IF NOT EXISTS users (
 	user_id int(6) AUTO_INCREMENT,
 	username varchar(50) NOT NULL,
@@ -141,3 +139,5 @@ INSERT INTO article(article_name,category_id,article_description,article_price) 
 INSERT INTO article(article_name,category_id,article_description,article_price) VALUES("blue shirt",1,"this article gives a blue shirt to your avatar",100);
 INSERT INTO article(article_name,category_id,article_description,article_price) VALUES("fancy hat",1,"this article gives a fancy hat to your avatar",500);
 INSERT INTO article(article_name,category_id,article_description,article_price) VALUES("green theme",2,"this article gives a green layout to your webpage",10000);
+
+
