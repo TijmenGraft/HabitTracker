@@ -11,6 +11,17 @@ function logger(req,res,next) {
 module.exports = function(app,habitArr,articalArr) {
 	app.use(logger);
 
+	app.post('/login', async function(req,res,next){
+		var result = await sqlModuleHabit.login(req);
+		console.log('++++CALLBACK RESULT++++')
+		console.log(result);
+		if(result > 0) {
+			res.redirect('/html/habits/'+result);
+		} else {
+			res.end();
+		}
+	})
+
 	app.get("/showHabits", function(req, res) {
 		var data = usefullFunction.organiseIntoCategory(habitArr);
 	    res.render('habitPageTemplate.ejs',{habit_array: data})
@@ -97,7 +108,7 @@ module.exports = function(app,habitArr,articalArr) {
 
 	app.get("/removeHabit", function(req,res) {
 	    var habitId = req.query.id;
-	    var position = usefullFunction.habitsPosition(habitId);
+	    var position = usefullFunction.habitsPosition(habitArr,habitId);
 	    habitArr.splice(position,1);
 	    sqlModuleHabit.deleteHabit(habitId);
 	});

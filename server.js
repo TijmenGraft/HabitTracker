@@ -69,11 +69,6 @@ require('./extra/router.js')(app,habitArr,articlesArr);
 
 app.use("/register",register);
 
-app.post("/login", function(req,res) {
-	var username = req.body.login_form_username; //continue here
-    var password = req.body.login_form_password;
-    console.log(username + " " + password);
-});
 
 app.get("/analytics", function(req,res) {
     

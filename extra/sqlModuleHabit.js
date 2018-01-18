@@ -34,21 +34,21 @@ con.configure({
 * data is de data provided by users
 * sqlHabits is de array
 */
+var login = async function(req){
+    console.log('++++Excecuting login++++');
+    var username = req.body.login_form_username; //continue here
+    var password = req.body.login_form_password;
+    var loginQRY = 'SELECT user_id FROM users WHERE username = "'+username+'" AND password = "'+password+'" LIMIT 1';
+    let result = await con.query(loginQRY);
+    return result[0][0].user_id;
+}
+
 var getMaxId = async function(){
 	var maxID = "SELECT habit_id FROM habit ORDER BY habit_id DESC LIMIT 1;";
     let res = await con.query(maxID);
     let int = res[0][0].habit_id;
     int++;
     return int;
-    // console.log(res[0].habit_id);
-    // return res[0][0].habit_id;
-
-    // function(err, result) {
-    //     if(err) {
-    //         console.log(err)
-    //     }
-    //     return nextHabitId = ++result[0].habit_id;
-    // }
 }
 
 var setFrequency = async function(id,habitFrequency) {
@@ -194,5 +194,6 @@ module.exports = {
 	},
 
 	sqlHabits: sqlHabits,
-	nextHabitId: nextHabitId
+	nextHabitId: nextHabitId,
+    login: login
 }
