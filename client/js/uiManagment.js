@@ -1,10 +1,10 @@
 $(document).ready(function() {
     var openModel = "";
-    var mainTopPosition = $("main").offset().top;
-    var conceptPosition = $("#concept").offset().top;
-    var registerPosition = $("#register").offset().top;
-    var reviewPosition = $("#review").offset().top;
-    var aboutPosition = $("#about").offset().top;
+    // var mainTopPosition = $("main").offset().top;
+    // var conceptPosition = $("#concept").offset().top;
+    // var registerPosition = $("#register").offset().top;
+    // var reviewPosition = $("#review").offset().top;
+    // var aboutPosition = $("#about").offset().top;
 
     window.blocker = false;
 
@@ -221,4 +221,22 @@ $(document).ready(function() {
             }
         }
     })
+
+    var consolelog = function(data) {
+        console.log(data);
+    }
+    console.log(consolelog);
+
+    getSalt('/salt', consolelog)
 });
+
+function getSalt(theUrl,callback) {
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.onreadystatechange = function() {
+        if(xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+            callback(xmlHttp.responseText);
+        }
+    }
+    xmlHttp.open("GET", theUrl, true);
+    xmlHttp.send(null);
+}

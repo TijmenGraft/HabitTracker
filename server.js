@@ -14,11 +14,13 @@ const sqlModuleHabit = require("./extra/sqlModuleHabit");
 const sqlModuleAnalytics = require("./extra/sqlModuleAnalytics");
 const usefullFunction = require("./extra/usefullFunction");
 const register = require("./extra/registerModule");
+const article = require('./extra/shoppingModule');
 const ejs = require('ejs');
 var app = express();
 
 var habitArr = sqlModuleHabit.sqlHabits;
 var nextHabitId = sqlModuleHabit.nextHabitId;
+var articlesArr = article.articles
 
 var analyticData = {
     totalHabit: 0,
@@ -44,7 +46,7 @@ app.use(bodyParser.urlencoded({
 app.set('views',__dirname + '/template');
 app.set('view engine', 'ejs');
 
-require('./extra/router.js')(app,habitArr);
+require('./extra/router.js')(app,habitArr,articlesArr);
 
 
 /* SETTING UP
@@ -67,11 +69,6 @@ require('./extra/router.js')(app,habitArr);
 
 app.use("/register",register);
 
-app.post("/login", function(req,res) {
-	var username = req.body.login_form_username; //continue here
-    var password = req.body.login_form_password;
-    console.log(username + " " + password);
-});
 
 app.get("/analytics", function(req,res) {
     

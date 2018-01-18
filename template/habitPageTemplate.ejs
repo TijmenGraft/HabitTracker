@@ -6,6 +6,7 @@
 	    <title>Your cockpit</title>
 	    <link href="/style/framework.css" rel="stylesheet" type="text/css"/>
 	    <link href="/style/maincss.css" rel="stylesheet" type="text/css"/>
+	    <link href="/style/headerStyle.css" rel="stylesheet" type="text/css"/>
 	    <link href="/font-awesome-4.7.0/css/font-awesome.css" rel="stylesheet" type="text/css"/>
 	    <link href="https://fonts.googleapis.com/css?family=Lato|Roboto+Slab" rel="stylesheet">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -36,6 +37,11 @@
 					<a href="/newhabit" class="add-habit">
 						<div id="add_habit_to_general">
 							Add habit
+						</div>
+					</a>
+					<a href="/openlootbox" class="add-habit">
+						<div id="add_habit_to_general">
+							OPEN LOOTBOX
 						</div>
 					</a>
 					<div class="habit-wrapper">
@@ -80,11 +86,13 @@
 				<div class="page-content-wrapper">
 					<h2>Shop</h2>
 					<div class="shop-wrapper">
-						<div class="artikel" id="black_trouser_avatar">
-							<img src="" alt="black_trouser_avatar" title="New stylish black trouser"/>
-							<p>Use your points to buy this fancy trouser for your avatar</p>
-							<button type="button">Buy</button>
-						</div>
+						<% artical_array.forEach(function(article) { %>
+							<div class="artikel" id="<%= article.id %>">
+								<img src="/img/<%= article.src %>" alt="<%= article.name %>" title="<%= article.name%>"/>
+								<p><%= article.description %></p>
+								<button type="button">Buy</button>
+							</div>
+						<% }) %>
 					</div>
 				</div>
 			</div>

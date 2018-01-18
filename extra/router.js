@@ -8,17 +8,29 @@ function logger(req,res,next) {
 	next();
 }
 
-module.exports = function(app,habitArr) {
+module.exports = function(app,habitArr,articalArr) {
 	app.use(logger);
+
+	app.post('/login', async function(req,res,next){
+		var result = await sqlModuleHabit.login(req);
+		console.log('++++CALLBACK RESULT++++')
+		console.log(result);
+		if(result > 0) {
+			res.redirect('/html/habits/'+result);
+		} else {
+			res.end();
+		}
+	})
 
 	app.get("/showHabits", function(req, res) {
 		var data = usefullFunction.organiseIntoCategory(habitArr);
 	    res.render('habitPageTemplate.ejs',{habit_array: data})
 	});
 
-	app.get('/html/habits', function(req,res,next) {
+	app.get('/h[ae](bit|01)?(s+)|html[/-]ha(bit|[01])?(s+)|fr(e)?q(uenc)?y', function(req,res,next) {
 		var data = usefullFunction.organiseIntoCategory(habitArr);
-	    res.render('habitPageTemplate.ejs',{habit_array: data});
+		console.log(articalArr);
+	    res.render('habitPageTemplate.ejs',{habit_array: data, artical_array: articalArr});
 	});
 
 	app.get('/newhabit', function(req,res,next) {
@@ -96,7 +108,7 @@ module.exports = function(app,habitArr) {
 
 	app.get("/removeHabit", function(req,res) {
 	    var habitId = req.query.id;
-	    var position = usefullFunction.habitsPosition(habitId);
+	    var position = usefullFunction.habitsPosition(habitArr,habitId);
 	    habitArr.splice(position,1);
 	    sqlModuleHabit.deleteHabit(habitId);
 	});
@@ -107,5 +119,10 @@ module.exports = function(app,habitArr) {
 
 	app.get('register', function(req,res) {
 
+	});
+
+	app.get('/salt', function(req,res) {
+		console.log("sending salt");
+		res.end();
 	});
 }

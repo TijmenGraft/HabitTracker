@@ -1,5 +1,3 @@
-
-
 CREATE TABLE IF NOT EXISTS users (
 	user_id int(6) AUTO_INCREMENT,
 	username varchar(50) NOT NULL,
@@ -11,9 +9,6 @@ CREATE TABLE IF NOT EXISTS users (
 	gender varchar(128),
 	age int(4) NOT NULL,
 	bank int(9) DEFAULT 0,
-	shop_currency int(9) DEFAULT 1000,
-	shop_premium_currency int(6) DEFAULT 0,
-	last_daily_collect timestamp DEFAULT "1970 -01-01T00:00:00.00",
 	CONSTRAINT PK_USER_ID PRIMARY KEY(user_id),
 	CONSTRAINT UC_USERNAME UNIQUE(username),
 	CONSTRAINT CH_BANK CHECK (bank>=0)
@@ -54,7 +49,8 @@ CREATE TABLE IF NOT EXISTS habit_done(
 	habit_id int(6),
 	date_done date,
 	bonus boolean DEFAULT 0,
-	CONSTRAINT PK_HABIT_ID_DATE_DONE PRIMARY KEY(habit_id,date_done)
+	CONSTRAINT PK_HABIT_ID_DATE_DONE PRIMARY KEY(habit_id,date_done),
+	CONSTRAINT FK_HABIT_ID_HABIT_DONE FOREIGN KEY(habit_id) REFERENCES habit(habit_id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS frequency(
@@ -135,3 +131,13 @@ INSERT INTO frequency VALUES(4,4);
 INSERT INTO frequency VALUES(4,5);
 INSERT INTO frequency VALUES(4,6);
 INSERT INTO frequency VALUES(4,7);
+/* adding categories to the shop */
+INSERT INTO article_category (category_name, category_description) VALUES("cosmetics","this styles your avatar");
+INSERT INTO article_category (category_name, category_description) VALUES("skins","this styles your webpage");
+/* adding articles to the shop */
+INSERT INTO article(article_name,category_id,article_description,article_price) VALUES("black pants",1,"this article gives black pants to your avatar",100);
+INSERT INTO article(article_name,category_id,article_description,article_price) VALUES("blue shirt",1,"this article gives a blue shirt to your avatar",100);
+INSERT INTO article(article_name,category_id,article_description,article_price) VALUES("fancy hat",1,"this article gives a fancy hat to your avatar",500);
+INSERT INTO article(article_name,category_id,article_description,article_price) VALUES("green theme",2,"this article gives a green layout to your webpage",10000);
+
+
