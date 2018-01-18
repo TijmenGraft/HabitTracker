@@ -1,14 +1,10 @@
 const con = require("mysql-promise")();
 const usefullFunction = require("./usefullFunction");
+const cred = require("./cred")
 
 var sqlHabits = [];
 var nextHabitId;
-con.configure({
-    host: "localhost",
-    user: "root",
-    password: "Kungfu1998",
-    database: "habitdatabase"
-});
+con.configure(cred);
 
 (function setUp() {
     console.log("Setting up storage");
